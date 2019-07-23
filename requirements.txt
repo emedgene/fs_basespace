@@ -1,3 +1,4 @@
 six==1.12.*
 fs==2.4.*
 git+https://github.com/emedgene/basespace-python-sdk@feature/do_not_require_config#egg=basespace-python-sdk&subdirectory=src
+smart_open==1.8.*

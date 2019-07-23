@@ -24,7 +24,7 @@ with open("README.md", "rt") as f:
     DESCRIPTION = f.read()
 
 REQUIREMENTS = ["basespace-python-sdk @ git+https://github.com/emedgene/basespace-python-sdk@feature/do_not_require_config#subdirectory=src",
-                "fs==2.*", "six==1.*"]
+                "fs==2.*", "six==1.*", "smart_open==1.8.*"]
 
 setup(
     name="fs-basespace",

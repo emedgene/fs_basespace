@@ -8,12 +8,14 @@ import threading
 
 from fs import errors
 from fs import ResourceType
+from fs import tools
 from fs.base import FS
 from fs.mode import Mode
 from fs.info import Info
 from fs.path import normpath, relpath
 
 import six
+from smart_open.http import SeekableBufferedInputBase
 
 from BaseSpacePy.api.BaseSpaceAPI import BaseSpaceAPI
 
@@ -78,7 +80,7 @@ class BASESPACEFS(FS):
                                                   AccessToken=self.access_token)
         return self._tlocal.basespace
 
-    def get_user(self):
+    def _get_user(self):
         if not hasattr(self._tlocal, "user"):
             self._tlocal.user = UserContext(self.basespace.getUserById('current'))
         return self._tlocal.user
@@ -104,7 +106,7 @@ class BASESPACEFS(FS):
         return _key
 
     def _get_context_by_key(self, key):
-        current_context = self.get_user()
+        current_context = self._get_user()
         for tag in key.strip("/").split("/"):
             try:
                 current_context = current_context.get(self.basespace, tag)
@@ -194,20 +196,15 @@ class BASESPACEFS(FS):
         if _mode.create:
             raise errors.ResourceReadOnly
 
-        # TODO: return file descriptor here
-        raise NotImplementedError("todo: return descriptor for %s" % _key)
+        current_context = self._get_context_by_key(_key)
+        s3_url = current_context.get_raw().getFileUrl(self.basespace)
+        return SeekableBufferedInputBase(s3_url, mode)
 
     def download(self, path, file, chunk_size=None, **options):
         _path = self.validatepath(path)
-        _key = self._path_to_key(_path)
-        current_context = self._get_context_by_key(_key)
 
-        if not isinstance(current_context, FileContext):
-            raise errors.FileExpected
-
-        with self._lock:
-            # TODO: download file here
-            raise NotImplementedError("todo")
+        with self.openbin(_path, "rb") as basespace_f:
+            tools.copy_file_data(basespace_f, file)
 
     def upload(self, path, file, chunk_size=None, **options):
         raise errors.ResourceReadOnly
