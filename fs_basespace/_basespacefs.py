@@ -12,7 +12,8 @@ from fs import tools
 from fs.base import FS
 from fs.mode import Mode
 from fs.info import Info
-from fs.path import normpath, relpath
+from fs.path import normpath
+from fs.path import relpath
 
 import six
 from smart_open.http import SeekableBufferedInputBase
@@ -22,6 +23,9 @@ from BaseSpacePy.api.BaseSpaceAPI import BaseSpaceAPI
 from .basespace_context import UserContext
 from .basespace_context import FileContext
 from .basespace_context import CategoryContext
+
+
+_BASESPACE_DEFAULT_SERVER = "https://api.basespace.illumina.com/"
 
 
 def _make_repr(class_name, *args, **kwargs):
@@ -67,7 +71,7 @@ class BASESPACEFS(FS):
         self.client_id = client_id
         self.client_secret = client_secret
         self.access_token = access_token
-        self.basespace_server = basespace_server
+        self.basespace_server = basespace_server or _BASESPACE_DEFAULT_SERVER
 
         super(BASESPACEFS, self).__init__()
 
@@ -107,7 +111,11 @@ class BASESPACEFS(FS):
 
     def _get_context_by_key(self, key):
         current_context = self._get_user()
-        for tag in key.strip("/").split("/"):
+
+        if key == "":
+            return current_context
+
+        for tag in key.split("/"):
             try:
                 current_context = current_context.get(self.basespace, tag)
             except KeyError:
@@ -115,7 +123,6 @@ class BASESPACEFS(FS):
         return current_context
 
     def getinfo(self, path, namespaces=None):
-        self.check()
         namespaces = namespaces or ()
         _path = self.validatepath(path)
         _key = self._path_to_key(_path)
@@ -126,7 +133,7 @@ class BASESPACEFS(FS):
         return Info(info_dict)
 
     def _info_from_object(self, obj, namespaces):
-        """ Make an info dict from a Datalake info() return.
+        """ Make an info dict from the basespace context object
 
             List of functional namespaces: https://github.com/PyFilesystem/pyfilesystem2/blob/master/fs/info.py
         """
@@ -179,8 +186,10 @@ class BASESPACEFS(FS):
 
     def openbin(self, path, mode="r", buffering=-1, **options):
         _mode = Mode(mode)
+        if _mode.create:
+            raise errors.ResourceReadOnly
+
         _mode.validate_bin()
-        self.check()
         _path = self.validatepath(path)
         _key = self._path_to_key(_path)
 
@@ -192,9 +201,6 @@ class BASESPACEFS(FS):
         else:
             if info.is_dir:
                 raise errors.FileExpected(path)
-
-        if _mode.create:
-            raise errors.ResourceReadOnly
 
         current_context = self._get_context_by_key(_key)
         s3_url = current_context.get_raw().getFileUrl(self.basespace)
