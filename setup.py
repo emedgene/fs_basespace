@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
+import os
 from setuptools import setup
 from setuptools import find_packages
 
 __version__ = "defined_below"
-with open("fs_basespace/_version.py") as f:
+with open(os.path.join(os.path.dirname(__file__), "fs_basespace/_version.py")) as f:
     exec(f.read())
 
 CLASSIFIERS = [
@@ -21,7 +22,7 @@ CLASSIFIERS = [
     "Topic :: System :: Filesystems",
 ]
 
-with open("README.md", "rt") as f:
+with open(os.path.join(os.path.dirname(__file__), "README.md"), "rt") as f:
     DESCRIPTION = f.read()
 
 REQUIREMENTS = ["basespace-python-sdk @ git+https://github.com/emedgene/basespace-python-sdk@feature/do_not_require_config#subdirectory=src",
