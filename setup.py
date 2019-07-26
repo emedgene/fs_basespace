@@ -25,8 +25,7 @@ CLASSIFIERS = [
 with open(os.path.join(os.path.dirname(__file__), "README.md"), "rt") as f:
     DESCRIPTION = f.read()
 
-REQUIREMENTS = ["basespace-python-sdk @ git+https://github.com/emedgene/basespace-python-sdk@feature/do_not_require_config#subdirectory=src",
-                "fs==2.*", "six==1.*", "smart_open==1.8.*"]
+REQUIREMENTS = ["basespace-python-sdk", "fs", "six", "smart_open"]
 
 setup(
     name="fs-basespace",
