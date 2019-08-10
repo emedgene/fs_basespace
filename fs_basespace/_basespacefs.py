@@ -2,10 +2,9 @@ from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import unicode_literals
 
-__all__ = ["BASESPACEFS"]
-
 import threading
 import itertools
+import six
 
 from fs import errors
 from fs import ResourceType
@@ -16,19 +15,16 @@ from fs.info import Info
 from fs.path import normpath
 from fs.path import relpath
 from fs.path import abspath
-from fs.path import join
-
-
-import six
 from smart_open.http import SeekableBufferedInputBase
 
 from BaseSpacePy.api.BaseSpaceAPI import BaseSpaceAPI
 
-from .basespace_context import UserContext
 from .basespace_context import FileContext
 from .basespace_context import CategoryContext
+from .basespace_context import get_context_by_key
 
 
+__all__ = ["BASESPACEFS"]
 _BASESPACE_DEFAULT_SERVER = "https://api.basespace.illumina.com/"
 
 
@@ -88,11 +84,6 @@ class BASESPACEFS(FS):
                                                   AccessToken=self.access_token)
         return self._tlocal.basespace
 
-    def _get_user(self):
-        if not hasattr(self._tlocal, "user"):
-            self._tlocal.user = UserContext(self.basespace.getUserById('current'))
-        return self._tlocal.user
-
     def __repr__(self):
         return _make_repr(
             self.__class__.__name__,
@@ -114,17 +105,7 @@ class BASESPACEFS(FS):
         return _key
 
     def _get_context_by_key(self, key):
-        current_context = self._get_user()
-
-        if key == "":
-            return current_context
-
-        for tag in key.split("/"):
-            try:
-                current_context = current_context.get(self.basespace, tag)
-            except KeyError:
-                raise errors.ResourceNotFound
-        return current_context
+        return get_context_by_key(self.basespace, key)
 
     def getinfo(self, path, namespaces=None):
         namespaces = namespaces or ()
