@@ -66,9 +66,7 @@ class FileContext(EntityContext):
         raise TypeError("get() is not applicable to a single file")
 
 
-class FileGroupContext(CategoryContext):
-    NAME = "files"
-
+class FileGroupContext(EntityContext):
     def list(self, api):
         files = self.raw_obj.getFiles(api)
         return [FileContext(f) for f in files]
@@ -77,27 +75,15 @@ class FileGroupContext(CategoryContext):
         return FileContext(api.getFileById(file_id))
 
 
-class FileGroupsContext(EntityContext):
-    @staticmethod
-    def _get_files(api, raw_filegroup):
-        return FileGroupContext(raw_filegroup)
-
-    @classproperty
-    def CATEGORY_MAP(cls):
-        return {
-            FileGroupContext.NAME: cls._get_files
-        }
-
-
 class AppResultsContext(CategoryContext):
     NAME = "appresults"
 
     def list(self, api):
         results = self.raw_obj.getAppResults(api)
-        return [FileGroupsContext(result) for result in results]
+        return [FileGroupContext(result) for result in results]
 
     def get(self, api, result_id):
-        return FileGroupsContext(api.getAppResultById(result_id))
+        return FileGroupContext(api.getAppResultById(result_id))
 
 
 class SamplesContext(CategoryContext):
@@ -105,10 +91,10 @@ class SamplesContext(CategoryContext):
 
     def list(self, api):
         results = self.raw_obj.getSamples(api)
-        return [FileGroupsContext(result) for result in results]
+        return [FileGroupContext(result) for result in results]
 
     def get(self, api, sample_id):
-        return FileGroupsContext(api.getSampleById(sample_id))
+        return FileGroupContext(api.getSampleById(sample_id))
 
 
 class ProjectContext(EntityContext):

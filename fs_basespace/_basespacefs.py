@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 __all__ = ["BASESPACEFS"]
 
 import threading
+import itertools
 
 from fs import errors
 from fs import ResourceType
@@ -14,6 +15,9 @@ from fs.mode import Mode
 from fs.info import Info
 from fs.path import normpath
 from fs.path import relpath
+from fs.path import abspath
+from fs.path import join
+
 
 import six
 from smart_open.http import SeekableBufferedInputBase
@@ -165,12 +169,36 @@ class BASESPACEFS(FS):
             info["access"] = access_info
         return info
 
-    def listdir(self, path):
+    def scandir(
+            self,
+            path,  # type: Text
+            namespaces=None,  # type: Optional[Collection[Text]]
+            page=None,  # type: Optional[Tuple[int, int]]
+    ):
+        # type: (...) -> Iterator[Info]
+        namespaces = namespaces or ()
+        _path = abspath(normpath(path))
+
+        info = (
+            Info(self._info_from_object(entity, namespaces=namespaces))
+            for entity in self._listdir_entities(path)
+        )
+        iter_info = iter(info)
+        if page is not None:
+            start, end = page
+            iter_info = itertools.islice(iter_info, start, end)
+        return iter_info
+
+    def _listdir_entities(self, path):
         _path = self.validatepath(path)
         _key = self._path_to_key(_path)
 
         destination = self._get_context_by_key(_key)
-        return sorted([entry.get_id() for entry in destination.list(self.basespace)])
+        return [entry for entry in destination.list(self.basespace)]
+
+    def listdir(self, path):
+        entities_list = self._listdir_entities(path)
+        return sorted([entry.get_id() for entry in entities_list])
 
     def makedir(self, path, permissions=None, recreate=False):
         raise errors.ResourceReadOnly
