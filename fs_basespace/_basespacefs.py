@@ -158,11 +158,12 @@ class BASESPACEFS(FS):
     ):
         # type: (...) -> Iterator[Info]
         namespaces = namespaces or ()
-        _path = abspath(normpath(path))
+        _path = self.validatepath(path)
+        _key = self._path_to_key(_path)
 
         info = (
             Info(self._info_from_object(entity, namespaces=namespaces))
-            for entity in self._listdir_entities(path)
+            for entity in self._listdir_entities(_key)
         )
         iter_info = iter(info)
         if page is not None:
@@ -170,15 +171,14 @@ class BASESPACEFS(FS):
             iter_info = itertools.islice(iter_info, start, end)
         return iter_info
 
-    def _listdir_entities(self, path):
-        _path = self.validatepath(path)
-        _key = self._path_to_key(_path)
-
-        destination = self._get_context_by_key(_key)
+    def _listdir_entities(self, key):
+        destination = self._get_context_by_key(key)
         return [entry for entry in destination.list(self.basespace)]
 
     def listdir(self, path):
-        entities_list = self._listdir_entities(path)
+        _path = self.validatepath(path)
+        _key = self._path_to_key(_path)
+        entities_list = self._listdir_entities(_key)
         return sorted([entry.get_id() for entry in entities_list])
 
     def makedir(self, path, permissions=None, recreate=False):
