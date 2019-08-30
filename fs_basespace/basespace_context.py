@@ -1,5 +1,4 @@
 from abc import abstractmethod, abstractproperty
-
 from fs import errors
 
 
@@ -48,7 +47,7 @@ class CategoryContext:
 
     @abstractmethod
     def get(self, api, entity_id):
-        raise NotImplementedError("Should return category context by id")
+        raise NotImplementedError("Should return entity context by id")
 
     def get_name(self):
         return self.NAME
@@ -60,6 +59,15 @@ class CategoryContext:
         return self.raw_obj
 
 
+class CategoryContextDirect(CategoryContext):
+    def get(self, api, entity_id):
+        return self.get_entity_by_id(api, entity_id)
+
+    @abstractmethod
+    def get_entity_by_id(api, entity_id):
+        raise NotImplementedError("Should return entity context by id")
+
+
 class FileContext(EntityContext):
     def list(self, api):
         raise TypeError("list() is not applicable to a single file")
@@ -68,41 +76,51 @@ class FileContext(EntityContext):
         raise TypeError("get() is not applicable to a single file")
 
 
-class FileGroupContext(EntityContext):
+class FileGroupContext(CategoryContextDirect):
+    NAME = "files"
+
     def list(self, api):
         files = self.raw_obj.getFiles(api)
         return [FileContext(f) for f in files]
 
-    def get(self, api, file_id):
+    @staticmethod
+    def get_entity_by_id(api, file_id):
         return FileContext(api.getFileById(file_id))
 
 
-class AppResultsContext(CategoryContext):
+class FileGroupsContext(EntityContext):
+    @staticmethod
+    def _get_files(api, raw_filegroup):
+        return FileGroupContext(raw_filegroup)
+
+    @classproperty
+    def CATEGORY_MAP(cls):
+        return {
+            FileGroupContext.NAME: cls._get_files
+        }
+
+
+class AppResultsContext(CategoryContextDirect):
     NAME = "appresults"
 
     def list(self, api):
         results = self.raw_obj.getAppResults(api)
-        return [FileGroupContext(result) for result in results]
-
-    def get(self, api, result_id):
-        return FileGroupContext(api.getAppResultById(result_id))
+        return [FileGroupsContext(result) for result in results]
 
     @staticmethod
-    def get_context_by_id(api, result_id):
-        return FileGroupContext(api.getAppResultById(result_id))
+    def get_entity_by_id(api, result_id):
+        return FileGroupsContext(api.getAppResultById(result_id))
 
-class SamplesContext(CategoryContext):
+
+class SamplesContext(CategoryContextDirect):
     NAME = "samples"
 
     def list(self, api):
         results = self.raw_obj.getSamples(api)
-        return [FileGroupContext(result) for result in results]
-
-    def get(self, api, sample_id):
-        return self.get_context_by_id(api, sample_id)
+        return [FileGroupsContext(result) for result in results]
 
     @staticmethod
-    def get_context_by_id(api, sample_id):
+    def get_entity_by_id(api, sample_id):
         return FileGroupContext(api.getSampleById(sample_id))
 
 
@@ -123,14 +141,15 @@ class ProjectContext(EntityContext):
         }
 
 
-class ProjectGroupContext(CategoryContext):
+class ProjectGroupContext(CategoryContextDirect):
     NAME = "projects"
 
     def list(self, api):
         projects = api.getProjectByUser()
         return [ProjectContext(project) for project in projects]
 
-    def get(self, api, project_id):
+    @staticmethod
+    def get_entity_by_id(api, project_id):
         return ProjectContext(api.getProjectById(project_id))
 
 
@@ -144,7 +163,7 @@ class UserContext(EntityContext):
         return {
             ProjectGroupContext.NAME: cls._get_projects
         }
- 
+
 
 def get_context_by_key_abstraction(self, key):
     current_context = UserContext(self.basespace.getUserById('current'))
@@ -177,9 +196,9 @@ def get_context_by_key(api, key):
         project = ProjectContext(api.getProjectById(project_id))
         return project.get(api, paths[2])
     if len(paths) == 4 and paths[2] == SamplesContext.NAME:
-        return SamplesContext.get_context_by_id(api, paths[3])
+        return SamplesContext.get_entity_by_id(api, paths[3])
     if len(paths) == 4 and paths[2] == AppResultsContext.NAME:
-        return AppResultsContext.get_context_by_id(api, paths[3])
-    if len(paths) == 5:
-        return FileContext(api.getFileById(paths[4]))
+        return AppResultsContext.get_entity_by_id(api, paths[3])
+    if len(paths) == 6:
+        return FileGroupContext.get_entity_by_id(api, paths[5])
     raise errors.ResourceNotFound

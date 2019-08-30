@@ -18,11 +18,11 @@ basespace://{clientKey}:{clientSecret}:{appToken}@{server}!/projects/{projectId}
 accessing project sample files:
 
 ```
-basespace://{clientKey}:{clientSecret}:{appToken}@{server}!/projects/{projectId}/samples/{sampleId}/{fileId}
+basespace://{clientKey}:{clientSecret}:{appToken}@{server}!/projects/{projectId}/samples/{sampleId}/files/{fileId}
 ```
 
 accessing project appResult files (bam, vcf, ...):
 
 ```
-basespace://{clientKey}:{clientSecret}:{appToken}@{server}!/projects/{projectId}/appresults/{resultId}/{fileId}
+basespace://{clientKey}:{clientSecret}:{appToken}@{server}!/projects/{projectId}/appresults/{resultId}/files/{fileId}
 ```
