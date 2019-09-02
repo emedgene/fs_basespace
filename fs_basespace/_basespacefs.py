@@ -122,7 +122,7 @@ class BASESPACEFS(FS):
 
             List of functional namespaces: https://github.com/PyFilesystem/pyfilesystem2/blob/master/fs/info.py
         """
-        raw_obj = obj.get_raw()
+        raw_obj = obj.raw_obj
         name = obj.get_id()
         alias = obj.get_name()
         is_dir = not isinstance(obj, FileContext)
@@ -212,7 +212,7 @@ class BASESPACEFS(FS):
                 raise errors.FileExpected(path)
 
         current_context = self._get_context_by_key(_key)
-        s3_url = current_context.get_raw().getFileUrl(self.basespace)
+        s3_url = current_context.raw_obj.getFileUrl(self.basespace)
         return SeekableBufferedInputBase(s3_url, mode)
 
     def download(self, path, file, chunk_size=None, **options):

@@ -1,4 +1,4 @@
-from abc import abstractmethod, abstractproperty
+from abc import abstractmethod
 from fs import errors
 
 
@@ -10,20 +10,24 @@ class classproperty:
         return self.getter(owner)
 
 
-class EntityContext:
+class EntityContextMeta(type):
+    def __new__(cls, name, inheritance_tuple, attr, **kwargs):
+        cls_obj = super().__new__(cls, name, inheritance_tuple, attr)
+        cls_obj.CATEGORY_MAP = {}
+        for category in kwargs.get("categories", []):
+            cls_obj.CATEGORY_MAP[category.NAME] = category
+        return cls_obj
+
+
+class EntityContext(metaclass=EntityContextMeta):
     def __init__(self, raw_obj):
         self.raw_obj = raw_obj
 
-    @abstractproperty
-    @classproperty
-    def CATEGORY_MAP(cls):
-        raise NotImplementedError("Should return dict. Directory name -> corresponding context")
-
     def list(self, api):
-        return [context(api, self.raw_obj) for context in self.CATEGORY_MAP.values()]
+        return [context(self.raw_obj) for context in self.CATEGORY_MAP.values()]
 
     def get(self, api, category):
-        return self.CATEGORY_MAP[category](api, self.raw_obj)
+        return self.CATEGORY_MAP[category](self.raw_obj)
 
     def get_name(self):
         return self.raw_obj.Name
@@ -37,17 +41,24 @@ class EntityContext:
 
 class CategoryContext:
     NAME = "undefined"
+    ENTITY_CONTEXT = None
 
     def __init__(self, raw_obj):
         self.raw_obj = raw_obj
 
     @abstractmethod
+    def list_raw(self, api):
+        raise NotImplementedError("Should return list of entity contexts")
+
     def list(self, api):
-        raise NotImplementedError("Should return list of category contexts")
+        return [self.ENTITY_CONTEXT(entity) for entity in self.list_raw(api)]
 
     @abstractmethod
+    def get_raw(self, api, entity_id):
+        raise NotImplementedError("Should return ENTITY_CONTEXT instance by id")
+
     def get(self, api, entity_id):
-        raise NotImplementedError("Should return entity context by id")
+        return self.ENTITY_CONTEXT(self.get_raw(api, entity_id))
 
     def get_name(self):
         return self.NAME
@@ -55,114 +66,88 @@ class CategoryContext:
     def get_id(self):
         return self.NAME
 
-    def get_raw(self):
-        return self.raw_obj
-
 
 class CategoryContextDirect(CategoryContext):
     def get(self, api, entity_id):
         return self.get_entity_by_id(api, entity_id)
 
+    @classmethod
     @abstractmethod
-    def get_entity_by_id(api, entity_id):
+    def get_raw_entity_direct(cls, api, entity_id):
         raise NotImplementedError("Should return entity context by id")
+
+    @classmethod
+    def get_entity_direct(cls, api, entity_id):
+        return cls.ENTITY_CONTEXT(cls.get_raw_entity_direct(api, entity_id))
 
 
 class FileContext(EntityContext):
-    def list(self, api):
-        raise TypeError("list() is not applicable to a single file")
+    def list_raw(self, api):
+        raise TypeError("list_raw() is not applicable to a single file")
 
-    def get(self, api, file_id):
-        raise TypeError("get() is not applicable to a single file")
+    def get_raw(self, api, file_id):
+        raise TypeError("get_raw() is not applicable to a single file")
 
 
 class FileGroupContext(CategoryContextDirect):
     NAME = "files"
+    ENTITY_CONTEXT = FileContext
 
-    def list(self, api):
-        files = self.raw_obj.getFiles(api)
-        return [FileContext(f) for f in files]
+    def list_raw(self, api):
+        return self.raw_obj.getFiles(api)
 
-    @staticmethod
-    def get_entity_by_id(api, file_id):
-        return FileContext(api.getFileById(file_id))
+    @classmethod
+    def get_raw_entity_direct(cls, api, file_id):
+        return api.getFileById(file_id)
 
 
-class FileGroupsContext(EntityContext):
-    @staticmethod
-    def _get_files(api, raw_filegroup):
-        return FileGroupContext(raw_filegroup)
-
-    @classproperty
-    def CATEGORY_MAP(cls):
-        return {
-            FileGroupContext.NAME: cls._get_files
-        }
+class FileGroupsContext(EntityContext, categories=[FileGroupContext]):
+    pass
 
 
 class AppResultsContext(CategoryContextDirect):
     NAME = "appresults"
+    ENTITY_CONTEXT = FileGroupsContext
 
-    def list(self, api):
-        results = self.raw_obj.getAppResults(api)
-        return [FileGroupsContext(result) for result in results]
+    def list_raw(self, api):
+        return self.raw_obj.getAppResults(api)
 
-    @staticmethod
-    def get_entity_by_id(api, result_id):
-        return FileGroupsContext(api.getAppResultById(result_id))
+    @classmethod
+    def get_raw_entity_direct(cls, api, result_id):
+        return api.getAppResultById(result_id)
 
 
 class SamplesContext(CategoryContextDirect):
     NAME = "samples"
+    ENTITY_CONTEXT = FileGroupsContext
 
     def list(self, api):
-        results = self.raw_obj.getSamples(api)
-        return [FileGroupsContext(result) for result in results]
+        return self.raw_obj.getSamples(api)
 
-    @staticmethod
-    def get_entity_by_id(api, sample_id):
-        return FileGroupContext(api.getSampleById(sample_id))
+    @classmethod
+    def get_raw_entity_direct(cls, api, sample_id):
+        return api.getSampleById(sample_id)
 
 
-class ProjectContext(EntityContext):
-    @staticmethod
-    def _get_results(api, raw_project):
-        return AppResultsContext(raw_project)
-
-    @staticmethod
-    def _get_samples(api, raw_project):
-        return SamplesContext(raw_project)
-
-    @classproperty
-    def CATEGORY_MAP(cls):
-        return {
-            AppResultsContext.NAME: cls._get_results,
-            SamplesContext.NAME: cls._get_samples
-        }
+class ProjectContext(EntityContext, categories=[AppResultsContext,
+                                                          SamplesContext]):
+    pass
 
 
 class ProjectGroupContext(CategoryContextDirect):
     NAME = "projects"
+    ENTITY_CONTEXT = ProjectContext
 
-    def list(self, api):
-        projects = api.getProjectByUser()
-        return [ProjectContext(project) for project in projects]
+    def list_raw(self, api):
+        return api.getProjectByUser()
 
-    @staticmethod
-    def get_entity_by_id(api, project_id):
-        return ProjectContext(api.getProjectById(project_id))
+    @classmethod
+    def get_raw_entity_direct(cls, api, project_id):
+        return api.getProjectById(project_id)
 
 
-class UserContext(EntityContext):
-    @staticmethod
-    def _get_projects(api, user):
-        return ProjectGroupContext(user)
-
-    @classproperty
-    def CATEGORY_MAP(cls):
-        return {
-            ProjectGroupContext.NAME: cls._get_projects
-        }
+class UserContext(EntityContext, categories=[ProjectGroupContext]):
+    pass
 
 
 def get_context_by_key_abstraction(self, key):
@@ -196,9 +181,9 @@ def get_context_by_key(api, key):
         project = ProjectContext(api.getProjectById(project_id))
         return project.get(api, paths[2])
     if len(paths) == 4 and paths[2] == SamplesContext.NAME:
-        return SamplesContext.get_entity_by_id(api, paths[3])
+        return SamplesContext.get_entity_direct(api, paths[3])
     if len(paths) == 4 and paths[2] == AppResultsContext.NAME:
-        return AppResultsContext.get_entity_by_id(api, paths[3])
+        return AppResultsContext.get_entity_direct(api, paths[3])
     if len(paths) == 6:
-        return FileGroupContext.get_entity_by_id(api, paths[5])
+        return FileGroupContext.get_entity_direct(api, paths[5])
     raise errors.ResourceNotFound
