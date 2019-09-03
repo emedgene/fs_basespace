@@ -19,8 +19,10 @@ from smart_open.http import SeekableBufferedInputBase
 
 from BaseSpacePy.api.BaseSpaceAPI import BaseSpaceAPI
 
+from .basespace_context import UserContext
 from .basespace_context import FileContext
 from .basespace_context import CategoryContext
+from .basespace_context import get_last_direct_context
 from .basespace_context import get_context_by_key
 
 
@@ -96,12 +98,17 @@ class BASESPACEFS(FS):
     def __str__(self):
         return six.text_type("<basespace '{}'>".format(self._prefix))
 
+    @staticmethod
+    def _validate_key(key):
+        get_last_direct_context(key)
+
     def _path_to_key(self, path):
         """Converts an fs path to a basespace path."""
         _path = relpath(normpath(path))
         _key = (
             "{}/{}".format(self._prefix, _path).strip("/")
         )
+        self._validate_key(_key)
         return _key
 
     def _get_context_by_key(self, key):

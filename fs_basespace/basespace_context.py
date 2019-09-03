@@ -1,4 +1,5 @@
 from abc import abstractmethod
+import re
 from fs import errors
 
 
@@ -29,6 +30,10 @@ class EntityContext(metaclass=EntityContextMeta):
     def get(self, api, category):
         return self.CATEGORY_MAP[category](self.raw_obj)
 
+    @classmethod
+    def get_lazy(cls, category):
+        return cls.CATEGORY_MAP[category]
+
     def get_name(self):
         return self.raw_obj.Name
 
@@ -41,6 +46,7 @@ class EntityContext(metaclass=EntityContextMeta):
 
 class CategoryContext:
     NAME = "undefined"
+    ENTITY_ID_FORMAT = re.compile("^[0-9]+$")
     ENTITY_CONTEXT = None
 
     def __init__(self, raw_obj):
@@ -60,6 +66,17 @@ class CategoryContext:
     def get(self, api, entity_id):
         return self.ENTITY_CONTEXT(self.get_raw(api, entity_id))
 
+    @classmethod
+    def get_lazy(cls, entity_id):
+        if not cls.validate_entity_id(entity_id):
+            raise ValueError("Invalid entity id")
+        return cls.ENTITY_CONTEXT
+
+    @classmethod
+    def validate_entity_id(cls, entity_id):
+        match = cls.ENTITY_ID_FORMAT.match(entity_id)
+        return bool(match)
+
     def get_name(self):
         return self.NAME
 
@@ -69,7 +86,7 @@ class CategoryContext:
 
 class CategoryContextDirect(CategoryContext):
     def get(self, api, entity_id):
-        return self.get_entity_by_id(api, entity_id)
+        return self.get_entity_direct(api, entity_id)
 
     @classmethod
     @abstractmethod
@@ -121,7 +138,7 @@ class SamplesContext(CategoryContextDirect):
     NAME = "samples"
     ENTITY_CONTEXT = FileGroupsContext
 
-    def list(self, api):
+    def list_raw(self, api):
         return self.raw_obj.getSamples(api)
 
     @classmethod
@@ -130,7 +147,7 @@ class SamplesContext(CategoryContextDirect):
 
 
 class ProjectContext(EntityContext, categories=[AppResultsContext,
-                                                          SamplesContext]):
+                                                SamplesContext]):
     pass
 
 
@@ -162,28 +179,31 @@ def get_context_by_key_abstraction(self, key):
     return current_context
 
 
-# Breaks the abstraction but creates an average of 2X performance improvements
-def get_context_by_key(api, key):
+def get_last_direct_context(key):
+    latest_direct = None
+
     if not key or key == '/':
-        return UserContext(None)
-    paths = key.split("/")
-    if paths[0] not in UserContext.CATEGORY_MAP:
-        raise errors.ResourceNotFound
-    if len(paths) == 1:
-        user = UserContext(api.getUserById('current'))
-        return UserContext(user).get(api, paths[0])
-    project_id = paths[1]
-    if len(paths) == 2:
-        return ProjectContext(api.getProjectById(project_id))
-    if paths[2] not in ProjectContext.CATEGORY_MAP:
-        raise errors.ResourceNotFound
-    if len(paths) == 3:
-        project = ProjectContext(api.getProjectById(project_id))
-        return project.get(api, paths[2])
-    if len(paths) == 4 and paths[2] == SamplesContext.NAME:
-        return SamplesContext.get_entity_direct(api, paths[3])
-    if len(paths) == 4 and paths[2] == AppResultsContext.NAME:
-        return AppResultsContext.get_entity_direct(api, paths[3])
-    if len(paths) == 6:
-        return FileGroupContext.get_entity_direct(api, paths[5])
-    raise errors.ResourceNotFound
+        return latest_direct
+
+    current_context = UserContext
+    path_steps = key.split("/")
+    for i, path_step in enumerate(path_steps):
+        if issubclass(current_context, CategoryContextDirect):
+            latest_direct = (current_context, "/".join(path_steps[i:]))
+        current_context = current_context.get_lazy(path_step)
+    return latest_direct
+
+
+def get_context_by_key(api, key):
+    latest_direct = get_last_direct_context(key)
+    if latest_direct is not None:
+        latest_context_cls, rest_path = latest_direct
+        path_steps = rest_path.split("/", 2)
+        latest_context = latest_context_cls.get_entity_direct(api, path_steps[0])
+        rest_steps = path_steps[1:]
+    else:
+        rest_steps = key.split("/")
+        latest_context = UserContext(None)
+    for path_step in rest_steps:
+        latest_context = latest_context.get(api, path_step)
+    return latest_context
