@@ -179,13 +179,16 @@ def get_context_by_key_abstraction(self, key):
     return current_context
 
 
+ROOT_CONTEXT = UserContext
+
+
 def get_last_direct_context(key):
     latest_direct = None
 
     if not key or key == '/':
         return latest_direct
 
-    current_context = UserContext
+    current_context = ROOT_CONTEXT
     path_steps = key.split("/")
     for i, path_step in enumerate(path_steps):
         if issubclass(current_context, CategoryContextDirect):
@@ -195,15 +198,14 @@ def get_last_direct_context(key):
 
 
 def get_context_by_key(api, key):
+    rest_steps = key
+    latest_context = ROOT_CONTEXT
     latest_direct = get_last_direct_context(key)
     if latest_direct is not None:
         latest_context_cls, rest_path = latest_direct
         path_steps = rest_path.split("/", 2)
         latest_context = latest_context_cls.get_entity_direct(api, path_steps[0])
         rest_steps = path_steps[1:]
-    else:
-        rest_steps = key
-        latest_context = UserContext(None)
     for path_step in rest_steps.split("/"):
         latest_context = latest_context.get(api, path_step)
     return latest_context

@@ -14,12 +14,10 @@ from fs.mode import Mode
 from fs.info import Info
 from fs.path import normpath
 from fs.path import relpath
-from fs.path import abspath
 from smart_open.http import SeekableBufferedInputBase
 
 from BaseSpacePy.api.BaseSpaceAPI import BaseSpaceAPI
 
-from .basespace_context import UserContext
 from .basespace_context import FileContext
 from .basespace_context import CategoryContext
 from .basespace_context import get_last_direct_context
