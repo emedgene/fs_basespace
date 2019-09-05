@@ -1,5 +1,5 @@
-from abc import abstractmethod
 import re
+from abc import abstractmethod
 from fs import errors
 
 
@@ -12,8 +12,8 @@ class classproperty:
 
 
 class EntityContextMeta(type):
-    def __new__(cls, name, inheritance_tuple, attr, **kwargs):
-        cls_obj = super().__new__(cls, name, inheritance_tuple, attr)
+    def __new__(mcs, name, inheritance_tuple, attr, **kwargs):
+        cls_obj = super().__new__(mcs, name, inheritance_tuple, attr)
         cls_obj.CATEGORY_MAP = {}
         for category in kwargs.get("categories", []):
             cls_obj.CATEGORY_MAP[category.NAME] = category
@@ -39,9 +39,6 @@ class EntityContext(metaclass=EntityContextMeta):
 
     def get_id(self):
         return self.raw_obj.Id
-
-    def get_raw(self):
-        return self.raw_obj
 
 
 class CategoryContext:
@@ -85,25 +82,22 @@ class CategoryContext:
 
 
 class CategoryContextDirect(CategoryContext):
-    def get(self, api, entity_id):
-        return self.get_entity_direct(api, entity_id)
+    def get_raw(self, api, entity_id):
+        return self.get_raw_entity_direct(api, entity_id)
+
+    @classmethod
+    def get_entity_direct(cls, api, entity_id):
+        return cls.ENTITY_CONTEXT(cls.get_raw_entity_direct(api, entity_id))
 
     @classmethod
     @abstractmethod
     def get_raw_entity_direct(cls, api, entity_id):
         raise NotImplementedError("Should return entity context by id")
 
-    @classmethod
-    def get_entity_direct(cls, api, entity_id):
-        return cls.ENTITY_CONTEXT(cls.get_raw_entity_direct(api, entity_id))
-
 
 class FileContext(EntityContext):
     def list_raw(self, api):
         raise TypeError("list_raw() is not applicable to a single file")
-
-    def get_raw(self, api, file_id):
-        raise TypeError("get_raw() is not applicable to a single file")
 
 
 class FileGroupContext(CategoryContextDirect):
@@ -198,14 +192,14 @@ def get_last_direct_context(key):
 
 
 def get_context_by_key(api, key):
-    rest_steps = key
-    latest_context = ROOT_CONTEXT
+    rest_steps = key.split("/")
+    latest_context = ROOT_CONTEXT(None)
     latest_direct = get_last_direct_context(key)
     if latest_direct is not None:
         latest_context_cls, rest_path = latest_direct
-        path_steps = rest_path.split("/", 2)
+        path_steps = rest_path.split("/")
         latest_context = latest_context_cls.get_entity_direct(api, path_steps[0])
         rest_steps = path_steps[1:]
-    for path_step in rest_steps.split("/"):
+    for path_step in rest_steps:
         latest_context = latest_context.get(api, path_step)
     return latest_context
