@@ -202,6 +202,7 @@ def get_context_by_key(api, key):
         latest_context = latest_context_cls.get_entity_direct(api, path_steps[0])
         rest_steps = path_steps[1:]
     else:
+        rest_steps = key
         latest_context = UserContext(None)
     for path_step in rest_steps.split("/"):
         latest_context = latest_context.get(api, path_step)
