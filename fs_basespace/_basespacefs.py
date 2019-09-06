@@ -2,9 +2,9 @@ from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import unicode_literals
 
-__all__ = ["BASESPACEFS"]
-
 import threading
+import itertools
+import six
 
 from fs import errors
 from fs import ResourceType
@@ -14,17 +14,17 @@ from fs.mode import Mode
 from fs.info import Info
 from fs.path import normpath
 from fs.path import relpath
-
-import six
 from smart_open.http import SeekableBufferedInputBase
 
 from BaseSpacePy.api.BaseSpaceAPI import BaseSpaceAPI
 
-from .basespace_context import UserContext
 from .basespace_context import FileContext
 from .basespace_context import CategoryContext
+from .basespace_context import get_last_direct_context
+from .basespace_context import get_context_by_key
 
 
+__all__ = ["BASESPACEFS"]
 _BASESPACE_DEFAULT_SERVER = "https://api.basespace.illumina.com/"
 
 
@@ -84,11 +84,6 @@ class BASESPACEFS(FS):
                                                   AccessToken=self.access_token)
         return self._tlocal.basespace
 
-    def _get_user(self):
-        if not hasattr(self._tlocal, "user"):
-            self._tlocal.user = UserContext(self.basespace.getUserById('current'))
-        return self._tlocal.user
-
     def __repr__(self):
         return _make_repr(
             self.__class__.__name__,
@@ -101,26 +96,21 @@ class BASESPACEFS(FS):
     def __str__(self):
         return six.text_type("<basespace '{}'>".format(self._prefix))
 
+    @staticmethod
+    def _validate_key(key):
+        get_last_direct_context(key)
+
     def _path_to_key(self, path):
         """Converts an fs path to a basespace path."""
         _path = relpath(normpath(path))
         _key = (
             "{}/{}".format(self._prefix, _path).strip("/")
         )
+        self._validate_key(_key)
         return _key
 
     def _get_context_by_key(self, key):
-        current_context = self._get_user()
-
-        if key == "":
-            return current_context
-
-        for tag in key.split("/"):
-            try:
-                current_context = current_context.get(self.basespace, tag)
-            except KeyError:
-                raise errors.ResourceNotFound
-        return current_context
+        return get_context_by_key(self.basespace, key)
 
     def getinfo(self, path, namespaces=None):
         namespaces = namespaces or ()
@@ -137,7 +127,7 @@ class BASESPACEFS(FS):
 
             List of functional namespaces: https://github.com/PyFilesystem/pyfilesystem2/blob/master/fs/info.py
         """
-        raw_obj = obj.get_raw()
+        raw_obj = obj.raw_obj
         name = obj.get_id()
         alias = obj.get_name()
         is_dir = not isinstance(obj, FileContext)
@@ -165,12 +155,36 @@ class BASESPACEFS(FS):
             info["access"] = access_info
         return info
 
-    def listdir(self, path):
+    def scandir(
+            self,
+            path,  # type: Text
+            namespaces=None,  # type: Optional[Collection[Text]]
+            page=None,  # type: Optional[Tuple[int, int]]
+    ):
+        # type: (...) -> Iterator[Info]
+        namespaces = namespaces or ()
         _path = self.validatepath(path)
         _key = self._path_to_key(_path)
 
-        destination = self._get_context_by_key(_key)
-        return sorted([entry.get_id() for entry in destination.list(self.basespace)])
+        info = (
+            Info(self._info_from_object(entity, namespaces=namespaces))
+            for entity in self._listdir_entities(_key)
+        )
+        iter_info = iter(info)
+        if page is not None:
+            start, end = page
+            iter_info = itertools.islice(iter_info, start, end)
+        return iter_info
+
+    def _listdir_entities(self, key):
+        destination = self._get_context_by_key(key)
+        return [entry for entry in destination.list(self.basespace)]
+
+    def listdir(self, path):
+        _path = self.validatepath(path)
+        _key = self._path_to_key(_path)
+        entities_list = self._listdir_entities(_key)
+        return sorted([entry.get_id() for entry in entities_list])
 
     def makedir(self, path, permissions=None, recreate=False):
         raise errors.ResourceReadOnly
@@ -203,7 +217,7 @@ class BASESPACEFS(FS):
                 raise errors.FileExpected(path)
 
         current_context = self._get_context_by_key(_key)
-        s3_url = current_context.get_raw().getFileUrl(self.basespace)
+        s3_url = current_context.raw_obj.getFileUrl(self.basespace)
         return SeekableBufferedInputBase(s3_url, mode)
 
     def download(self, path, file, chunk_size=None, **options):
