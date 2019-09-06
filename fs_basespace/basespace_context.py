@@ -192,7 +192,7 @@ def get_last_direct_context(key):
 
 
 def get_context_by_key(api, key):
-    rest_steps = key.split("/")
+    rest_steps = key.split("/") if key else []
     latest_context = ROOT_CONTEXT(None)
     latest_direct = get_last_direct_context(key)
     if latest_direct is not None:
