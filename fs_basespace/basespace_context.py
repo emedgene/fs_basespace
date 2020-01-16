@@ -99,6 +99,19 @@ class FileContext(EntityContext):
     def list_raw(self, api):
         raise TypeError("list_raw() is not applicable to a single file")
 
+    @classmethod
+    def get_lazy(cls, category):
+        return AfterFileContext
+
+    def get(self, api, category):
+        return self
+
+
+class AfterFileContext(EntityContext):
+    def __init__(self, raw_obj):
+        super().__init__(raw_obj)
+        raise NotImplemented("After file context only allow one path.")
+
 
 class FileGroupContext(CategoryContextDirect):
     NAME = "files"
