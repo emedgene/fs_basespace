@@ -10,6 +10,15 @@ Installing
 
     pip install fs-basespace
 
+
+Requires python3 version of `basespace-python-sdk <https://github.com/basespace/basespace-python-sdk>`_ which can be installed from
+the `develop` branch.
+
+::
+
+    pip install 'git+https://github.com/basespace/basespace-python-sdk#egg=BaseSpacePy-0.3&subdirectory=src'
+
+
 Opening FS Basespace
 --------------------
 
