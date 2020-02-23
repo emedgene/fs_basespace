@@ -22,7 +22,7 @@ CLASSIFIERS = [
     "Topic :: System :: Filesystems",
 ]
 
-with open(os.path.join(os.path.dirname(__file__), "README.md"), "rt") as f:
+with open(os.path.join(os.path.dirname(__file__), "README.rst"), "rt") as f:
     DESCRIPTION = f.read()
 
 REQUIREMENTS = ["basespace-python-sdk", "fs", "six", "smart_open"]
