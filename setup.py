@@ -29,7 +29,8 @@ REQUIREMENTS = ["basespace-python-sdk", "fs", "six", "smart_open"]
 
 setup(
     name="fs-basespace",
-    author="vindex10",
+    author="emedgene",
+    author_email="pypi@emedgene.com",
     classifiers=CLASSIFIERS,
     description="Illumina Basespace filesystem for PyFilesystem2",
     install_requires=REQUIREMENTS,
@@ -39,6 +40,7 @@ setup(
     keywords=["pyfilesystem", "Illumina", "Basespace"],
     platforms=["any"],
     url="https://github.com/emedgene/fs_basespace",
+    download_url="https://github.com/emedgene/fs_basespace/tarball/0.2.0",
     version=__version__,
     entry_points={"fs.opener": ["basespace = fs_basespace.opener:BASESPACEFSOpener"]},
 )
