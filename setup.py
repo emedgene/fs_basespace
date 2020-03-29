@@ -22,14 +22,15 @@ CLASSIFIERS = [
     "Topic :: System :: Filesystems",
 ]
 
-with open(os.path.join(os.path.dirname(__file__), "README.md"), "rt") as f:
+with open(os.path.join(os.path.dirname(__file__), "README.rst"), "rt") as f:
     DESCRIPTION = f.read()
 
-REQUIREMENTS = ["basespace-python-sdk", "fs", "six", "smart_open"]
+REQUIREMENTS = ["BaseSpacePy~=0.3", "fs~=2.4", "six~=1.14", "smart-open~=1.9"]
 
 setup(
     name="fs-basespace",
-    author="vindex10",
+    author="emedgene",
+    author_email="pypi@emedgene.com",
     classifiers=CLASSIFIERS,
     description="Illumina Basespace filesystem for PyFilesystem2",
     install_requires=REQUIREMENTS,
@@ -39,6 +40,7 @@ setup(
     keywords=["pyfilesystem", "Illumina", "Basespace"],
     platforms=["any"],
     url="https://github.com/emedgene/fs_basespace",
+    download_url="https://github.com/emedgene/fs_basespace/tarball/0.2.0",
     version=__version__,
     entry_points={"fs.opener": ["basespace = fs_basespace.opener:BASESPACEFSOpener"]},
 )
