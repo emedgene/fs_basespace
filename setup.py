@@ -25,7 +25,7 @@ CLASSIFIERS = [
 with open(os.path.join(os.path.dirname(__file__), "README.rst"), "rt") as f:
     DESCRIPTION = f.read()
 
-REQUIREMENTS = ["BaseSpacePy~=0.3", "fs~=2.4", "six~=1.14", "smart-open~=1.9"]
+REQUIREMENTS = ["basespace-python-sdk", "fs~=2.4", "six~=1.14", "smart-open~=1.9"]
 
 setup(
     name="fs-basespace",
