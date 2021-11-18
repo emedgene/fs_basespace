@@ -153,8 +153,21 @@ class SamplesContext(CategoryContextDirect):
         return api.getSampleById(sample_id)
 
 
+class BioSamplesContext(CategoryContextDirect):
+    NAME = "biosamples"
+    ENTITY_CONTEXT = FileGroupsContext
+
+    def list_raw(self, api):
+        return self.raw_obj.getSamples(api)
+
+    @classmethod
+    def get_raw_entity_direct(cls, api, sample_id):
+        return api.getSampleById(sample_id)
+
+
 class ProjectContext(EntityContext, categories=[AppResultsContext,
-                                                SamplesContext]):
+                                                SamplesContext,
+                                                BioSamplesContext]):
     pass
 
 
