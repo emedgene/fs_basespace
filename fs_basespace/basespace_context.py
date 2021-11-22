@@ -156,31 +156,29 @@ class SamplesContext(CategoryContextDirect):
         return api.getSampleById(sample_id)
 
 
-class FastQFileGroupContext(CategoryContextDirect):
-    NAME = "fastq files"
+class SequencedFileGroupContext(CategoryContextDirect):
+    NAME = "sequenced files"
     ENTITY_CONTEXT = FileContext
 
     def list_raw(self, api):
-        # list of raw obj of type DatasetsContext
-        return [element for element in self.raw_obj]
+        return list(self.raw_obj)
 
     @classmethod
     def get_raw_entity_direct(cls, api, file_id):
-        return api.getFileById(file_id)
+        pass
 
 
-class FastQFileGroupsContext(EntityContext, categories=[FastQFileGroupContext]):
+class SequencedFileGroupsContext(EntityContext, categories=[SequencedFileGroupContext]):
     pass
 
 
 class DatasetsContext(CategoryContextDirect):
     ENTITY_ID_FORMAT = re.compile("^ds.[0-9a-z]+$")
     NAME = "datasets"
-    ENTITY_CONTEXT = FastQFileGroupsContext
+    ENTITY_CONTEXT = SequencedFileGroupsContext
 
     def list_raw(self, api):
-        # list of raw obj of type DatasetsContext
-        return [element for element in self.raw_obj]
+        return list(self.raw_obj)
 
     @classmethod
     def get_raw_entity_direct(cls, api, dataset_id):
