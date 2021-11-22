@@ -73,6 +73,8 @@ class BASESPACEFS(FS):
         self.access_token = access_token
         self.basespace_server = basespace_server or _BASESPACE_DEFAULT_SERVER
 
+        self._validate_mandatory_fields()
+
         super(BASESPACEFS, self).__init__()
 
     @property
@@ -95,6 +97,16 @@ class BASESPACEFS(FS):
 
     def __str__(self):
         return six.text_type("<basespace '{}'>".format(self._prefix))
+
+    def _validate_mandatory_fields(self):
+        if not self.client_id:
+            raise ValueError('Client id must be specified')
+        if not self.client_secret:
+            raise ValueError('Client secret must be specified')
+        if not self.access_token:
+            raise ValueError('Access token must be specified')
+        if not self.basespace_server:
+            raise ValueError('Basespace server must be specified')
 
     @staticmethod
     def _validate_key(key):
