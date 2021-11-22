@@ -165,7 +165,7 @@ class SequencedFileGroupContext(CategoryContextDirect):
 
     @classmethod
     def get_raw_entity_direct(cls, api, file_id):
-        pass
+        return api.getFileById(file_id)
 
 
 class SequencedFileGroupsContext(EntityContext, categories=[SequencedFileGroupContext]):
