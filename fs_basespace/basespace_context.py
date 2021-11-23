@@ -5,6 +5,8 @@ from BaseSpacePy.api.BiosamplesApi import BiosamplesApi
 from BaseSpacePy.api.DatasetsApi import DatasetsApi
 from fs import errors
 
+BASESPACE_V2_DEFAULT_SERVER = 'https://api.basespace.illumina.com/v2'
+
 
 class classproperty:
     def __init__(self, getter):
@@ -161,7 +163,7 @@ class SequencedFileGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileContext
 
     def list_raw(self, api):
-        return list(self.raw_obj)
+        return sorted(list(self.raw_obj))
 
     @classmethod
     def get_raw_entity_direct(cls, api, file_id):
@@ -178,11 +180,11 @@ class DatasetsContext(CategoryContextDirect):
     ENTITY_CONTEXT = SequencedFileGroupsContext
 
     def list_raw(self, api):
-        return list(self.raw_obj)
+        return sorted(list(self.raw_obj))
 
     @classmethod
     def get_raw_entity_direct(cls, api, dataset_id):
-        api_v2_server = 'https://api.basespace.illumina.com/v2'
+        api_v2_server = ''
         datasets_api = DatasetsApi(access_token=api.apiClient.apiKey, api_server_and_version=api_v2_server)
         return datasets_api.get_v2_datasets_id_files(excludevcfindexfolder=False,
                                                      excludebamcoveragefolder=False,
@@ -203,15 +205,15 @@ class BioSampleGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = BioSampleContext
 
     def list_raw(self, api):
-        api_v2_server = 'https://api.basespace.illumina.com/v2'
-        biosamples_api = BiosamplesApi(access_token=api.apiClient.apiKey, api_server_and_version=api_v2_server)
+        biosamples_api = BiosamplesApi(access_token=api.apiClient.apiKey,
+                                       api_server_and_version=BASESPACE_V2_DEFAULT_SERVER)
         # offset = offset, limit = limit
         return self.raw_obj.get_biosamples(biosamples_api)
 
     @classmethod
     def get_raw_entity_direct(cls, api, biosample_id):
-        api_v2_server = 'https://api.basespace.illumina.com/v2'
-        datasets_api = DatasetsApi(access_token=api.apiClient.apiKey, api_server_and_version=api_v2_server)
+        datasets_api = DatasetsApi(access_token=api.apiClient.apiKey,
+                                   api_server_and_version=BASESPACE_V2_DEFAULT_SERVER)
         return datasets_api.get_v2_datasets(limit=50, offset=0, sortby="Name", sortdir="Asc",
                                             include="properties",
                                             datasettypes="~common.fastq",

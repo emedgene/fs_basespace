@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import threading
 import itertools
 import six
-
+import logging
 from fs import errors
 from fs import ResourceType
 from fs import tools
@@ -26,6 +26,9 @@ from .basespace_context import get_context_by_key
 
 __all__ = ["BASESPACEFS"]
 _BASESPACE_DEFAULT_SERVER = "https://api.basespace.illumina.com/"
+
+logger = logging.getLogger("BaseSpaceFs")
+logger.setLevel(logging.DEBUG)
 
 
 def _make_repr(class_name, *args, **kwargs):
@@ -76,6 +79,7 @@ class BASESPACEFS(FS):
         self._validate_mandatory_fields()
 
         super(BASESPACEFS, self).__init__()
+        logger.debug('BaseSpaceFs is created')
 
     @property
     def basespace(self):
@@ -125,18 +129,23 @@ class BASESPACEFS(FS):
         return get_context_by_key(self.basespace, key)
 
     def getinfo(self, path, namespaces=None):
+        logger.debug(f'getinfo path: {path}')
+        if path in ['', '/']:
+            raise errors.ResourceNotFound(path)
         namespaces = namespaces or ()
         _path = self.validatepath(path)
-        _key = self._path_to_key(_path)
 
-        current_context = self._get_context_by_key(_key)
-        info_dict = self._info_from_object(current_context, namespaces)
+        try:
+            _key = self._path_to_key(_path)
+            current_context = self._get_context_by_key(_key)
+            info_dict = self._info_from_object(current_context, namespaces)
+        except Exception:
+            raise errors.ResourceNotFound(path)
 
         return Info(info_dict)
 
     def _info_from_object(self, obj, namespaces):
         """ Make an info dict from the basespace context object
-
             List of functional namespaces: https://github.com/PyFilesystem/pyfilesystem2/blob/master/fs/info.py
         """
         raw_obj = obj.raw_obj
@@ -174,6 +183,7 @@ class BASESPACEFS(FS):
             page=None,  # type: Optional[Tuple[int, int]]
     ):
         # type: (...) -> Iterator[Info]
+        logger.debug(f'scandir path: {path}')
         namespaces = namespaces or ()
         _path = self.validatepath(path)
         _key = self._path_to_key(_path)
@@ -193,22 +203,18 @@ class BASESPACEFS(FS):
         return [entry for entry in destination.list(self.basespace)]
 
     def listdir(self, path):
-        _path = self.validatepath(path)
-        _key = self._path_to_key(_path)
-        entities_list = self._listdir_entities(_key)
+        logger.debug(f'listdir path: {path}')
+        if not self.isdir(path) and not self.isfile(path):
+            raise errors.DirectoryExpected(path)
+
+        try:
+            _path = self.validatepath(path)
+            _key = self._path_to_key(_path)
+            entities_list = self._listdir_entities(_key)
+        except:
+            raise errors.ResourceNotFound(path)
+
         return sorted([entry.get_id() for entry in entities_list])
-
-    def makedir(self, path, permissions=None, recreate=False):
-        raise errors.ResourceReadOnly
-
-    def remove(self, path):
-        raise errors.ResourceReadOnly
-
-    def removedir(self, path):
-        raise errors.ResourceReadOnly
-
-    def setinfo(self, path, info):
-        raise errors.ResourceReadOnly
 
     def openbin(self, path, mode="r", buffering=-1, **options):
         _mode = Mode(mode)
@@ -222,8 +228,8 @@ class BASESPACEFS(FS):
         info = None
         try:
             info = self.getinfo(path)
-        except errors.ResourceNotFound:
-            pass
+        except Exception:
+            raise errors.ResourceNotFound(path)
         else:
             if info.is_dir:
                 raise errors.FileExpected(path)
@@ -233,10 +239,27 @@ class BASESPACEFS(FS):
         return SeekableBufferedInputBase(s3_url, mode)
 
     def download(self, path, file, chunk_size=None, **options):
+        logger.debug(f'download path: {path}')
         _path = self.validatepath(path)
 
-        with self.openbin(_path, "rb") as basespace_f:
-            tools.copy_file_data(basespace_f, file)
+        try:
+            with self.openbin(_path, "rb") as basespace_f:
+                tools.copy_file_data(basespace_f, file)
+        except Exception as e:
+            logger.exception(f'download failed: {path} err: {str(e)}')
+            file = None
+
+    def makedir(self, path, permissions=None, recreate=False):
+        raise errors.ResourceReadOnly
+
+    def remove(self, path):
+        raise errors.ResourceReadOnly
+
+    def removedir(self, path):
+        raise errors.ResourceReadOnly
+
+    def setinfo(self, path, info):
+        raise errors.ResourceReadOnly
 
     def upload(self, path, file, chunk_size=None, **options):
         raise errors.ResourceReadOnly
