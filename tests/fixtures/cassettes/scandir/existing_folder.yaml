@@ -1,0 +1,149 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Authorization:
+      - Bearer 224880f27f224388b11f3b193ee377e7
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Host:
+      - api.basespace.illumina.com
+      User-Agent:
+      - Python-urllib/3.6
+    method: GET
+    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915
+  response:
+    body:
+      string: '{"Response":{"HrefSamples":"v1pre3/projects/86591915/samples","HrefAppResults":"v1pre3/projects/86591915/appresults","HrefBaseSpaceUI":"https://basespace.illumina.com/project/86591915/MiSeq-Myeloid-RNA-Panel-Brain-and-SeraSeq-Samples","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/projects/86591915/properties"},"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"2016-10-25T17:38:36.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"ResponseStatus":{},"Notifications":[]}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Nov 2021 19:26:30 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Server:
+      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Unknown
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-ID:
+      - 2021.11.24.19.26.29.E92UGXCJmkWMNXZfmv5DDA
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer 224880f27f224388b11f3b193ee377e7
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Host:
+      - api.basespace.illumina.com
+      User-Agent:
+      - Python-urllib/3.6
+    method: GET
+    uri: https://api.basespace.illumina.com/v2/biosamples?projectid=86591915
+  response:
+    body:
+      string: '{"Items":[{"Id":"104555093","Href":"https://api.basespace.illumina.com/v2/biosamples/104555093","UserOwnedBy":{"Id":"10154153","Href":"https://api.basespace.illumina.com/v2/users/10154153","Name":"Lightning","DateCreated":"2017-02-23T21:13:50.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"BioSampleName":"Myeloid-RNA-Brain-Rep1","DefaultProject":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"DateModified":"2018-08-03T02:42:13.0000000Z","DateCreated":"2018-07-18T18:49:07.0000000Z","Status":"New","LabStatus":"Sequencing"},{"Id":"104555094","Href":"https://api.basespace.illumina.com/v2/biosamples/104555094","UserOwnedBy":{"Id":"10154153","Href":"https://api.basespace.illumina.com/v2/users/10154153","Name":"Lightning","DateCreated":"2017-02-23T21:13:50.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"BioSampleName":"Myeloid-RNA-SeraSeq-Rep1","DefaultProject":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"DateModified":"2018-08-03T02:42:13.0000000Z","DateCreated":"2018-07-18T18:49:07.0000000Z","Status":"New","LabStatus":"Sequencing"},{"Id":"104555095","Href":"https://api.basespace.illumina.com/v2/biosamples/104555095","UserOwnedBy":{"Id":"10154153","Href":"https://api.basespace.illumina.com/v2/users/10154153","Name":"Lightning","DateCreated":"2017-02-23T21:13:50.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"BioSampleName":"Myeloid-RNA-SeraSeq-Rep9","DefaultProject":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"DateModified":"2018-08-03T02:42:14.0000000Z","DateCreated":"2018-07-18T18:49:07.0000000Z","Status":"New","LabStatus":"Sequencing"},{"Id":"104555096","Href":"https://api.basespace.illumina.com/v2/biosamples/104555096","UserOwnedBy":{"Id":"10154153","Href":"https://api.basespace.illumina.com/v2/users/10154153","Name":"Lightning","DateCreated":"2017-02-23T21:13:50.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"BioSampleName":"Myeloid-RNA-Brain-Rep2","DefaultProject":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"DateModified":"2018-08-03T02:42:14.0000000Z","DateCreated":"2018-07-18T18:49:07.0000000Z","Status":"New","LabStatus":"Sequencing"},{"Id":"104555097","Href":"https://api.basespace.illumina.com/v2/biosamples/104555097","UserOwnedBy":{"Id":"10154153","Href":"https://api.basespace.illumina.com/v2/users/10154153","Name":"Lightning","DateCreated":"2017-02-23T21:13:50.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"BioSampleName":"Myeloid-RNA-SeraSeq-Rep2","DefaultProject":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"DateModified":"2018-08-03T02:42:15.0000000Z","DateCreated":"2018-07-18T18:49:07.0000000Z","Status":"New","LabStatus":"Sequencing"},{"Id":"104555098","Href":"https://api.basespace.illumina.com/v2/biosamples/104555098","UserOwnedBy":{"Id":"10154153","Href":"https://api.basespace.illumina.com/v2/users/10154153","Name":"Lightning","DateCreated":"2017-02-23T21:13:50.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"BioSampleName":"Myeloid-RNA-SeraSeq-Rep10","DefaultProject":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"DateModified":"2018-08-03T02:42:14.0000000Z","DateCreated":"2018-07-18T18:49:08.0000000Z","Status":"New","LabStatus":"Sequencing"},{"Id":"104555099","Href":"https://api.basespace.illumina.com/v2/biosamples/104555099","UserOwnedBy":{"Id":"10154153","Href":"https://api.basespace.illumina.com/v2/users/10154153","Name":"Lightning","DateCreated":"2017-02-23T21:13:50.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"BioSampleName":"Myeloid-RNA-Brain-Rep3","DefaultProject":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"DateModified":"2018-08-03T02:42:15.0000000Z","DateCreated":"2018-07-18T18:49:08.0000000Z","Status":"New","LabStatus":"Sequencing"},{"Id":"104555100","Href":"https://api.basespace.illumina.com/v2/biosamples/104555100","UserOwnedBy":{"Id":"10154153","Href":"https://api.basespace.illumina.com/v2/users/10154153","Name":"Lightning","DateCreated":"2017-02-23T21:13:50.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"BioSampleName":"Myeloid-RNA-SeraSeq-Rep3","DefaultProject":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"DateModified":"2018-08-03T02:42:14.0000000Z","DateCreated":"2018-07-18T18:49:08.0000000Z","Status":"New","LabStatus":"Sequencing"},{"Id":"104555101","Href":"https://api.basespace.illumina.com/v2/biosamples/104555101","UserOwnedBy":{"Id":"10154153","Href":"https://api.basespace.illumina.com/v2/users/10154153","Name":"Lightning","DateCreated":"2017-02-23T21:13:50.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"BioSampleName":"Myeloid-RNA-SeraSeq-Rep11","DefaultProject":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"DateModified":"2018-08-03T02:42:14.0000000Z","DateCreated":"2018-07-18T18:49:08.0000000Z","Status":"New","LabStatus":"Sequencing"},{"Id":"104555102","Href":"https://api.basespace.illumina.com/v2/biosamples/104555102","UserOwnedBy":{"Id":"10154153","Href":"https://api.basespace.illumina.com/v2/users/10154153","Name":"Lightning","DateCreated":"2017-02-23T21:13:50.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"BioSampleName":"Myeloid-RNA-Brain-Rep4","DefaultProject":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"DateModified":"2018-08-03T02:42:14.0000000Z","DateCreated":"2018-07-18T18:49:08.0000000Z","Status":"New","LabStatus":"Sequencing"}],"Paging":{"DisplayedCount":10,"TotalCount":24,"Offset":0,"Limit":10,"SortDir":"Asc","SortBy":"Id"}}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Nov 2021 19:26:30 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Server:
+      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Unknown
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-ID:
+      - 2021.11.24.19.26.30.jL9tNATfDUOhJhDmqkP43Q
+    status:
+      code: 200
+      message: OK
+version: 1

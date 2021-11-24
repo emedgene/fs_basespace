@@ -185,7 +185,11 @@ class BASESPACEFS(FS):
         logger.debug(f'scandir path: {path}')
         namespaces = namespaces or ()
         _path = self.validatepath(path)
-        _key = self._path_to_key(_path)
+
+        try:
+            _key = self._path_to_key(_path)
+        except Exception:
+            raise errors.ResourceNotFound(path)
 
         info = (
             Info(self._info_from_object(entity, namespaces=namespaces))
@@ -222,7 +226,11 @@ class BASESPACEFS(FS):
 
         _mode.validate_bin()
         _path = self.validatepath(path)
-        _key = self._path_to_key(_path)
+
+        try:
+            _key = self._path_to_key(_path)
+        except Exception:
+            raise errors.ResourceNotFound(path)
 
         info = None
         try:
