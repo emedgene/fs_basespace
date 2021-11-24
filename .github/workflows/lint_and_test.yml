@@ -1,0 +1,57 @@
+name: Lint & Test
+
+on: [push]
+
+jobs:
+  flake8:
+    name: Lint with Flake8
+    runs-on: ubuntu-latest
+    env:
+      JFROG_PYPI_URL: https://${{ secrets.JFROG_USER }}:${{ secrets.JFROG_PASSWORD }}@emg.jfrog.io/artifactory/api/pypi/pypi/simple
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.6
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6.12
+    - name: Install dependencies
+      run: |
+        # Use pip==20.2 because some pkg are autdated and it crashes on higer versions 
+        python -m pip install pip==20.2
+        pip install flake8
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+  
+  testing:
+    name: Testing
+    runs-on: ubuntu-latest
+    env:
+      JFROG_PYPI_URL: https://${{ secrets.JFROG_USER }}:${{ secrets.JFROG_PASSWORD }}@emg.jfrog.io/artifactory/api/pypi/pypi/simple
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.6
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6.12
+    - name: Install dependencies
+      run: |
+        # Use pip==20.2 because some pkg are autdated and it crashes on higer versions 
+        python -m pip install pip==20.2
+        pip install pytest pytest-cov
+        if [ -f requirements.txt ]; then pip install -r requirements.txt --extra-index-url https://${{ secrets.JFROG_USER }}:${{ secrets.JFROG_PASSWORD }}@emg.jfrog.io/artifactory/api/pypi/pypi/simple; fi
+        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt --extra-index-url https://${{ secrets.JFROG_USER }}:${{ secrets.JFROG_PASSWORD }}@emg.jfrog.io/artifactory/api/pypi/pypi/simple; fi
+    - name: Test with pytest
+      working-directory: fs_basespace
+      env:
+        EMG_ENV: test
+      run: |
+        python -m pytest --cov=./ --cov-report=xml ../tests/
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./fs_basespace/coverage.xml
