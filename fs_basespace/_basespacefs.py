@@ -178,11 +178,11 @@ class BASESPACEFS(FS):
 
     def scandir(
             self,
-            path,  # type: Text
-            namespaces=None,  # type: Optional[Collection[Text]]
-            page=None,  # type: Optional[Tuple[int, int]]
+            path,  # type: Text     # noqa
+            namespaces=None,  # type: Optional[Collection[Text]]    # noqa
+            page=None,  # type: Optional[Tuple[int, int]]   # noqa
     ):
-        # type: (...) -> Iterator[Info]
+        # type: (...) -> Iterator[Info] # noqa
         logger.debug(f'scandir path: {path}')
         namespaces = namespaces or ()
         _path = self.validatepath(path)
