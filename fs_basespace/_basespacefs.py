@@ -23,7 +23,6 @@ from .basespace_context import CategoryContext
 from .basespace_context import get_last_direct_context
 from .basespace_context import get_context_by_key
 
-
 __all__ = ["BASESPACEFS"]
 _BASESPACE_DEFAULT_SERVER = "https://api.basespace.illumina.com/"
 
@@ -211,7 +210,7 @@ class BASESPACEFS(FS):
             _path = self.validatepath(path)
             _key = self._path_to_key(_path)
             entities_list = self._listdir_entities(_key)
-        except:
+        except Exception:
             raise errors.ResourceNotFound(path)
 
         return sorted([entry.get_id() for entry in entities_list])
