@@ -4,9 +4,7 @@ import os
 from setuptools import setup
 from setuptools import find_packages
 
-__version__ = "defined_below"
-with open(os.path.join(os.path.dirname(__file__), "fs_basespace/_version.py")) as f:
-    exec(f.read())
+VERSION = open('VERSION').read().strip()
 
 CLASSIFIERS = [
     "Development Status :: 4 - Beta",
@@ -41,6 +39,6 @@ setup(
     platforms=["any"],
     url="https://github.com/emedgene/fs_basespace",
     download_url="https://github.com/emedgene/fs_basespace/tarball/0.2.0",
-    version=__version__,
+    version=VERSION,
     entry_points={"fs.opener": ["basespace = fs_basespace.opener:BASESPACEFSOpener"]},
 )
