@@ -1,5 +1,8 @@
 import re
 from abc import abstractmethod
+
+from BaseSpacePy.api.BiosamplesApi import BiosamplesApi
+from BaseSpacePy.api.DatasetsApi import DatasetsApi
 from fs import errors
 
 
@@ -153,8 +156,72 @@ class SamplesContext(CategoryContextDirect):
         return api.getSampleById(sample_id)
 
 
+class SequencedFileGroupContext(CategoryContextDirect):
+    NAME = "sequenced files"
+    ENTITY_CONTEXT = FileContext
+
+    def list_raw(self, api):
+        return list(self.raw_obj)
+
+    @classmethod
+    def get_raw_entity_direct(cls, api, file_id):
+        return api.getFileById(file_id)
+
+
+class SequencedFileGroupsContext(EntityContext, categories=[SequencedFileGroupContext]):
+    pass
+
+
+class DatasetsContext(CategoryContextDirect):
+    ENTITY_ID_FORMAT = re.compile("^ds.[0-9a-z]+$")
+    NAME = "datasets"
+    ENTITY_CONTEXT = SequencedFileGroupsContext
+
+    def list_raw(self, api):
+        return list(self.raw_obj)
+
+    @classmethod
+    def get_raw_entity_direct(cls, api, dataset_id):
+        api_v2_server = 'https://api.basespace.illumina.com/v2'
+        datasets_api = DatasetsApi(access_token=api.apiClient.apiKey, api_server_and_version=api_v2_server)
+        return datasets_api.get_v2_datasets_id_files(excludevcfindexfolder=False,
+                                                     excludebamcoveragefolder=False,
+                                                     excludesystemfolder=False,
+                                                     excludeemptyfiles=False,
+                                                     filehrefcontentresolution=False,
+                                                     turbomode=False,
+                                                     id=dataset_id,
+                                                     sortdir="Asc", sortby="Name", limit=50)
+
+
+class BioSampleContext(EntityContext, categories=[DatasetsContext]):
+    pass
+
+
+class BioSampleGroupContext(CategoryContextDirect):
+    NAME = "biosamples"
+    ENTITY_CONTEXT = BioSampleContext
+
+    def list_raw(self, api):
+        api_v2_server = 'https://api.basespace.illumina.com/v2'
+        biosamples_api = BiosamplesApi(access_token=api.apiClient.apiKey, api_server_and_version=api_v2_server)
+        # offset = offset, limit = limit
+        return self.raw_obj.get_biosamples(biosamples_api)
+
+    @classmethod
+    def get_raw_entity_direct(cls, api, biosample_id):
+        api_v2_server = 'https://api.basespace.illumina.com/v2'
+        datasets_api = DatasetsApi(access_token=api.apiClient.apiKey, api_server_and_version=api_v2_server)
+        return datasets_api.get_v2_datasets(limit=50, offset=0, sortby="Name", sortdir="Asc",
+                                            include="properties",
+                                            datasettypes="~common.fastq",
+                                            propertyfilters="Input.Libraries,Input.Runs,BaseSpace.Metrics.FastQ",
+                                            inputbiosamples=biosample_id)
+
+
 class ProjectContext(EntityContext, categories=[AppResultsContext,
-                                                SamplesContext]):
+                                                SamplesContext,
+                                                BioSampleGroupContext]):
     pass
 
 
