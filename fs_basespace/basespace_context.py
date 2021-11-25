@@ -180,8 +180,6 @@ class DatasetsContext(CategoryContextDirect):
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, dataset_id):
-        api_v2_server = ''
-        datasets_api = DatasetsApi(access_token=api.apiClient.apiKey, api_server_and_version=api_v2_server)
         return api.datasets_api.get_v2_datasets_id_files(excludevcfindexfolder=False,
                                                      excludebamcoveragefolder=False,
                                                      excludesystemfolder=False,
@@ -206,9 +204,7 @@ class BioSampleGroupContext(CategoryContextDirect):
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, biosample_id):
-        datasets_api = DatasetsApi(access_token=api.apiClient.apiKey,
-                                   api_server_and_version=BASESPACE_V2_DEFAULT_SERVER)
-        return datasets_api.get_v2_datasets(limit=50, offset=0, sortby="Name", sortdir="Asc",
+        return api.datasets_api.get_v2_datasets(limit=50, offset=0, sortby="Name", sortdir="Asc",
                                             include="properties",
                                             datasettypes="~common.fastq",
                                             propertyfilters="Input.Libraries,Input.Runs,BaseSpace.Metrics.FastQ",
