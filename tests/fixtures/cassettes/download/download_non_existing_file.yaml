@@ -1,0 +1,49 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Authorization:
+      - Bearer 224880f27f224388b11f3b193ee377e7
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Host:
+      - api.basespace.illumina.com
+      User-Agent:
+      - Python-urllib/3.6
+    method: GET
+    uri: https://api.basespace.illumina.com/v1pre3/files/11710711111
+  response:
+    body:
+      string: '{"ResponseStatus":{"ErrorCode":"BASESPACE.COMMON.INSUFFICIENT_RESOURCE_PERMISSIONS","Message":"Sorry
+        but this requires READ access to this Run resource."},"Notifications":[{"Type":"error","Item":"Sorry
+        but this requires READ access to this Run resource."}]}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - close
+      Content-Length:
+      - '257'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Tue, 23 Nov 2021 13:02:29 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Server:
+      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Unknown
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-ID:
+      - 2021.11.23.13.02.29.JrOe4HTWBEaDoutYLBuFhA
+    status:
+      code: 403
+      message: Forbidden
+version: 1

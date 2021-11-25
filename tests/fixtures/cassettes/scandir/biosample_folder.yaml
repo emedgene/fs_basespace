@@ -1,0 +1,76 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer 224880f27f224388b11f3b193ee377e7
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Host:
+      - api.basespace.illumina.com
+      User-Agent:
+      - Python-urllib/3.6
+    method: GET
+    uri: https://api.basespace.illumina.com/v2/datasets?include=properties&propertyfilters=Input.Libraries%2CInput.Runs%2CBaseSpace.Metrics.FastQ&datasettypes=%7Ecommon.fastq&inputbiosamples=104555093&sortby=Name&offset=0&limit=50&sortdir=Asc
+  response:
+    body:
+      string: '{"Items":[{"Id":"ds.ac82a306af3847f2b53ecb695bc22400","Href":"https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400","HrefFiles":"https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/files","Name":"Myeloid-RNA-Brain-Rep1_L001","DateCreated":"2018-07-19T23:50:10.0000000Z","DateModified":"2018-07-24T19:45:08.0000000Z","AppSession":{"Id":"110644538","Name":"FASTQ
+        Generation 2018-07-19 23:26:05Z","Href":"https://api.basespace.illumina.com/v2/appsessions/110644538","Application":{"Id":"2313311","Href":"v1pre3/applications/2313311","Name":"FASTQ
+        Generation","CompanyName":"Illumina","VersionNumber":"1.0.0","ShortDescription":"FASTQ
+        Generation using the BCL2FASTQ 2.20 algorithm","DateCreated":"2015-11-29T23:43:42.0000000Z","PublishStatus":"Beta","IsBillingActivated":false,"Category":"Native","Classifications":["Resequencing","SmallRNA","TargetedSequencing","DeNovoAssembly","RNASeq","GeneFusionDetection","ChiPSeq","MethylSeq","Metagenomics","TumorNormal","Quality","Proteomics","SyntheticLongReads","Hipaa"],"AppFamilySlug":"illumina.fastq-generation","AppVersionSlug":"illumina.fastq-generation.1.0.0","Features":["IsAppRegisteredToPlatform","AbortParentIfAnyChildAborts"],"LockStatus":"Unlocked"},"UserCreatedBy":{"Id":"10154153","Href":"https://api.basespace.illumina.com/v2/users/10154153","Name":"Lightning","DateCreated":"2017-02-23T21:13:50.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"ExecutionStatus":"Complete","QcStatus":"Undefined","StatusSummary":"Application
+        completed successfully","Purpose":"AppTrigger","DateCreated":"2018-07-19T23:26:05.0000000Z","DateModified":"2018-07-19T23:50:09.0000000Z","DateCompleted":"2018-07-19T23:50:05.0000000Z","DateStarted":"2018-07-19T23:27:49.0000000Z","TotalSize":3123866539,"DeliveryStatus":"None","ContainsComments":false,"HrefComments":"https://api.basespace.illumina.com/v2/appsessions/110644538/comments"},"Project":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"https://api.basespace.illumina.com/v2/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"2016-10-25T17:38:36.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"Href":"https://api.basespace.illumina.com/v2/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"TotalSize":99461045,"IsArchived":false,"UserOwnedBy":{"Id":"9319322","Href":"https://api.basespace.illumina.com/v2/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"2016-10-25T17:38:36.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"DatasetType":{"Id":"illumina.fastq.v1.8","Href":"https://api.basespace.illumina.com/v2/datasettypes/illumina.fastq.v1.8","Name":"Illumina
+        Fastq","ConformsToIds":["common.files","common.fastq"]},"Attributes":{"common_fastq":{"MaxLengthRead1":151,"MaxLengthRead2":151,"IsPairedEnd":true,"TotalClustersPF":844152,"TotalClustersRaw":844152,"TotalReadsPF":1688304,"TotalReadsRaw":1688304,"MaxLengthIndexRead1":8,"MaxLengthIndexRead2":8}},"Properties":{"Items":[{"Type":"map","Href":"https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/properties/BaseSpace.Metrics.FastQ","Name":"BaseSpace.Metrics.FastQ","Description":"","ContentMap":[{"Key":"LaneNumber","Values":["1"]}]},{"Type":"library[]","Href":"https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/properties/Input.Libraries","Name":"Input.Libraries","Description":"","SampleLibraryItems":[{"Id":"58863450","Href":"https://api.basespace.illumina.com/v2/libraries/58863450","Name":"Myeloid-RNA-Brain-Rep1","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2018-07-31T15:59:50.0000000Z","Status":"Active","BioSample":{"Id":"104555093","Href":"https://api.basespace.illumina.com/v2/biosamples/104555093","UserOwnedBy":{"Id":"10154153","Href":"https://api.basespace.illumina.com/v2/users/10154153","Name":"Lightning","DateCreated":"2017-02-23T21:13:50.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"BioSampleName":"Myeloid-RNA-Brain-Rep1","DefaultProject":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"DateModified":"2018-08-03T02:42:13.0000000Z","DateCreated":"2018-07-18T18:49:07.0000000Z","Status":"New","LabStatus":"Sequencing"},"LibraryPrep":{"Id":"1014015","Href":"v1pre3/libraryprepkits/1014015","Name":"Unknown","ValidIndexingStrategies":"None,SingleIndex,DualIndex","ValidReadTypes":"SingleRead,PairedEnd","NumIndexCycles":0,"DateModified":"2016-01-22T01:41:23.0000000Z","State":"Active","DefaultRead1Cycles":0,"DefaultRead2Cycles":0},"Project":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"https://api.basespace.illumina.com/v2/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"2016-10-25T17:38:36.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"Href":"https://api.basespace.illumina.com/v2/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"Biomolecule":"Undefined","UserOwnedBy":{"Id":"10154153","Href":"https://api.basespace.illumina.com/v2/users/10154153","Name":"Lightning","DateCreated":"2017-02-23T21:13:50.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","HrefProperties":"https://api.basespace.illumina.com/v2/users/current/properties","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"}}],"HrefItems":"https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/properties/Input.Libraries/items","ItemsDisplayedCount":1,"ItemsTotalCount":1},{"Type":"run[]","Href":"https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/properties/Input.Runs","Name":"Input.Runs","Description":"","RunItems":[{"Id":"105215111","Href":"v1pre3/runs/105215111","Name":"180718_M04074_0242_000000000-BRGPG","Number":242,"ExperimentName":"Myeloid_RNA_Public_Data_MiSeq","Status":"Complete","ReagentBarcode":"MS6728391-600V3","FlowcellBarcode":"000000000-BRGPG","DateCreated":"2018-07-18T18:44:01.0000000Z","DateModified":"2018-07-25T14:48:33.0000000Z","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"UserUploadedBy":{"Id":"6789802","Href":"v1pre3/users/6789802","Name":"Nathalie
+        Mouttham","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/2cba19f73ea863fca41bc66bfb6a6ec9.jpg?s=20&d=mm&r=PG"},"TotalSize":12136793873,"PlatformName":"MiSeq","Workflow":"Generate
+        FASTQ","Instrument":{"InstrumentId":4155151,"Name":"M04074","SerialNumber":"M04074"},"InstrumentName":"M04074","InstrumentType":"MiSeq","NumCyclesRead1":0,"NumCyclesRead2":0,"NumCyclesIndex1":0,"NumCyclesIndex2":0,"HasCollaborators":true,"IsArchived":false,"SequencingStats":{"Chemistry":"Amplicon","ErrorRate":0,"ErrorRateR1":0,"ErrorRateR2":0,"Href":"v1pre3/runs/105215111/sequencingstats","IntensityCycle1":490.789,"IsIndexed":true,"MaxCycleCalled":318,"MaxCycleExtracted":318,"MaxCycleScored":318,"MinCycleCalled":318,"MinCycleExtracted":318,"MinCycleScored":318,"NonIndexedErrorRate":0,"NonIndexedIntensityCycle1":252.803,"NonIndexedPercentAligned":0,"NonIndexedPercentGtQ30":90.6147,"NonIndexedProjectedTotalYield":8.42537,"NonIndexedYieldTotal":8.42537,"NumCyclesIndex1":8,"NumCyclesIndex2":8,"NumCyclesRead1":151,"NumCyclesRead2":151,"NumLanes":1,"NumReads":4,"NumSurfaces":2,"NumSwathsPerLane":1,"NumTilesPerSwath":19,"PercentAligned":0,"PercentGtQ30":90.7961,"PercentGtQ30R1":93.207,"PercentGtQ30R2":88.0224,"PercentGtQ30Last10Cycles":0,"PercentPf":0.903788,"PercentResynthesis":97.7053,"PhasingR1":0.223071,"PhasingR2":0.218713,"PrePhasingR1":0.0770354,"PrePhasingR2":0.0936069,"ProjectedTotalYield":8.81856,"ReadsPfTotal":112338320,"ReadsTotal":124297264,"YieldTotal":8.81856,"Clusters":31074316,"ClustersPf":28084580,"ClusterDensity":0,"Occupancy":0},"AnalysisSettings":{"ReverseComplementI5Index":false},"LaneAndQcStatus":"QcPassed","LimsStatus":"NoLims","DateInstrumentStarted":"2018-07-18T18:44:01.0000000Z","DateInstrumentCompleted":"2018-07-19T23:26:05.0000000Z"}],"HrefItems":"https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/properties/Input.Runs/items","ItemsDisplayedCount":1,"ItemsTotalCount":1}],"DisplayedCount":3,"TotalCount":3,"Href":"https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/properties"},"QcStatus":"Undefined","QcStatusSummary":"No
+        thresholds were evaluated","UploadStatus":"Completed","UploadStatusSummary":"","ValidationStatus":"Passed","HrefComments":"https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/comments","ContainsComments":false}],"Paging":{"DisplayedCount":1,"TotalCount":1,"Offset":0,"Limit":50,"SortDir":"Asc","SortBy":"Name"}}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 24 Nov 2021 11:59:15 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Server:
+      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Unknown
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-BaseSpace-Source:
+      - master/readonly
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-ID:
+      - 2021.11.24.11.59.14.bDwdzAD4Xk-Hxa6ruTWnyA
+    status:
+      code: 200
+      message: OK
+version: 1

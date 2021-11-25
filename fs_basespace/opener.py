@@ -20,7 +20,7 @@ class BASESPACEFSOpener(Opener):
         client_secret, _, access_token = parse_result.password.partition(":")
 
         try:
-            basespacefs = BASESPACEFS(
+            basespace_fs = BASESPACEFS(
                 dir_path=parse_result.path or "/",
                 client_id=parse_result.username,
                 client_secret=client_secret,
@@ -30,4 +30,4 @@ class BASESPACEFSOpener(Opener):
         except ValueError as v:
             raise OpenerError(f'Could not open file system with given path. Reason: {v}')
 
-        return basespacefs
+        return basespace_fs

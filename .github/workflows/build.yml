@@ -1,0 +1,36 @@
+name: build-version-workflow
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+jobs:
+  build-and-push-pkg:
+    name: Build and push pkg
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2.3.3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.6.12
+
+      - name: Set version from tag
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Clean workspace
+        id: clean-workspace
+        run: make clean
+      - name: Write src VERSION file
+        id: write-src-version
+        run: echo ${{ steps.vars.outputs.tag }} > VERSION
+      - name: Build src pip package
+        id: build-src-pip
+        run: make build-pip-src-package
+      - name: Publish pip src package
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: ${{ secrets.JFROG_USER }}
+          password: ${{ secrets.JFROG_PASSWORD }}
+          repository_url: https://emg.jfrog.io/artifactory/api/pypi/pypi
