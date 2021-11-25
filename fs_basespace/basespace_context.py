@@ -1,11 +1,7 @@
 import re
 from abc import abstractmethod
-
-from BaseSpacePy.api.BiosamplesApi import BiosamplesApi
-from BaseSpacePy.api.DatasetsApi import DatasetsApi
 from fs import errors
-
-BASESPACE_V2_DEFAULT_SERVER = 'https://api.basespace.illumina.com/v2'
+from fs_basespace.api_factory import BasespaceApiFactory
 
 
 class classproperty:
@@ -29,10 +25,10 @@ class EntityContext(metaclass=EntityContextMeta):
     def __init__(self, raw_obj):
         self.raw_obj = raw_obj
 
-    def list(self, api):
+    def list(self, api: BasespaceApiFactory):
         return [context(self.raw_obj) for context in self.CATEGORY_MAP.values()]
 
-    def get(self, api, category):
+    def get(self, api: BasespaceApiFactory, category):
         return self.CATEGORY_MAP[category](self.raw_obj)
 
     @classmethod
@@ -55,17 +51,17 @@ class CategoryContext:
         self.raw_obj = raw_obj
 
     @abstractmethod
-    def list_raw(self, api):
+    def list_raw(self, api: BasespaceApiFactory):
         raise NotImplementedError("Should return list of entity contexts")
 
-    def list(self, api):
+    def list(self, api: BasespaceApiFactory):
         return [self.ENTITY_CONTEXT(entity) for entity in self.list_raw(api)]
 
     @abstractmethod
-    def get_raw(self, api, entity_id):
+    def get_raw(self, api: BasespaceApiFactory, entity_id):
         raise NotImplementedError("Should return ENTITY_CONTEXT instance by id")
 
-    def get(self, api, entity_id):
+    def get(self, api: BasespaceApiFactory, entity_id):
         return self.ENTITY_CONTEXT(self.get_raw(api, entity_id))
 
     @classmethod
@@ -87,28 +83,28 @@ class CategoryContext:
 
 
 class CategoryContextDirect(CategoryContext):
-    def get_raw(self, api, entity_id):
+    def get_raw(self, api: BasespaceApiFactory, entity_id):
         return self.get_raw_entity_direct(api, entity_id)
 
     @classmethod
-    def get_entity_direct(cls, api, entity_id):
+    def get_entity_direct(cls, api: BasespaceApiFactory, entity_id):
         return cls.ENTITY_CONTEXT(cls.get_raw_entity_direct(api, entity_id))
 
     @classmethod
     @abstractmethod
-    def get_raw_entity_direct(cls, api, entity_id):
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, entity_id):
         raise NotImplementedError("Should return entity context by id")
 
 
 class FileContext(EntityContext):
-    def list_raw(self, api):
+    def list_raw(self, api: BasespaceApiFactory):
         raise TypeError("list_raw() is not applicable to a single file")
 
     @classmethod
     def get_lazy(cls, category):
         return AfterFileContext
 
-    def get(self, api, category):
+    def get(self, api: BasespaceApiFactory, category):
         return self
 
 
@@ -122,12 +118,12 @@ class FileGroupContext(CategoryContextDirect):
     NAME = "files"
     ENTITY_CONTEXT = FileContext
 
-    def list_raw(self, api):
-        return self.raw_obj.getFiles(api)
+    def list_raw(self, api: BasespaceApiFactory):
+        return self.raw_obj.getFiles(api.base_api)
 
     @classmethod
-    def get_raw_entity_direct(cls, api, file_id):
-        return api.getFileById(file_id)
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id):
+        return api.base_api.getFileById(file_id)
 
 
 class FileGroupsContext(EntityContext, categories=[FileGroupContext]):
@@ -138,36 +134,36 @@ class AppResultsContext(CategoryContextDirect):
     NAME = "appresults"
     ENTITY_CONTEXT = FileGroupsContext
 
-    def list_raw(self, api):
-        return self.raw_obj.getAppResults(api)
+    def list_raw(self, api: BasespaceApiFactory):
+        return self.raw_obj.getAppResults(api.base_api)
 
     @classmethod
-    def get_raw_entity_direct(cls, api, result_id):
-        return api.getAppResultById(result_id)
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, result_id):
+        return api.base_api.getAppResultById(result_id)
 
 
 class SamplesContext(CategoryContextDirect):
     NAME = "samples"
     ENTITY_CONTEXT = FileGroupsContext
 
-    def list_raw(self, api):
-        return self.raw_obj.getSamples(api)
+    def list_raw(self, api: BasespaceApiFactory):
+        return self.raw_obj.getSamples(api.base_api)
 
     @classmethod
-    def get_raw_entity_direct(cls, api, sample_id):
-        return api.getSampleById(sample_id)
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, sample_id):
+        return api.base_api.getSampleById(sample_id)
 
 
 class SequencedFileGroupContext(CategoryContextDirect):
     NAME = "sequenced files"
     ENTITY_CONTEXT = FileContext
 
-    def list_raw(self, api):
+    def list_raw(self, api: BasespaceApiFactory):
         return sorted(list(self.raw_obj))
 
     @classmethod
-    def get_raw_entity_direct(cls, api, file_id):
-        return api.getFileById(file_id)
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id):
+        return api.base_api.getFileById(file_id)
 
 
 class SequencedFileGroupsContext(EntityContext, categories=[SequencedFileGroupContext]):
@@ -179,14 +175,12 @@ class DatasetsContext(CategoryContextDirect):
     NAME = "datasets"
     ENTITY_CONTEXT = SequencedFileGroupsContext
 
-    def list_raw(self, api):
+    def list_raw(self, api: BasespaceApiFactory):
         return sorted(list(self.raw_obj))
 
     @classmethod
-    def get_raw_entity_direct(cls, api, dataset_id):
-        api_v2_server = ''
-        datasets_api = DatasetsApi(access_token=api.apiClient.apiKey, api_server_and_version=api_v2_server)
-        return datasets_api.get_v2_datasets_id_files(excludevcfindexfolder=False,
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, dataset_id):
+        return api.datasets_api.get_v2_datasets_id_files(excludevcfindexfolder=False,
                                                      excludebamcoveragefolder=False,
                                                      excludesystemfolder=False,
                                                      excludeemptyfiles=False,
@@ -204,17 +198,13 @@ class BioSampleGroupContext(CategoryContextDirect):
     NAME = "biosamples"
     ENTITY_CONTEXT = BioSampleContext
 
-    def list_raw(self, api):
-        biosamples_api = BiosamplesApi(access_token=api.apiClient.apiKey,
-                                       api_server_and_version=BASESPACE_V2_DEFAULT_SERVER)
+    def list_raw(self, api: BasespaceApiFactory):
         # offset = offset, limit = limit
-        return self.raw_obj.get_biosamples(biosamples_api)
+        return self.raw_obj.get_biosamples(api.biosamples_api)
 
     @classmethod
-    def get_raw_entity_direct(cls, api, biosample_id):
-        datasets_api = DatasetsApi(access_token=api.apiClient.apiKey,
-                                   api_server_and_version=BASESPACE_V2_DEFAULT_SERVER)
-        return datasets_api.get_v2_datasets(limit=50, offset=0, sortby="Name", sortdir="Asc",
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, biosample_id):
+        return api.datasets_api.get_v2_datasets(limit=50, offset=0, sortby="Name", sortdir="Asc",
                                             include="properties",
                                             datasettypes="~common.fastq",
                                             propertyfilters="Input.Libraries,Input.Runs,BaseSpace.Metrics.FastQ",
@@ -232,11 +222,11 @@ class ProjectGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = ProjectContext
 
     def list_raw(self, api):
-        return api.getProjectByUser()
+        return api.base_api.getProjectByUser()
 
     @classmethod
-    def get_raw_entity_direct(cls, api, project_id):
-        return api.getProjectById(project_id)
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, project_id):
+        return api.base_api.getProjectById(project_id)
 
 
 class UserContext(EntityContext, categories=[ProjectGroupContext]):
@@ -244,7 +234,7 @@ class UserContext(EntityContext, categories=[ProjectGroupContext]):
 
 
 def get_context_by_key_abstraction(self, key):
-    current_context = UserContext(self.basespace.getUserById('current'))
+    current_context = UserContext(self.basespace.base_api.getUserById('current'))
     if key == "":
         return current_context
     for tag in key.split("/"):
@@ -273,7 +263,7 @@ def get_last_direct_context(key):
     return latest_direct
 
 
-def get_context_by_key(api, key):
+def get_context_by_key(api: BasespaceApiFactory, key):
     rest_steps = key.split("/") if key else []
     latest_context = ROOT_CONTEXT(None)
     latest_direct = get_last_direct_context(key)

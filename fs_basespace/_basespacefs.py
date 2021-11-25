@@ -16,8 +16,8 @@ from fs.path import normpath
 from fs.path import relpath
 from smart_open.http import SeekableBufferedInputBase
 
-from BaseSpacePy.api.BaseSpaceAPI import BaseSpaceAPI
 
+from .api_factory import BasespaceApiFactory
 from .basespace_context import FileContext
 from .basespace_context import CategoryContext
 from .basespace_context import get_last_direct_context
@@ -81,13 +81,10 @@ class BASESPACEFS(FS):
         logger.debug('BaseSpaceFs is created')
 
     @property
-    def basespace(self):
+    def basespace(self) -> BasespaceApiFactory:
         if not hasattr(self._tlocal, "basespace"):
-            self._tlocal.basespace = BaseSpaceAPI(self.client_id,
-                                                  self.client_secret,
-                                                  self.basespace_server,
-                                                  AccessToken=self.access_token)
-        return self._tlocal.basespace
+            self._tlocal.basesapce_api_factory = BasespaceApiFactory(self.client_id, self.client_secret, self.basespace_server, self.access_token)
+        return self._tlocal.basesapce_api_factory
 
     def __repr__(self):
         return _make_repr(
