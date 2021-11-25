@@ -239,7 +239,7 @@ class BASESPACEFS(FS):
                 raise errors.FileExpected(path)
 
         current_context = self._get_context_by_key(_key)
-        s3_url = current_context.raw_obj.getFileUrl(self.basespace)
+        s3_url = current_context.raw_obj.getFileUrl(self.basespace.base_api)
         return SeekableBufferedInputBase(s3_url, mode)
 
     def download(self, path, file, chunk_size=None, **options):
@@ -252,6 +252,30 @@ class BASESPACEFS(FS):
         except Exception as e:
             logger.exception(f'download failed: {path} err: {str(e)}')
             file = None
+
+    def geturl(self, path, purpose="download"):
+        logger.debug(f'geturl path: {path}')
+        if purpose != "download":
+            raise errors.NoURL(path, purpose)
+        _path = self.validatepath(path)
+
+        info = None
+        try:
+            _key = self._path_to_key(_path)
+            info = self.getinfo(_path)
+        except Exception:
+            raise errors.ResourceNotFound(path)
+        else:
+            if info.is_dir:
+                raise errors.FileExpected(path)
+
+        try:
+            current_context = self._get_context_by_key(_key)
+            s3_url = current_context.raw_obj.getFileUrl(self.basespace.base_api)
+        except Exception as e:
+            raise errors.NoURL(path, purpose, msg=str(e))
+        return s3_url
+
 
     def makedir(self, path, permissions=None, recreate=False):
         raise errors.ResourceReadOnly

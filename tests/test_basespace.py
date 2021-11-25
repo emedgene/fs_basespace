@@ -12,6 +12,7 @@ import vcr
 from fs import errors
 from fs.errors import ResourceNotFound
 from fs.opener.errors import OpenerError
+from vcr.record_mode import RecordMode
 
 ROOT_PATH = '/'
 
@@ -681,114 +682,62 @@ class TestBaseSpace(unittest.TestCase):
     #         if not has_more:
     #             self.assertEqual(len(resources), expected_pagination_reminder)
 
-# # # geturl
-# # @vcr.use_cassette('geturl/geturl.yaml', cassette_library_dir=cassette_lib_dir)
-# # def test_geturl_default(self):
-# #     # init
-# #     blob_fs = self._init_default_fs()
-# #
-# #     # act
-# #     blob = BLOB_FILE_1
-# #     blob_url = blob_fs.geturl(blob)
-# #
-# #     # validate url structure
-# #     self.assertIsNotNone(blob_url)
-# #     self.assertTrue(f'{CONTAINER_NAME}{BLOB_FILE_1}' in blob_url)
-# #     self.assertTrue(blob_url.startswith(f'{ACCOUNT_URL}'))
-# #
-# #     # validate auth params
-# #     self.assertTrue('se=' in blob_url)  # signedExpiry
-# #     self.assertTrue('sp=' in blob_url)  # signedPermissions
-# #     self.assertTrue('sv=' in blob_url)  # signedVersion
-# #     self.assertTrue('sr=' in blob_url)  # signedResource
-# #     self.assertTrue('skoid=' in blob_url)  # signedObjectId
-# #     self.assertTrue('sktid=' in blob_url)  # signedTenantId
-# #     self.assertTrue('skt=' in blob_url)  # signedKeyStartTime
-# #     self.assertTrue('ske=' in blob_url)  # signedKeyExpiryTime
-# #     self.assertTrue('sks=' in blob_url)  # signedKeyService
-# #     self.assertTrue('skv=' in blob_url)  # signedkeyversion
-# #     self.assertTrue('sig=' in blob_url)  # signature
-# #
-# # @vcr.use_cassette('geturl/with_base_path.yaml', cassette_library_dir=cassette_lib_dir)
-# # def test_geturl_with_base_path(self):
-# #     # prepare
-# #     base_blob_folder = BLOB_VISUALIZATION_FOLDER
-# #     blob = f'{BLOB_FOLDER_5}{BLOB_FOLDER_4}/19-384.emg-norm_v1.0.5.vcf.gz'
-# #
-# #     # init
-# #     blob_fs = fs.open_fs(self._get_conn_str(blob=base_blob_folder))
-# #     self.assertIsNotNone(blob_fs)
-# #
-# #     # act
-# #     blob_url = blob_fs.geturl(blob)
-# #
-# #     # validate url structure
-# #     self.assertIsNotNone(blob_url)
-# #     self.assertTrue(f'{CONTAINER_NAME}{BLOB_VISUALIZATION_FOLDER}{blob}' in blob_url)
-# #     self.assertTrue(blob_url.startswith(f'{ACCOUNT_URL}'))
-# #
-# #     # validate auth params
-# #     self.assertTrue('se=' in blob_url)  # signedExpiry
-# #     self.assertTrue('sp=' in blob_url)  # signedPermissions
-# #     self.assertTrue('sv=' in blob_url)  # signedVersion
-# #     self.assertTrue('sr=' in blob_url)  # signedResource
-# #     self.assertTrue('skoid=' in blob_url)  # signedObjectId
-# #     self.assertTrue('sktid=' in blob_url)  # signedTenantId
-# #     self.assertTrue('skt=' in blob_url)  # signedKeyStartTime
-# #     self.assertTrue('ske=' in blob_url)  # signedKeyExpiryTime
-# #     self.assertTrue('sks=' in blob_url)  # signedKeyService
-# #     self.assertTrue('skv=' in blob_url)  # signedkeyversion
-# #     self.assertTrue('sig=' in blob_url)  # signature
-# #
-# # @vcr.use_cassette('geturl/test_geturl_with_base_path_and_empty_blob_path.yaml',
-# #                   cassette_library_dir=cassette_lib_dir)
-# # def test_geturl_with_base_path_and_empty_blob_path(self):
-# #     # prepare
-# #     base_blob_folder = BLOB_VISUALIZATION_FOLDER
-# #     blob = ''
-# #
-# #     # init
-# #     blob_fs = fs.open_fs(self._get_conn_str(blob=base_blob_folder))
-# #     self.assertIsNotNone(blob_fs)
-# #
-# #     # act & assert
-# #     with self.assertRaises(errors.NoURL):
-# #         blob_fs.geturl(blob)
-# #
-# # @vcr.use_cassette('geturl/empty_blob.yaml', cassette_library_dir=cassette_lib_dir)
-# # def test_geturl_empty_blob(self):
-# #     # init
-# #     blob_fs = self._init_default_fs()
-# #
-# #     # act & assert
-# #     blob = ''
-# #     with self.assertRaises(errors.NoURL):
-# #         blob_fs.geturl(blob)
-# #
-# #     blob = None
-# #     with self.assertRaises(errors.NoURL):
-# #         blob_fs.geturl(blob)
-# #
-# # @vcr.use_cassette('geturl/geturl_non_existing_blob.yaml', cassette_library_dir=cassette_lib_dir)
-# # def test_geturl_non_existing_blob(self):
-# #     # init
-# #     blob_fs = self._init_default_fs()
-# #
-# #     # act & assert
-# #     no_blob = '/non-existing-blob/no-blob/no-blob-at-all'
-# #     with self.assertRaises(errors.NoURL):
-# #         blob_fs.geturl(no_blob)
-# #
-# # @vcr.use_cassette('geturl/geturl_geturl_folder_only_blob.yaml', cassette_library_dir=cassette_lib_dir)
-# # def test_geturl_folder_only_blob(self):
-# #     # init
-# #     blob_fs = self._init_default_fs()
-# #
-# #     # run & assert
-# #     folder_blob = '/folder-123'
-# #     with self.assertRaises(errors.NoURL):
-# #         blob_fs.geturl(folder_blob)
-# #
+    # geturl
+    @vcr.use_cassette('geturl/of_file.yaml', cassette_library_dir=cassette_lib_dir)
+    def test_geturl_of_file(self):
+        # prepare
+        file_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets/' \
+                    f'{EMEDGENE_DATASET_ID}/sequenced files/{FILE_1_ID}'
+
+        # init
+        basespace_fs = fs.open_fs(self._get_conn_str())
+        self.assertIsNotNone(basespace_fs)
+
+        # act
+        file_url = basespace_fs.geturl(file_name)
+
+        # validate
+        self.assertIsNotNone(file_url)
+        self.assertTrue(FILE_1_NAME in file_url)
+        self.assertTrue("AWSAccessKeyId" in file_url)
+        self.assertTrue("Signature" in file_url)
+        self.assertTrue("Expires" in file_url)
+
+    def test_geturl_empty_file_name(self):
+        # prepare
+        file_name = ''
+
+        # init
+        basespace_fs = fs.open_fs(self._get_conn_str())
+        self.assertIsNotNone(basespace_fs)
+
+        # act
+        with self.assertRaises(ResourceNotFound):
+            basespace_fs.geturl(file_name)
+
+    @vcr.use_cassette('geturl/non_existing_file.yaml', cassette_library_dir=cassette_lib_dir)
+    def test_geturl_non_existing_file(self):
+        # prepare
+        no_such_file_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/' \
+                            f'datasets/{EMEDGENE_DATASET_ID}/sequenced files/1111111'
+
+        # init
+        basespace_fs = fs.open_fs(self._get_conn_str())
+        self.assertIsNotNone(basespace_fs)
+
+        # act
+        with self.assertRaises(ResourceNotFound):
+            basespace_fs.geturl(no_such_file_name)
+
+    # @vcr.use_cassette('geturl/folder_name.yaml', cassette_library_dir=cassette_lib_dir, record_mode=RecordMode.NEW_EPISODES)
+    # def test_geturl_folder_name(self):
+    #     # init
+    #     folder_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets/'
+    #     basespace_fs = self._init_default_fs()
+    #
+    #     # run & assert
+    #     with self.assertRaises(errors.FileExpected):
+    #         basespace_fs.geturl(folder_name)
 
 
 if __name__ == '__main__':
