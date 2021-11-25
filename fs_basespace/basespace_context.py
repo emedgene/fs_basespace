@@ -234,7 +234,7 @@ class UserContext(EntityContext, categories=[ProjectGroupContext]):
 
 
 def get_context_by_key_abstraction(self, key):
-    current_context = UserContext(self.basespace.basespace.getUserById('current'))
+    current_context = UserContext(self.basespace.base_api.getUserById('current'))
     if key == "":
         return current_context
     for tag in key.split("/"):
