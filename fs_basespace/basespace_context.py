@@ -119,7 +119,7 @@ class FileGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileContext
 
     def list_raw(self, api: BasespaceApiFactory):
-        return self.raw_obj.getFiles(api)
+        return self.raw_obj.getFiles(api.base_api)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id):
@@ -135,7 +135,7 @@ class AppResultsContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileGroupsContext
 
     def list_raw(self, api: BasespaceApiFactory):
-        return self.raw_obj.getAppResults(api)
+        return self.raw_obj.getAppResults(api.base_api)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, result_id):
@@ -147,7 +147,7 @@ class SamplesContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileGroupsContext
 
     def list_raw(self, api: BasespaceApiFactory):
-        return self.raw_obj.getSamples(api)
+        return self.raw_obj.getSamples(api.base_api)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, sample_id):
