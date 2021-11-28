@@ -1,4 +1,4 @@
 .
 fs~=2.4
-smart-open~=5.1
+smart-open~=1.9
 vcrpy~=4.1
