@@ -30,7 +30,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 23 Nov 2021 20:27:11 GMT
+      - Sun, 28 Nov 2021 09:59:05 GMT
       Expires:
       - '0'
       Pragma:
@@ -40,12 +40,10 @@ interactions:
       - Unknown
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
-      Transfer-Encoding:
-      - chunked
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2021.11.23.20.27.11.cZqtKnylRkWVdgPxJGPKBA
+      - 2021.11.28.09.59.05.09hAqLjfEUa5qhXuGfgMjQ
     status:
       code: 200
       message: OK
@@ -80,7 +78,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 23 Nov 2021 20:27:12 GMT
+      - Sun, 28 Nov 2021 09:59:05 GMT
       Expires:
       - '0'
       Pragma:
@@ -90,12 +88,10 @@ interactions:
       - Unknown
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
-      Transfer-Encoding:
-      - chunked
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2021.11.23.20.27.12.1_x-sWHKqU-d6ANfP3JZ1g
+      - 2021.11.28.09.59.05.pc1GCTmwpkib1D9kqvDBuA
     status:
       code: 200
       message: OK
@@ -177,7 +173,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 23 Nov 2021 20:27:12 GMT
+      - Sun, 28 Nov 2021 09:59:06 GMT
       Expires:
       - '0'
       Pragma:
@@ -192,8 +188,48 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2021.11.23.20.27.12.BlgTzupVc0eB3kO1Wb01ZA
+      - 2021.11.28.09.59.06.ssWKXpt_gkShxIaEandeZg
     status:
       code: 200
       message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer YYYYY0f27f224388b11f3b193eeXXXXX
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Host:
+      - api.basespace.illumina.com
+      User-Agent:
+      - Python-urllib/3.6
+    method: GET
+    uri: https://api.basespace.illumina.com/v2/v2/biosamples?projectid=86591915
+  response:
+    body:
+      string: '{"ResponseStatus":{"Message":"This isn''t a recognized path. Please
+        refer to the API documentation at https://developer.basespace.illumina.com/docs
+        for the available resources."},"Notifications":[]}'
+    headers:
+      Cache-Control:
+      - private
+      Connection:
+      - close
+      Content-Length:
+      - '197'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 28 Nov 2021 09:59:11 GMT
+      Server:
+      - Mono.WebServer.XSP/4.7.1.0 Linux
+      X-Request-ID:
+      - 2021.11.28.09.59.11.rsXLzDV-5UOvbRjZgyFgwA
+    status:
+      code: 404
+      message: Not Found
 version: 1
