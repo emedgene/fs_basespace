@@ -159,7 +159,7 @@ class SequencedFileGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileContext
 
     def list_raw(self, api: BasespaceApiFactory):
-        return sorted(list(self.raw_obj))
+        return list(self.raw_obj)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id):
