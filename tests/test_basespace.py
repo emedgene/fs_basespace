@@ -198,12 +198,12 @@ class TestBaseSpace(unittest.TestCase):
         basespace_fs = self._init_default_fs()
 
         # act
-        folder_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets/'
+        folder_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples'
         info = basespace_fs.getinfo(folder_name)
 
         # assert
         self.assertIsNotNone(info)
-        self.assertEqual(info.name, 'datasets')
+        self.assertEqual(info.name, 'biosamples')
         self.assertTrue(info.is_dir)
 
     @vcr.use_cassette('getinfo/root_dir.yaml', cassette_library_dir=cassette_lib_dir)
@@ -265,38 +265,38 @@ class TestBaseSpace(unittest.TestCase):
             basespace_fs.getinfo(no_such_folder_name)
 
     # listdir
-    @vcr.use_cassette('listdir/existing_dir_datasets.yaml', cassette_library_dir=cassette_lib_dir)
-    def test_listdir_existing_dir_datasets(self):
-        # prepare
-        expected_list = [EMEDGENE_DATASET_ID]
+    # @vcr.use_cassette('listdir/existing_dir_datasets.yaml', cassette_library_dir=cassette_lib_dir)
+    # def test_listdir_existing_dir_datasets(self):
+    #     # prepare
+    #     expected_list = [EMEDGENE_DATASET_ID]
+    #
+    #     # init
+    #     basespace_fs = self._init_default_fs()
+    #
+    #     # act
+    #     existing_folder = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets/'
+    #     datasets_list = basespace_fs.listdir(existing_folder)
+    #
+    #     # assert
+    #     self.assertIsNotNone(datasets_list)
+    #     self.assertListEqual(datasets_list, expected_list)
 
-        # init
-        basespace_fs = self._init_default_fs()
-
-        # act
-        existing_folder = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets/'
-        datasets_list = basespace_fs.listdir(existing_folder)
-
-        # assert
-        self.assertIsNotNone(datasets_list)
-        self.assertListEqual(datasets_list, expected_list)
-
-    @vcr.use_cassette('listdir/existing_dir_biosamples.yaml', cassette_library_dir=cassette_lib_dir)
-    def test_listdir_existing_dir_biosampless(self):
-        # prepare
-        expected_list = ['104555093', '104555094', '104555095', '104555096', '104555097', '104555098', '104555099',
-                         '104555100', '104555101', '104555102']
-
-        # init
-        basespace_fs = self._init_default_fs()
-
-        # act
-        existing_folder = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/'
-        biosamples_list = basespace_fs.listdir(existing_folder)
-
-        # assert
-        self.assertIsNotNone(biosamples_list)
-        self.assertListEqual(biosamples_list, expected_list)
+    # @vcr.use_cassette('listdir/existing_dir_biosamples.yaml', cassette_library_dir=cassette_lib_dir)
+    # def test_listdir_existing_dir_biosamples(self):
+    #     # prepare
+    #     expected_list = ['104555093', '104555094', '104555095', '104555096', '104555097', '104555098', '104555099',
+    #                      '104555100', '104555101', '104555102']
+    #
+    #     # init
+    #     basespace_fs = self._init_default_fs()
+    #
+    #     # act
+    #     folder_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples'
+    #     biosamples_list = basespace_fs.listdir(folder_name)
+    #
+    #     # assert
+    #     self.assertIsNotNone(biosamples_list)
+    #     self.assertListEqual(biosamples_list, expected_list)
 
     @vcr.use_cassette('listdir/existing_dir_projects.yaml', cassette_library_dir=cassette_lib_dir)
     def test_listdir_existing_dir_projects(self):
@@ -372,17 +372,17 @@ class TestBaseSpace(unittest.TestCase):
         with self.assertRaises(errors.ResourceNotFound):
             basespace_fs.openbin(no_such_file_name, mode='rb')
 
-    @vcr.use_cassette('openbin/existing_folder.yaml', cassette_library_dir=cassette_lib_dir)
-    def test_openbin_existing_folder(self):
-        # prepare
-        folder_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets/'
-
-        # init
-        basespace_fs = self._init_default_fs()
-
-        # act & assert
-        with self.assertRaises(errors.FileExpected):
-            basespace_fs.openbin(folder_name, mode='rb')
+    # @vcr.use_cassette('openbin/existing_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    # def test_openbin_existing_folder(self):
+    #     # prepare
+    #     folder_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets/'
+    #
+    #     # init
+    #     basespace_fs = self._init_default_fs()
+    #
+    #     # act & assert
+    #     with self.assertRaises(errors.FileExpected):
+    #         basespace_fs.openbin(folder_name, mode='rb')
 
     def test_openbin_non_existing_folder(self):
         # prepare
@@ -487,93 +487,93 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    @vcr.use_cassette('scandir/project_biosamples_folder.yaml', cassette_library_dir=cassette_lib_dir)
-    def test_scandir_project_biosamples_folder(self):
-        # prepare
-        # expected_list = [{'name': '104555096', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep2'},
-        #                  {'name': '104555094', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep1'},
-        #                  {'name': '104555095', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep9'},
-        #                  {'name': '104555096', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep2'},
-        #                  {'name': '104555097', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep2'},
-        #                  {'name': '104555098', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep10'},
-        #                  {'name': '104555099', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep3'},
-        #                  {'name': '104555100', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep3'},
-        #                  {'name': '104555101', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep11'},
-        #                  {'name': '104555102', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep4'}]
+    # @vcr.use_cassette('scandir/project_biosamples_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    # def test_scandir_project_biosamples_folder(self):
+    #     # prepare
+    #     # expected_list = [{'name': '104555096', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep2'},
+    #     #                  {'name': '104555094', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep1'},
+    #     #                  {'name': '104555095', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep9'},
+    #     #                  {'name': '104555096', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep2'},
+    #     #                  {'name': '104555097', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep2'},
+    #     #                  {'name': '104555098', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep10'},
+    #     #                  {'name': '104555099', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep3'},
+    #     #                  {'name': '104555100', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep3'},
+    #     #                  {'name': '104555101', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep11'},
+    #     #                  {'name': '104555102', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep4'}]
+    #
+    #     # init
+    #     basespace_fs = self._init_default_fs()
+    #
+    #     # act
+    #     biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples'
+    #     resource_list = basespace_fs.scandir(biosamples_path)
+    #
+    #     # assert
+    #     resources = []
+    #     for index, fs_resource in enumerate(resource_list):
+    #         resource = {
+    #             "name": fs_resource.name,
+    #             "directory": fs_resource.is_dir
+    #         }
+    #         alias = fs_resource.get('basic', 'alias')
+    #         if alias:
+    #             resource['alias'] = alias
+    #         resources.append(resource)
+    #
+    #     self.assertGreaterEqual(len(resources), 10)
 
-        # init
-        basespace_fs = self._init_default_fs()
+    # @vcr.use_cassette('scandir/biosample_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    # def test_scandir_biosample_folder(self):
+    #     # prepare
+    #     expected_list = [{'name': 'datasets', 'directory': True, 'alias': 'datasets'}]
+    #
+    #     # init
+    #     basespace_fs = self._init_default_fs()
+    #
+    #     # act
+    #     biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}'
+    #     resource_list = basespace_fs.scandir(biosamples_path)
+    #
+    #     # assert
+    #     resources = []
+    #     for index, fs_resource in enumerate(resource_list):
+    #         resource = {
+    #             "name": fs_resource.name,
+    #             "directory": fs_resource.is_dir
+    #         }
+    #         alias = fs_resource.get('basic', 'alias')
+    #         if alias:
+    #             resource['alias'] = alias
+    #         resources.append(resource)
+    #
+    #     self.assertListEqual(resources, expected_list)
 
-        # act
-        biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples'
-        resource_list = basespace_fs.scandir(biosamples_path)
-
-        # assert
-        resources = []
-        for index, fs_resource in enumerate(resource_list):
-            resource = {
-                "name": fs_resource.name,
-                "directory": fs_resource.is_dir
-            }
-            alias = fs_resource.get('basic', 'alias')
-            if alias:
-                resource['alias'] = alias
-            resources.append(resource)
-
-        self.assertGreaterEqual(len(resources), 10)
-
-    @vcr.use_cassette('scandir/biosample_folder.yaml', cassette_library_dir=cassette_lib_dir)
-    def test_scandir_biosample_folder(self):
-        # prepare
-        expected_list = [{'name': 'datasets', 'directory': True, 'alias': 'datasets'}]
-
-        # init
-        basespace_fs = self._init_default_fs()
-
-        # act
-        biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}'
-        resource_list = basespace_fs.scandir(biosamples_path)
-
-        # assert
-        resources = []
-        for index, fs_resource in enumerate(resource_list):
-            resource = {
-                "name": fs_resource.name,
-                "directory": fs_resource.is_dir
-            }
-            alias = fs_resource.get('basic', 'alias')
-            if alias:
-                resource['alias'] = alias
-            resources.append(resource)
-
-        self.assertListEqual(resources, expected_list)
-
-    @vcr.use_cassette('scandir/datasets_folder.yaml', cassette_library_dir=cassette_lib_dir)
-    def test_scandir_datasets_folder(self):
-        # prepare
-        expected_list = [
-            {'name': 'ds.ac82a306af3847f2b53ecb695bc22400', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep1_L001'}]
-
-        # init
-        basespace_fs = self._init_default_fs()
-
-        # act
-        biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets'
-        resource_list = basespace_fs.scandir(biosamples_path)
-
-        # assert
-        resources = []
-        for index, fs_resource in enumerate(resource_list):
-            resource = {
-                "name": fs_resource.name,
-                "directory": fs_resource.is_dir
-            }
-            alias = fs_resource.get('basic', 'alias')
-            if alias:
-                resource['alias'] = alias
-            resources.append(resource)
-
-        self.assertListEqual(resources, expected_list)
+    # @vcr.use_cassette('scandir/datasets_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    # def test_scandir_datasets_folder(self):
+    #     # prepare
+    #     expected_list = [
+    #         {'name': 'ds.ac82a306af3847f2b53ecb695bc22400', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep1_L001'}]
+    #
+    #     # init
+    #     basespace_fs = self._init_default_fs()
+    #
+    #     # act
+    #     biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets'
+    #     resource_list = basespace_fs.scandir(biosamples_path)
+    #
+    #     # assert
+    #     resources = []
+    #     for index, fs_resource in enumerate(resource_list):
+    #         resource = {
+    #             "name": fs_resource.name,
+    #             "directory": fs_resource.is_dir
+    #         }
+    #         alias = fs_resource.get('basic', 'alias')
+    #         if alias:
+    #             resource['alias'] = alias
+    #         resources.append(resource)
+    #
+    #     self.assertListEqual(resources, expected_list)
 
     def test_scandir_non_existing_folder(self):
         # prepare
@@ -586,38 +586,38 @@ class TestBaseSpace(unittest.TestCase):
         with self.assertRaises(errors.ResourceNotFound):
             basespace_fs.scandir(no_such_folder_name)
 
-    @vcr.use_cassette('scandir/existing_folder.yaml', cassette_library_dir=cassette_lib_dir)
-    def test_scandir_existing_folder(self):
-        # prepare
-        biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/'
-
-        # init
-        basespace_fs = self._init_default_fs()
-
-        # act
-        resource_list = basespace_fs.scandir(biosamples_path)
-
-        # assert
-        resources = []
-        folder_count = 10
-        file_count = 0
-        for index, fs_resource in enumerate(resource_list):
-            if fs_resource.is_dir:
-                folder_count -= 1
-            else:
-                file_count -= 1
-            print(fs_resource.name)
-            resource = {
-                "name": fs_resource.name,
-                "directory": fs_resource.is_dir
-            }
-            alias = fs_resource.get('basic', 'alias')
-            if alias:
-                resource['alias'] = alias
-            resources.append(resource)
-
-        self.assertEqual(folder_count, 0)
-        self.assertEqual(file_count, 0)
+    # @vcr.use_cassette('scandir/existing_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    # def test_scandir_existing_folder(self):
+    #     # prepare
+    #     biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/'
+    #
+    #     # init
+    #     basespace_fs = self._init_default_fs()
+    #
+    #     # act
+    #     resource_list = basespace_fs.scandir(biosamples_path)
+    #
+    #     # assert
+    #     resources = []
+    #     folder_count = 10
+    #     file_count = 0
+    #     for index, fs_resource in enumerate(resource_list):
+    #         if fs_resource.is_dir:
+    #             folder_count -= 1
+    #         else:
+    #             file_count -= 1
+    #         print(fs_resource.name)
+    #         resource = {
+    #             "name": fs_resource.name,
+    #             "directory": fs_resource.is_dir
+    #         }
+    #         alias = fs_resource.get('basic', 'alias')
+    #         if alias:
+    #             resource['alias'] = alias
+    #         resources.append(resource)
+    #
+    #     self.assertEqual(folder_count, 0)
+    #     self.assertEqual(file_count, 0)
 
     # #@vcr.use_cassette('scandir/dataset_files.yaml', cassette_library_dir=cassette_lib_dir)
     # def test_scandir_dataset_files(self):
