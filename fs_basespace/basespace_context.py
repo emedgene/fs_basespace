@@ -159,7 +159,7 @@ class SequencedFileGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileContext
 
     def list_raw(self, api: BasespaceApiFactory):
-        return sorted(list(self.raw_obj))
+        return list(self.raw_obj)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id):
@@ -176,7 +176,7 @@ class DatasetsContext(CategoryContextDirect):
     ENTITY_CONTEXT = SequencedFileGroupsContext
 
     def list_raw(self, api: BasespaceApiFactory):
-        return sorted(list(self.raw_obj))
+        return list(self.raw_obj)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, dataset_id):
@@ -199,8 +199,8 @@ class BioSampleGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = BioSampleContext
 
     def list_raw(self, api: BasespaceApiFactory):
-        # offset = offset, limit = limit
-        return self.raw_obj.get_biosamples(api.biosamples_api)
+        params = {'limit': 50, 'offset': 0, 'sortby': 'Name'}
+        return self.raw_obj.get_biosamples(api.biosamples_api, query_params=params)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, biosample_id):
