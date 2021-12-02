@@ -286,7 +286,9 @@ class TestBaseSpace(unittest.TestCase):
     def test_listdir_existing_dir_biosamples(self):
         # prepare
         expected_list = ['104555093', '104555094', '104555095', '104555096', '104555097', '104555098', '104555099',
-                         '104555100', '104555101', '104555102']
+                         '104555100', '104555101', '104555102', '104555103', '104555104', '104555105', '104555106',
+                         '104555107', '104555108', '104555109', '104555110', '104555111', '104555112', '104555113',
+                         '104555114', '104555115', '104555116']
 
         # init
         basespace_fs = self._init_default_fs()
@@ -298,7 +300,6 @@ class TestBaseSpace(unittest.TestCase):
         # assert
         self.assertIsNotNone(biosamples_list)
         self.assertListEqual(biosamples_list, expected_list)
-
     @vcr.use_cassette('listdir/existing_dir_projects.yaml', cassette_library_dir=cassette_lib_dir)
     def test_listdir_existing_dir_projects(self):
         # prepare
@@ -491,16 +492,30 @@ class TestBaseSpace(unittest.TestCase):
     @vcr.use_cassette('scandir/project_biosamples_folder.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_project_biosamples_folder(self):
         # prepare
-        # expected_list = [{'name': '104555096', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep2'},
-        #                  {'name': '104555094', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep1'},
-        #                  {'name': '104555095', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep9'},
-        #                  {'name': '104555096', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep2'},
-        #                  {'name': '104555097', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep2'},
-        #                  {'name': '104555098', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep10'},
-        #                  {'name': '104555099', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep3'},
-        #                  {'name': '104555100', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep3'},
-        #                  {'name': '104555101', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep11'},
-        #                  {'name': '104555102', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep4'}]
+        expected_list = [{'name': '104555093', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep1'},
+                         {'name': '104555094', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep1'},
+                         {'name': '104555095', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep9'},
+                         {'name': '104555096', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep2'},
+                         {'name': '104555097', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep2'},
+                         {'name': '104555098', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep10'},
+                         {'name': '104555099', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep3'},
+                         {'name': '104555100', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep3'},
+                         {'name': '104555101', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep11'},
+                         {'name': '104555102', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep4'},
+                         {'name': '104555103', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep4'},
+                         {'name': '104555104', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep12'},
+                         {'name': '104555105', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep5'},
+                         {'name': '104555106', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep5'},
+                         {'name': '104555107', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep13'},
+                         {'name': '104555108', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep6'},
+                         {'name': '104555109', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep6'},
+                         {'name': '104555110', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep14'},
+                         {'name': '104555111', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep7'},
+                         {'name': '104555112', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep7'},
+                         {'name': '104555113', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep15'},
+                         {'name': '104555114', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep8'},
+                         {'name': '104555115', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep8'},
+                         {'name': '104555116', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep16'}]
 
         # init
         basespace_fs = self._init_default_fs()
@@ -521,7 +536,8 @@ class TestBaseSpace(unittest.TestCase):
                 resource['alias'] = alias
             resources.append(resource)
 
-        self.assertGreaterEqual(len(resources), 10)
+        self.assertGreaterEqual(len(resources), 24)
+        self.assertListEqual(resources, expected_list)
 
     @vcr.use_cassette('scandir/biosample_folder.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_biosample_folder(self):
@@ -600,7 +616,7 @@ class TestBaseSpace(unittest.TestCase):
 
         # assert
         resources = []
-        folder_count = 10
+        folder_count = 24
         file_count = 0
         for index, fs_resource in enumerate(resource_list):
             if fs_resource.is_dir:
