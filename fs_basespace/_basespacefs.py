@@ -121,8 +121,8 @@ class BASESPACEFS(FS):
         self._validate_key(_key)
         return _key
 
-    def _get_context_by_key(self, key):
-        return get_context_by_key(self.basespace, key)
+    def _get_context_by_key(self, key, page=None):
+        return get_context_by_key(self.basespace, key, page)
 
     def getinfo(self, path, namespaces=None):
         logger.debug(f'getinfo path: {path}')
@@ -190,7 +190,7 @@ class BASESPACEFS(FS):
 
         info = (
             Info(self._info_from_object(entity, namespaces=namespaces))
-            for entity in self._listdir_entities(_key)
+            for entity in self._listdir_entities(_key, page)
         )
         iter_info = iter(info)
         if page is not None:
@@ -198,9 +198,9 @@ class BASESPACEFS(FS):
             iter_info = itertools.islice(iter_info, start, end)
         return iter_info
 
-    def _listdir_entities(self, key):
-        destination = self._get_context_by_key(key)
-        return [entry for entry in destination.list(self.basespace)]
+    def _listdir_entities(self, key, page=None):
+        destination = self._get_context_by_key(key, page)
+        return [entry for entry in destination.list(self.basespace, page)]
 
     def listdir(self, path):
         logger.debug(f'listdir path: {path}')
