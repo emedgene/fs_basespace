@@ -184,9 +184,7 @@ class DatasetsContext(CategoryContextDirect):
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, dataset_id: str, page: Tuple[int, int]):
-        limit = 50
-        if page:
-            _, limit = page
+        offset, limit = translate_range_to_offset_and_limit(page)
         return api.datasets_api.get_v2_datasets_id_files(excludevcfindexfolder=False,
                                                          excludebamcoveragefolder=False,
                                                          excludesystemfolder=False,
@@ -196,7 +194,7 @@ class DatasetsContext(CategoryContextDirect):
                                                          id=dataset_id,
                                                          sortdir='Asc',
                                                          sortby='Name',
-                                                         offset=0,
+                                                         offset=offset,
                                                          limit=limit)
 
 
@@ -209,19 +207,15 @@ class BioSampleGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = BioSampleContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Tuple[int, int]):
-        limit = 50
-        if page:
-            _, limit = page
-        params = {'sortby': 'Name', 'offset': 0, 'limit': limit}
+        offset, limit = translate_range_to_offset_and_limit(page)
+        params = {'sortby': 'Name', 'offset': offset, 'limit': limit}
         bio_sample_list = self.raw_obj.get_biosamples(api.biosamples_api, query_params=params)
         return bio_sample_list
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, biosample_id: str, page: Tuple[int, int]):
-        limit = 50
-        if page:
-            _, limit = page
-        return api.datasets_api.get_v2_datasets(offset=0,
+        offset, limit = translate_range_to_offset_and_limit(page)
+        return api.datasets_api.get_v2_datasets(offset=offset,
                                                 limit=limit,
                                                 sortby='Name',
                                                 sortdir='Asc',
@@ -295,3 +289,11 @@ def get_context_by_key(api: BasespaceApiFactory, key: str, page: Tuple[int, int]
     for path_step in rest_steps:
         latest_context = latest_context.get(api, path_step)
     return latest_context
+
+
+def translate_range_to_offset_and_limit(page: Tuple[int, int]):
+    offset, limit = 0, 50
+    if page:
+        offset, offset_end = page
+        limit = offset_end - offset
+    return offset, limit

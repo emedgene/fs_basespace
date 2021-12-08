@@ -193,9 +193,6 @@ class BASESPACEFS(FS):
             for entity in self._listdir_entities(_key, page)
         )
         iter_info = iter(info)
-        if page is not None:
-            start, end = page
-            iter_info = itertools.islice(iter_info, start, end)
         return iter_info
 
     def _listdir_entities(self, key, page=None):
