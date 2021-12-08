@@ -5,6 +5,7 @@ from typing import Tuple
 from fs import errors
 from fs_basespace.api_factory import BasespaceApiFactory
 
+Page = Tuple[int, int]
 
 class classproperty:
     def __init__(self, getter):
@@ -27,8 +28,7 @@ class EntityContext(metaclass=EntityContextMeta):
     def __init__(self, raw_obj):
         self.raw_obj = raw_obj
 
-    # def list(self, api: BasespaceApiFactory, page: Tuple[int, int]):
-    def list(self, api: BasespaceApiFactory, page: Tuple[int, int]):
+    def list(self, api: BasespaceApiFactory, page: Page):
         return [context(self.raw_obj) for context in self.CATEGORY_MAP.values()]
 
     def get(self, api: BasespaceApiFactory, category):
@@ -54,11 +54,10 @@ class CategoryContext:
         self.raw_obj = raw_obj
 
     @abstractmethod
-    def list_raw(self, api: BasespaceApiFactory, page: Tuple[int, int]):
+    def list_raw(self, api: BasespaceApiFactory, page: Page):
         raise NotImplementedError("Should return list of entity contexts")
 
-    # def list(self, api: BasespaceApiFactory):
-    def list(self, api: BasespaceApiFactory, page: Tuple[int, int]):
+    def list(self, api: BasespaceApiFactory, page: Page):
         return [self.ENTITY_CONTEXT(entity) for entity in self.list_raw(api, page)]
 
     @abstractmethod
@@ -91,17 +90,17 @@ class CategoryContextDirect(CategoryContext):
         return self.get_raw_entity_direct(api, entity_id)
 
     @classmethod
-    def get_entity_direct(cls, api: BasespaceApiFactory, entity_id: str, page: Tuple[int, int]):
+    def get_entity_direct(cls, api: BasespaceApiFactory, entity_id: str, page: Page):
         return cls.ENTITY_CONTEXT(cls.get_raw_entity_direct(api, entity_id, page))
 
     @classmethod
     @abstractmethod
-    def get_raw_entity_direct(cls, api: BasespaceApiFactory, entity_id: str, page: Tuple[int, int]):
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, entity_id: str, page: Page):
         raise NotImplementedError("Should return entity context by id")
 
 
 class FileContext(EntityContext):
-    def list_raw(self, api: BasespaceApiFactory, page: Tuple[int, int]):
+    def list_raw(self, api: BasespaceApiFactory, page: Page):
         raise TypeError("list_raw() is not applicable to a single file")
 
     @classmethod
@@ -122,11 +121,11 @@ class FileGroupContext(CategoryContextDirect):
     NAME = "files"
     ENTITY_CONTEXT = FileContext
 
-    def list_raw(self, api: BasespaceApiFactory, page: Tuple[int, int]):
+    def list_raw(self, api: BasespaceApiFactory, page: Page):
         return self.raw_obj.getFiles(api.base_api)
 
     @classmethod
-    def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id: str, page: Tuple[int, int]):
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id: str, page: Page):
         return api.base_api.getFileById(file_id)
 
 
@@ -138,11 +137,11 @@ class AppResultsContext(CategoryContextDirect):
     NAME = "appresults"
     ENTITY_CONTEXT = FileGroupsContext
 
-    def list_raw(self, api: BasespaceApiFactory, page: Tuple[int, int]):
+    def list_raw(self, api: BasespaceApiFactory, page: Page):
         return self.raw_obj.getAppResults(api.base_api)
 
     @classmethod
-    def get_raw_entity_direct(cls, api: BasespaceApiFactory, result_id: str, page: Tuple[int, int]):
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, result_id: str, page: Page):
         return api.base_api.getAppResultById(result_id)
 
 
@@ -150,11 +149,11 @@ class SamplesContext(CategoryContextDirect):
     NAME = "samples"
     ENTITY_CONTEXT = FileGroupsContext
 
-    def list_raw(self, api: BasespaceApiFactory, page: Tuple[int, int]):
+    def list_raw(self, api: BasespaceApiFactory, page: Page):
         return self.raw_obj.getSamples(api.base_api)
 
     @classmethod
-    def get_raw_entity_direct(cls, api: BasespaceApiFactory, sample_id: str, page: Tuple[int, int]):
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, sample_id: str, page: Page):
         return api.base_api.getSampleById(sample_id)
 
 
@@ -162,11 +161,11 @@ class SequencedFileGroupContext(CategoryContextDirect):
     NAME = "sequenced files"
     ENTITY_CONTEXT = FileContext
 
-    def list_raw(self, api: BasespaceApiFactory, page: Tuple[int, int]):
+    def list_raw(self, api: BasespaceApiFactory, page: Page):
         return list(self.raw_obj)
 
     @classmethod
-    def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id: str, page: Tuple[int, int]):
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id: str, page: Page):
         return api.base_api.getFileById(file_id)
 
 
@@ -179,12 +178,12 @@ class DatasetsContext(CategoryContextDirect):
     NAME = "datasets"
     ENTITY_CONTEXT = SequencedFileGroupsContext
 
-    def list_raw(self, api: BasespaceApiFactory, page: Tuple[int, int]):
+    def list_raw(self, api: BasespaceApiFactory, page: Page):
         return list(self.raw_obj)
 
     @classmethod
-    def get_raw_entity_direct(cls, api: BasespaceApiFactory, dataset_id: str, page: Tuple[int, int]):
-        offset, limit = translate_range_to_offset_and_limit(page)
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, dataset_id: str, page: Page):
+        offset, limit = translate_page_to_offset_and_limit(page)
         return api.datasets_api.get_v2_datasets_id_files(excludevcfindexfolder=False,
                                                          excludebamcoveragefolder=False,
                                                          excludesystemfolder=False,
@@ -206,15 +205,15 @@ class BioSampleGroupContext(CategoryContextDirect):
     NAME = "biosamples"
     ENTITY_CONTEXT = BioSampleContext
 
-    def list_raw(self, api: BasespaceApiFactory, page: Tuple[int, int]):
-        offset, limit = translate_range_to_offset_and_limit(page)
+    def list_raw(self, api: BasespaceApiFactory, page: Page):
+        offset, limit = translate_page_to_offset_and_limit(page)
         params = {'sortby': 'Name', 'offset': offset, 'limit': limit}
         bio_sample_list = self.raw_obj.get_biosamples(api.biosamples_api, query_params=params)
         return bio_sample_list
 
     @classmethod
-    def get_raw_entity_direct(cls, api: BasespaceApiFactory, biosample_id: str, page: Tuple[int, int]):
-        offset, limit = translate_range_to_offset_and_limit(page)
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, biosample_id: str, page: Page):
+        offset, limit = translate_page_to_offset_and_limit(page)
         return api.datasets_api.get_v2_datasets(offset=offset,
                                                 limit=limit,
                                                 sortby='Name',
@@ -235,11 +234,11 @@ class ProjectGroupContext(CategoryContextDirect):
     NAME = "projects"
     ENTITY_CONTEXT = ProjectContext
 
-    def list_raw(self, api, page: Tuple[int, int]):
+    def list_raw(self, api, page: Page):
         return api.base_api.getProjectByUser()
 
     @classmethod
-    def get_raw_entity_direct(cls, api: BasespaceApiFactory, project_id: str, page: Tuple[int, int]):
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, project_id: str, page: Page):
         return api.base_api.getProjectById(project_id)
 
 
@@ -277,7 +276,7 @@ def get_last_direct_context(key):
     return latest_direct
 
 
-def get_context_by_key(api: BasespaceApiFactory, key: str, page: Tuple[int, int]):
+def get_context_by_key(api: BasespaceApiFactory, key: str, page: Page):
     rest_steps = key.split("/") if key else []
     latest_context = ROOT_CONTEXT(None)
     latest_direct = get_last_direct_context(key)
@@ -291,7 +290,7 @@ def get_context_by_key(api: BasespaceApiFactory, key: str, page: Tuple[int, int]
     return latest_context
 
 
-def translate_range_to_offset_and_limit(page: Tuple[int, int]):
+def translate_page_to_offset_and_limit(page: Page):
     offset, limit = 0, 50
     if page:
         offset, offset_end = page
