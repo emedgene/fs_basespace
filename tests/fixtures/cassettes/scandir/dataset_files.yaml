@@ -15,7 +15,7 @@ interactions:
       User-Agent:
       - Python-urllib/3.6
     method: GET
-    uri: https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/files?excludevcfindexfolder=False&excludebamcoveragefolder=False&excludesystemfolder=False&excludeemptyfiles=False&filehrefcontentresolution=False&turbomode=False&sortby=Name&limit=50&sortdir=Asc
+    uri: https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/files?excludevcfindexfolder=False&excludebamcoveragefolder=False&excludesystemfolder=False&excludeemptyfiles=False&filehrefcontentresolution=False&turbomode=False&sortby=Name&offset=0&limit=50&sortdir=Asc
   response:
     body:
       string: '{"Items":[{"Id":"11710715826","Href":"https://api.basespace.illumina.com/v2/files/11710715826","HrefContent":"https://api.basespace.illumina.com/v2/files/11710715826/content","Name":"Myeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz","ContentType":"application/x-gzip","Size":48526491,"Path":"Myeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz","IsArchived":false,"DateCreated":"2018-07-19T23:50:10.0000000Z","DateModified":"2018-07-19T23:50:10.0000000Z","ETag":"3a1f3ea201911c15cf166a58ecc783d0-6","IdAsLong":11710715826},{"Id":"11710715827","Href":"https://api.basespace.illumina.com/v2/files/11710715827","HrefContent":"https://api.basespace.illumina.com/v2/files/11710715827/content","Name":"Myeloid-RNA-Brain-Rep1_S1_L001_R2_001.fastq.gz","ContentType":"application/x-gzip","Size":50934554,"Path":"Myeloid-RNA-Brain-Rep1_S1_L001_R2_001.fastq.gz","IsArchived":false,"DateCreated":"2018-07-19T23:50:10.0000000Z","DateModified":"2018-07-19T23:50:10.0000000Z","ETag":"b270e3ed6754e7c66be4f20ce13f0a98-7","IdAsLong":11710715827}],"Paging":{"DisplayedCount":2,"TotalCount":2,"Offset":0,"Limit":50,"SortDir":"Asc","SortBy":"Name"}}'
@@ -27,7 +27,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 28 Nov 2021 19:55:47 GMT
+      - Mon, 06 Dec 2021 14:12:42 GMT
       Expires:
       - '0'
       Pragma:
@@ -42,7 +42,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2021.11.28.19.55.47.Jb-y7FT_Jk2YaILs058jTw
+      - 2021.12.06.14.12.42.EP3n5gZIg0yeEiGkZJLQjA
     status:
       code: 200
       message: OK

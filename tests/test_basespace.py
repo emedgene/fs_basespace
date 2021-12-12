@@ -664,44 +664,6 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_file_list)
 
-    # # scan dir pagination
-    # @vcr.use_cassette('scandir/scandir_pagination.yaml', cassette_library_dir=cassette_lib_dir)
-    # def test_scandir_pagination_folder(self):
-    #     # prepare
-    #     offset = 0
-    #     size = 50
-    #     has_more = True
-    #     # there are 311 files and page size is 50
-    #     expected_pagination_reminder = 11
-    #     blob_path = '/pagination-200/311'
-    #
-    #     # init
-    #     blob_fs = self._init_default_fs()
-    #
-    #     # act
-    #     while has_more:
-    #         resource_list = blob_fs.scandir(blob_path, page=(offset, offset + size))
-    #         offset += size
-    #         resources = []
-    #         for index, fs_resource in enumerate(resource_list):
-    #             resource = {
-    #                 "name": fs_resource.name,
-    #                 "directory": fs_resource.is_dir
-    #             }
-    #             alias = fs_resource.get('basic', 'alias')
-    #             if alias:
-    #                 resource['alias'] = alias
-    #             resources.append(resource)
-    #
-    #         for resource in resources:
-    #             print(f"resource: name: {resource['name']} directory: {resource['directory']}")
-    #             if 'size' in resource.keys():
-    #                 print(f"resource: size: {resource['size']}")
-    #
-    #         has_more = len(resources) == size
-    #         if not has_more:
-    #             self.assertEqual(len(resources), expected_pagination_reminder)
-
     # geturl
     @vcr.use_cassette('geturl/of_file.yaml', cassette_library_dir=cassette_lib_dir)
     def test_geturl_of_file(self):
@@ -748,6 +710,180 @@ class TestBaseSpace(unittest.TestCase):
         # act
         with self.assertRaises(ResourceNotFound):
             basespace_fs.geturl(no_such_file_name)
+
+    # PAGINATION
+    @vcr.use_cassette('scandir/project_biosamples_folder_pagination.yaml', cassette_library_dir=cassette_lib_dir)
+    def test_scandir_project_biosamples_folder_pagination(self):
+        # prepare
+        expected_list = [{'name': '104555093', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep1'},
+                         {'name': '104555094', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep1'},
+                         {'name': '104555095', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep9'},
+                         {'name': '104555096', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep2'},
+                         {'name': '104555097', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep2'},
+                         {'name': '104555098', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep10'},
+                         {'name': '104555099', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep3'},
+                         {'name': '104555100', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep3'},
+                         {'name': '104555101', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep11'},
+                         {'name': '104555102', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep4'},
+                         {'name': '104555103', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep4'},
+                         {'name': '104555104', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep12'},
+                         {'name': '104555105', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep5'},
+                         {'name': '104555106', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep5'},
+                         {'name': '104555107', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep13'},
+                         {'name': '104555108', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep6'},
+                         {'name': '104555109', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep6'},
+                         {'name': '104555110', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep14'},
+                         {'name': '104555111', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep7'},
+                         {'name': '104555112', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep7'},
+                         {'name': '104555113', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep15'},
+                         {'name': '104555114', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep8'},
+                         {'name': '104555115', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep8'},
+                         {'name': '104555116', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep16'}]
+
+        # init
+        basespace_fs = self._init_default_fs()
+
+        # act
+        biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples'
+        step = 5
+        start = 0
+        end = step
+        page = (start, end)
+        full_resources_list = []
+        while True:
+            resource_list = basespace_fs.scandir(biosamples_path, page=page)
+            # assert
+            resources = []
+            for index, fs_resource in enumerate(resource_list):
+                resource = {
+                    "name": fs_resource.name,
+                    "directory": fs_resource.is_dir
+                }
+                alias = fs_resource.get('basic', 'alias')
+                if alias:
+                    resource['alias'] = alias
+                resources.append(resource)
+
+            full_resources_list += resources
+
+            for resource in resources:
+                print(
+                    f"resource: name: {resource['name']} directory: {resource['directory']}   alias: {resource['alias']}")
+                if 'size' in resource.keys():
+                    print(f"resource: size: {resource['size']}")
+            if len(resources) < step:
+                offset, _ = page
+                print(f"last ({offset} {offset + len(resources)}) --------------------------------")
+                break
+            print(f"{page}--------------------------------")
+            start = end
+            end += step
+            page = (start, end)
+
+        self.assertGreaterEqual(len(full_resources_list), len(expected_list))
+        self.assertListEqual(full_resources_list, expected_list)
+
+    @vcr.use_cassette('scandir/datasets_folder_pagination.yaml', cassette_library_dir=cassette_lib_dir)
+    def test_scandir_datasets_folder_pagination(self):
+        # prepare
+        expected_list = [
+            {'name': 'ds.ac82a306af3847f2b53ecb695bc22400', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep1_L001'}]
+
+        # init
+        basespace_fs = self._init_default_fs()
+
+        # act
+        biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets'
+
+        step = 5
+        start = 0
+        size = step
+        page = (start, size)
+        full_resources_list = []
+        while True:
+            resource_list = basespace_fs.scandir(biosamples_path, page=page)
+
+            # assert
+            resources = []
+            for index, fs_resource in enumerate(resource_list):
+                resource = {
+                    "name": fs_resource.name,
+                    "directory": fs_resource.is_dir
+                }
+                alias = fs_resource.get('basic', 'alias')
+                if alias:
+                    resource['alias'] = alias
+                resources.append(resource)
+
+            full_resources_list += resources
+
+            for resource in resources:
+                print(
+                    f"resource: name: {resource['name']} directory: {resource['directory']}   alias: {resource['alias']}")
+                if 'size' in resource.keys():
+                    print(f"resource: size: {resource['size']}")
+            if len(resources) < step:
+                offset, _ = page
+                print(f"last ({offset} {offset + len(resources)}) --------------------------------")
+                break
+            print(f"{page}--------------------------------")
+            start = size
+            size += step
+            page = (start, size)
+
+        self.assertListEqual(full_resources_list, expected_list)
+
+    @vcr.use_cassette('scandir/dataset_files_pagination.yaml', cassette_library_dir=cassette_lib_dir)
+    def test_scandir_dataset_files_pagination(self):
+        # prepare
+        expected_file_list = [
+            {'name': '11710715826', 'directory': False, 'alias': 'Myeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz'},
+            {'name': '11710715827', 'directory': False, 'alias': 'Myeloid-RNA-Brain-Rep1_S1_L001_R2_001.fastq.gz'}]
+
+        # init
+        basespace_fs = self._init_default_fs()
+
+        # act
+        biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets/{EMEDGENE_DATASET_ID}/sequenced files'
+
+        step = 5
+        start = 0
+        size = step
+        page = (start, size)
+        full_resources_list = []
+        while True:
+            resource_list = basespace_fs.scandir(biosamples_path, page=page)
+
+            # assert
+            resources = []
+            for index, fs_resource in enumerate(resource_list):
+                resource = {
+                    "name": fs_resource.name,
+                    "directory": fs_resource.is_dir
+                }
+                alias = fs_resource.get('basic', 'alias')
+                if alias:
+                    resource['alias'] = alias
+                resources.append(resource)
+
+            full_resources_list += resources
+
+            for resource in resources:
+                print(
+                    f"resource: name: {resource['name']} directory: {resource['directory']}   alias: {resource['alias']}")
+                if 'size' in resource.keys():
+                    print(f"resource: size: {resource['size']}")
+            if len(resources) < step:
+                offset, _ = page
+                print(f"last ({offset} {offset + len(resources)}) --------------------------------")
+                break
+            print(f"{page}--------------------------------")
+            start = size
+            size += step
+            page = (start, size)
+
+        self.assertListEqual(full_resources_list, expected_file_list)
+
 
     # @vcr.use_cassette('geturl/folder_name.yaml', cassette_library_dir=cassette_lib_dir, record_mode=RecordMode.NEW_EPISODES)
     # def test_geturl_folder_name(self):
