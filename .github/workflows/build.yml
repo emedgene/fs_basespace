@@ -7,14 +7,14 @@ on:
 jobs:
   build-and-push-pkg:
     name: Build and push pkg
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v2.3.3
+      - uses: actions/checkout@v3.5.2
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4.5.0
         with:
-          python-version: 3.6.12
+          python-version: 3.10.4
 
       - name: Set version from tag
         id: vars
@@ -29,7 +29,7 @@ jobs:
         id: build-src-pip
         run: make build-pip-src-package
       - name: Publish pip src package
-        uses: pypa/gh-action-pypi-publish@master
+        uses: pypa/gh-action-pypi-publish@v1.8.6
         with:
           user: ${{ secrets.JFROG_USER }}
           password: ${{ secrets.JFROG_PASSWORD }}
