@@ -33,7 +33,7 @@ jobs:
       JFROG_PYPI_URL: https://${{ secrets.JFROG_USER }}:${{ secrets.JFROG_PASSWORD }}@emg.jfrog.io/artifactory/api/pypi/pypi/simple
     steps:
     - uses: actions/checkout@v3.5.2
-    - name: Set up Python 3.10
+    - name: Set up Python 3.10.4
       uses: actions/setup-python@v4.5.0
       with:
         python-version: 3.10.4
@@ -42,7 +42,6 @@ jobs:
         # Use pip==20.2 because some pkg are outdated and it crashes on higher versions 
         python -m pip install pip==20.2
         pip install pytest pytest-cov
-        if [ -f requirements.txt ]; then pip install --extra-index-url $JFROG_PYPI_URL -r requirements.txt; fi
         if [ -f requirements-dev.txt ]; then pip install --extra-index-url $JFROG_PYPI_URL -r requirements-dev.txt; fi
     - name: Test with pytest
       working-directory: fs_basespace
