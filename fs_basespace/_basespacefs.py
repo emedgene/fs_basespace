@@ -237,7 +237,7 @@ class BASESPACEFS(FS):
 
         current_context = self._get_context_by_key(_key)
         s3_url = current_context.raw_obj.getFileUrl(self.basespace.base_api)
-        return SeekableBufferedInputBase(s3_url, mode)
+        return SeekableBufferedInputBase(s3_url, mode, timeout=10)
 
     def download(self, path, file, chunk_size=None, **options):
         logger.debug(f'download path: {path}')
