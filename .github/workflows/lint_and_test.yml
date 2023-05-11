@@ -5,15 +5,15 @@ on: [push]
 jobs:
   flake8:
     name: Lint with Flake8
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     env:
       JFROG_PYPI_URL: https://${{ secrets.JFROG_USER }}:${{ secrets.JFROG_PASSWORD }}@emg.jfrog.io/artifactory/api/pypi/pypi/simple
     steps:
-    - uses: actions/checkout@v3.5.2
-    - name: Set up Python 3.10.4
-      uses: actions/setup-python@master
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7.13
+      uses: actions/setup-python@v2
       with:
-        python-version: 3.10.4
+        python-version: 3.7.13
     - name: Install dependencies
       run: |
         # Use pip==20.2 because some pkg are outdated and it crashes on higher versions 
@@ -28,15 +28,15 @@ jobs:
   
   testing:
     name: Testing
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     env:
       JFROG_PYPI_URL: https://${{ secrets.JFROG_USER }}:${{ secrets.JFROG_PASSWORD }}@emg.jfrog.io/artifactory/api/pypi/pypi/simple
     steps:
-    - uses: actions/checkout@v3.5.2
-    - name: Set up Python 3.10.4
-      uses: actions/setup-python@master
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7.13
+      uses: actions/setup-python@v2
       with:
-        python-version: 3.10.4
+        python-version: 3.7.13
     - name: Install dependencies
       run: |
         # Use pip==20.2 because some pkg are outdated and it crashes on higher versions 
