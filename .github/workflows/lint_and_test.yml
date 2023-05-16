@@ -6,7 +6,7 @@ on: [push]
 jobs:
   flake8:
     name: Lint with Flake8
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env:
       JFROG_PYPI_URL: https://${{ secrets.JFROG_USER }}:${{ secrets.JFROG_PASSWORD }}@emg.jfrog.io/artifactory/api/pypi/pypi/simple
     steps:
@@ -14,7 +14,7 @@ jobs:
     - name: Set up Python 3.6
       uses: actions/setup-python@v2
       with:
-        python-version: 3.7.13
+        python-version: 3.6.12
     - name: Install dependencies
       run: |
         # Use pip==20.2 because some pkg are outdated and it crashes on higher versions 
@@ -29,15 +29,15 @@ jobs:
   
   testing:
     name: Testing
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     env:
       JFROG_PYPI_URL: https://${{ secrets.JFROG_USER }}:${{ secrets.JFROG_PASSWORD }}@emg.jfrog.io/artifactory/api/pypi/pypi/simple
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python 3.7.13
+    - name: Set up Python 3.6.12
       uses: actions/setup-python@v2
       with:
-        python-version: 3.7.13
+        python-version: 3.6.12
     - name: Install dependencies
       run: |
         # Use pip==20.2 because some pkg are outdated and it crashes on higher versions 
