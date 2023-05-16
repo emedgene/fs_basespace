@@ -43,7 +43,7 @@ jobs:
         # Use pip==20.2 because some pkg are outdated and it crashes on higher versions 
         python -m pip install pip==20.2
         pip install pytest pytest-cov
-        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt fi
+        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
     - name: Test with pytest
       env:
         EMG_ENV: test
