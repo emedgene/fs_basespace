@@ -48,4 +48,4 @@ jobs:
       env:
         EMG_ENV: test
       run: |
-        python -m pytest --cov=./ --cov-report=xml ../tests/
+        python -m pytest --cov=./ --cov-report=xml tests/
