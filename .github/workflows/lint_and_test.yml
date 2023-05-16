@@ -43,7 +43,8 @@ jobs:
         # Use pip==20.2 because some pkg are outdated and it crashes on higher versions 
         python -m pip install pip==20.2
         pip install pytest pytest-cov
-        if [ -f requirements-dev.txt ]; then pip install --extra-index-url $JFROG_PYPI_URL -r requirements-dev.txt; fi
+        if [ -f requirements.txt ]; then pip install -r requirements.txt --extra-index-url https://${{ secrets.JFROG_USER }}:${{ secrets.JFROG_PASSWORD }}@emg.jfrog.io/artifactory/api/pypi/pypi/simple; fi
+        if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt --extra-index-url https://${{ secrets.JFROG_USER }}:${{ secrets.JFROG_PASSWORD }}@emg.jfrog.io/artifactory/api/pypi/pypi/simple; fi
     - name: Test with pytest
       env:
         EMG_ENV: test
