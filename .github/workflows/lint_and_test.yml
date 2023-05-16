@@ -30,8 +30,8 @@ jobs:
   testing:
     name: Testing
     runs-on: ubuntu-latest
-    env:
-      JFROG_PYPI_URL: https://${{ secrets.JFROG_USER }}:${{ secrets.JFROG_PASSWORD }}@emg.jfrog.io/artifactory/api/pypi/pypi/simple
+#    env:
+#      JFROG_PYPI_URL: https://${{ secrets.JFROG_USER }}:${{ secrets.JFROG_PASSWORD }}@emg.jfrog.io/artifactory/api/pypi/pypi/simple
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.10.10
