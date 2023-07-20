@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 
 import threading
 import itertools
-import six
 import logging
 from fs import errors
 from fs import ResourceType
@@ -57,7 +56,6 @@ def _make_repr(class_name, *args, **kwargs):
     return "{}({})".format(class_name, ", ".join(arguments))
 
 
-@six.python_2_unicode_compatible
 class BASESPACEFS(FS):
     def __init__(
             self,
@@ -96,7 +94,7 @@ class BASESPACEFS(FS):
         )
 
     def __str__(self):
-        return six.text_type("<basespace '{}'>".format(self._prefix))
+        return f"<basespace '{self._prefix}'>"
 
     def _validate_mandatory_fields(self):
         if not self.client_id:
