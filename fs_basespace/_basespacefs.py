@@ -79,8 +79,7 @@ class BASESPACEFS(FS):
     @property
     def basespace(self) -> BasespaceApiFactory:
         if not hasattr(self._tlocal, "basespace"):
-            self._tlocal.basesapce_api_factory = BasespaceApiFactory(self.client_id, self.client_secret,
-                                                                     self.basespace_server, self.access_token)
+            self._tlocal.basesapce_api_factory = BasespaceApiFactory(self.client_id, self.client_secret, self.basespace_server, self.access_token)
         return self._tlocal.basesapce_api_factory
 
     def __repr__(self):
