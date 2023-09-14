@@ -230,9 +230,6 @@ class BASESPACEFS(FS):
         _path = self.validatepath(path)
 
         try:
-            result = self.verify_upload_complete(path)
-            if result:
-                logger.exception(result)
             with self.openbin(_path, "rb") as basespace_f:
                 tools.copy_file_data(basespace_f, file)
         except Exception as e:
@@ -242,19 +239,9 @@ class BASESPACEFS(FS):
         logger.debug(f'geturl path: {path}')
         if purpose != "download":
             raise errors.NoURL(path, purpose)
-        _path = self.validatepath(path)
 
         try:
-            _key = self._path_to_key(_path)
-            info = self.getinfo(_path)
-        except Exception:
-            raise errors.ResourceNotFound(path)
-        else:
-            if info.is_dir:
-                raise errors.FileExpected(path)
-
-        try:
-            current_context = self._get_context_by_key(_key)
+            current_context = self.get_context_by_path(path)
             result = self.verify_upload_complete(path, context=current_context)
             if result:
                 logger.exception(result)
