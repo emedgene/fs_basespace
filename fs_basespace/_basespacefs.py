@@ -227,10 +227,6 @@ class BASESPACEFS(FS):
 
     def download(self, path, file, chunk_size=None, **options):
         logger.debug(f'download path: {path}')
-        current_context = self.get_context_by_path(path)
-        result = self.verify_upload_complete(path, context=current_context)
-        if result:
-            logger.exception(result)
         try:
             with self.openbin(path, "rb") as basespace_f:
                 tools.copy_file_data(basespace_f, file)
