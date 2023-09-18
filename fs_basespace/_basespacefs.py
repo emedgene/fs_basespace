@@ -217,12 +217,7 @@ class BASESPACEFS(FS):
 
         _mode.validate_bin()
 
-        current_context = self.get_context_by_path(path)
-        result = self.verify_upload_complete(path, context=current_context)
-        if result:
-            logger.exception(result)
-
-        s3_url = current_context.raw_obj.getFileUrl(self.basespace.base_api)
+        s3_url = self.geturl(path=path)
         return SeekableBufferedInputBase(s3_url, mode, timeout=15)
 
     def download(self, path, file, chunk_size=None, **options):
