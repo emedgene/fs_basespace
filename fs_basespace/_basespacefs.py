@@ -235,8 +235,8 @@ class BASESPACEFS(FS):
             raise
 
     def validate_files_has_same_size(self, path, file):
-        info = self.getinfo(path=path)
-        file_size_in_path = info.size
+        current_context = self.get_context_by_path(path)
+        file_size_in_path = current_context.raw_obj.Size
         downloaded_file_size = os.path.getsize(file.name)
         if file_size_in_path != downloaded_file_size:
             error_msg = f'download failed: {path} err: "downloaded file size: {downloaded_file_size} ' \
