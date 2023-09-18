@@ -218,7 +218,7 @@ class BASESPACEFS(FS):
         _mode.validate_bin()
 
         current_context = self.get_context_by_path(path)
-        result = self.verify_upload_complete(current_context, path)
+        result = self.verify_upload_complete(path, context=current_context)
         if result:
             logger.exception(result)
 
@@ -228,7 +228,7 @@ class BASESPACEFS(FS):
     def download(self, path, file, chunk_size=None, **options):
         logger.debug(f'download path: {path}')
         current_context = self.get_context_by_path(path)
-        result = self.verify_upload_complete(current_context, path)
+        result = self.verify_upload_complete(path, context=current_context)
         if result:
             logger.exception(result)
         try:
