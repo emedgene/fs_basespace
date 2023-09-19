@@ -1,0 +1,58 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Authorization:
+      - Bearer 72007ae76ac14a27b389765fd01b509e
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Host:
+      - api.basespace.illumina.com
+      User-Agent:
+      - Python-urllib/3.7
+    method: GET
+    uri: https://api.basespace.illumina.com/v1pre3/appresults/313508279
+  response:
+    body:
+      string: '{"Response":{"Description":"","HrefFiles":"v1pre3/appresults/313508279/files","References":[],"Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/appresults/313508279/properties"},"Id":"313508279","Href":"v1pre3/appresults/313508279","UserOwnedBy":{"Id":"19228209","Href":"v1pre3/users/19228209","Name":"Illumina
+        Demo Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/7506c25caeba72f27a39c83767e9e103.jpg?s=20&d=mm&r=PG"},"Name":"Illumina
+        Complete Long Reads WGS","Status":"Complete","StatusSummary":"CLI Upload","DateCreated":"2023-05-05T23:07:39.0000000Z","TotalSize":163795629989,"AppSession":{"Id":"668487865","Name":"Uploaded
+        Files","Href":"v1pre3/appsessions/668487865","Application":{"Id":"1375375","Href":"v1pre3/applications/1375375","Name":"BaseSpace
+        CLI","CompanyName":"Illumina, Inc.","VersionNumber":"1.0.0","HomepageUri":"","ShortDescription":"Command
+        line interface to BaseSpace","DateCreated":"2015-04-02T07:44:12.0000000Z","PublishStatus":"Development","IsBillingActivated":false,"Category":"Other","Classifications":["Illumina"],"AppFamilySlug":"illumina-inc.basespace-cli","AppVersionSlug":"illumina-inc.basespace-cli.1.0.0","Features":["GrantInheritanceDisabled","IsAppRegisteredToPlatform"],"LockStatus":"Unlocked"},"UserCreatedBy":{"Id":"19228209","Href":"v1pre3/users/19228209","Name":"Illumina
+        Demo Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/7506c25caeba72f27a39c83767e9e103.jpg?s=20&d=mm&r=PG"},"Status":"Complete","QcStatus":"Undefined","StatusSummary":"CLI
+        Upload","DateCreated":"2023-05-05T23:07:39.0000000Z","ModifiedOn":"2023-05-06T00:19:03.0000000Z","DateCompleted":"2023-05-06T00:12:21.0000000Z","TotalSize":163795629989},"Projects":[{"Id":"385613228","UserOwnedBy":{"Id":"19228209","Href":"v1pre3/users/19228209","Name":"Illumina
+        Demo Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/7506c25caeba72f27a39c83767e9e103.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/385613228","Name":"DRAGEN
+        ICLR Demo Data","Description":"","DateCreated":"2023-04-05T00:43:54.0000000Z","DateModified":"2023-05-16T20:55:08.0000000Z","HasCollaborators":true,"TotalSize":163795629989}]},"ResponseStatus":{},"Notifications":[]}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 18 Sep 2023 13:35:42 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Server:
+      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Unknown
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-BaseSpace-Source:
+      - master/readonly
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-ID:
+      - 2023.09.18.13.35.42.iri-6T3I0UqYuDv7gY2vEQ
+    status:
+      code: 200
+      message: OK
+version: 1
