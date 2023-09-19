@@ -227,6 +227,7 @@ class BASESPACEFS(FS):
                 tools.copy_file_data(basespace_f, file)
         except Exception as e:
             logger.exception(f'download failed: {path} err: {str(e)}')
+            raise
 
         try:
             self.validate_files_has_same_size(path, file)
