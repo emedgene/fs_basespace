@@ -2,8 +2,8 @@ from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import os
 import threading
-import itertools
 import logging
 from fs import errors
 from fs import ResourceType
@@ -14,7 +14,6 @@ from fs.info import Info
 from fs.path import normpath
 from fs.path import relpath
 from smart_open.http import SeekableBufferedInputBase
-
 
 from .api_factory import BasespaceApiFactory
 from .basespace_context import FileContext
@@ -217,15 +216,61 @@ class BASESPACEFS(FS):
             raise errors.ResourceReadOnly
 
         _mode.validate_bin()
+
+        s3_url = self.geturl(path=path)
+        return SeekableBufferedInputBase(s3_url, mode, timeout=15)
+
+    def download(self, path, file, chunk_size=None, **options):
+        logger.debug(f'download path: {path}')
+        try:
+            with self.openbin(path, "rb") as basespace_f:
+                tools.copy_file_data(basespace_f, file)
+        except Exception as e:
+            logger.exception(f'download failed: {path} err: {str(e)}')
+            raise
+
+        try:
+            self.validate_files_has_same_size(path, file)
+        except Exception as e:
+            logger.exception(f'download failed: {path} err: {str(e)}')
+            raise
+
+    def validate_files_has_same_size(self, path, file):
+        current_context = self.get_context_by_path(path)
+        file_size_in_path = current_context.raw_obj.Size
+        downloaded_file_size = os.path.getsize(file.name)
+        if file_size_in_path != downloaded_file_size:
+            error_msg = f'download failed: {path} err: "downloaded file size: {downloaded_file_size} ' \
+                        f'while file size in path: {file_size_in_path}'
+            raise errors.ResourceInvalid(path=path, msg=error_msg)
+
+    def geturl(self, path, purpose="download"):
+        logger.debug(f'geturl path: {path}')
+        if purpose != "download":
+            raise errors.NoURL(path, purpose)
+
+        try:
+            current_context = self.get_context_by_path(path)
+            self.verify_upload_complete(path, context=current_context)
+            s3_url = current_context.raw_obj.getFileUrl(self.basespace.base_api)
+        except errors.ResourceInvalid as e:
+            raise e
+        except Exception as e:
+            logging.exception(f"Failed to get URL for path: {path}")
+            raise errors.NoURL(path, purpose, msg=str(e))
+
+        return s3_url
+
+    def verify_upload_complete(self, path, context=None):
+        is_complete = context.raw_obj.UploadStatus == 'complete'
+        if not is_complete:
+            raise errors.ResourceInvalid(path=path, msg=f"File has not been uploaded yet. status: {context.raw_obj.UploadStatus}")
+
+    def get_context_by_path(self, path):
         _path = self.validatepath(path)
 
         try:
             _key = self._path_to_key(_path)
-        except Exception:
-            raise errors.ResourceNotFound(path)
-
-        info = None
-        try:
             info = self.getinfo(path)
         except Exception:
             raise errors.ResourceNotFound(path)
@@ -233,44 +278,7 @@ class BASESPACEFS(FS):
             if info.is_dir:
                 raise errors.FileExpected(path)
 
-        current_context = self._get_context_by_key(_key)
-        s3_url = current_context.raw_obj.getFileUrl(self.basespace.base_api)
-        return SeekableBufferedInputBase(s3_url, mode)
-
-    def download(self, path, file, chunk_size=None, **options):
-        logger.debug(f'download path: {path}')
-        _path = self.validatepath(path)
-
-        try:
-            with self.openbin(_path, "rb") as basespace_f:
-                tools.copy_file_data(basespace_f, file)
-        except Exception as e:
-            logger.exception(f'download failed: {path} err: {str(e)}')
-            file = None
-
-    def geturl(self, path, purpose="download"):
-        logger.debug(f'geturl path: {path}')
-        if purpose != "download":
-            raise errors.NoURL(path, purpose)
-        _path = self.validatepath(path)
-
-        info = None
-        try:
-            _key = self._path_to_key(_path)
-            info = self.getinfo(_path)
-        except Exception:
-            raise errors.ResourceNotFound(path)
-        else:
-            if info.is_dir:
-                raise errors.FileExpected(path)
-
-        try:
-            current_context = self._get_context_by_key(_key)
-            s3_url = current_context.raw_obj.getFileUrl(self.basespace.base_api)
-        except Exception as e:
-            raise errors.NoURL(path, purpose, msg=str(e))
-        return s3_url
-
+        return self._get_context_by_key(_key)
 
     def makedir(self, path, permissions=None, recreate=False):
         raise errors.ResourceReadOnly

@@ -1,0 +1,55 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Authorization:
+      - Bearer 72007ae76ac14a27b389765fd01b509e
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Host:
+      - api.basespace.illumina.com
+      User-Agent:
+      - Python-urllib/3.7
+    method: GET
+    uri: https://api.basespace.illumina.com/v1pre3/appresults/294859593
+  response:
+    body:
+      string: '{"Response":{"Description":"","HrefFiles":"v1pre3/appresults/294859593/files","References":[],"Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/appresults/294859593/properties"},"Id":"294859593","Href":"v1pre3/appresults/294859593","UserOwnedBy":{"Id":"34606577","Href":"v1pre3/users/34606577","Name":"Yael
+        Raden","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/b5e8e6d362c6c90e664cd4b8aac903ac.jpg?s=20&d=mm&r=PG"},"Name":"19-384","Status":"Complete","StatusSummary":"","DateCreated":"2022-08-23T10:24:07.0000000Z","TotalSize":656957,"AppSession":{"Id":"599549967","Name":"19-384","Href":"v1pre3/appsessions/599549967","Application":{"Id":"10","Href":"v1pre3/applications/10","Name":"Imported","CompanyName":"Illumina,
+        Inc.","VersionNumber":"1.0.0","ShortDescription":"auto created for uploader
+        app","DateCreated":"2014-04-08T00:00:00.0000000Z","DatePublished":"2014-04-08T00:00:00.0000000Z","PublishStatus":"Published","IsBillingActivated":false,"Category":"Uploader","Classifications":["Illumina"],"AppFamilySlug":"illumina-inc.imported","AppVersionSlug":"illumina-inc.imported.1.0.0","Features":["IsAppRegisteredToPlatform"],"LockStatus":"Unlocked"},"UserCreatedBy":{"Id":"34606577","Href":"v1pre3/users/34606577","Name":"Yael
+        Raden","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/b5e8e6d362c6c90e664cd4b8aac903ac.jpg?s=20&d=mm&r=PG"},"Status":"Complete","QcStatus":"Undefined","StatusSummary":"","DateCreated":"2022-08-23T10:24:07.0000000Z","ModifiedOn":"2022-08-23T10:24:18.0000000Z","DateCompleted":"2022-08-23T10:24:17.0000000Z","TotalSize":656957},"Projects":[{"Id":"361922565","UserOwnedBy":{"Id":"34606577","Href":"v1pre3/users/34606577","Name":"Yael
+        Raden","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/b5e8e6d362c6c90e664cd4b8aac903ac.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/361922565","Name":"Frankfurt_Yael_New","Description":"New
+        storage for frankfurt","DateCreated":"2022-08-23T10:22:59.0000000Z","DateModified":"2022-08-29T13:29:32.0000000Z","HasCollaborators":false,"TotalSize":315985891}]},"ResponseStatus":{},"Notifications":[]}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 18 Sep 2023 16:11:21 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Server:
+      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Unknown
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-BaseSpace-Source:
+      - master/readonly
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-ID:
+      - 2023.09.18.16.11.21.1Pn5jkSlfkGeavnmKQfFUA
+    status:
+      code: 200
+      message: OK
+version: 1
