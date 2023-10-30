@@ -10,7 +10,7 @@ import unittest
 
 import fs
 import vcr
-from fs.errors import ResourceNotFound
+from fs.errors import ResourceNotFound, FileExpected
 from fs.errors import NoURL
 from fs.errors import DirectoryExpected
 from fs.opener.errors import OpenerError
@@ -147,7 +147,7 @@ class TestBaseSpace(unittest.TestCase):
         # act
         folder_name = '/projects/385613228/appresults/313508279/files/'
         out_file_name = 'my_downloaded_existing_folder'
-        with self.assertRaises(NoURL):
+        with self.assertRaises(FileExpected):
             with open(out_file_name, 'wb') as write_file:
                 basespace_fs.download(folder_name, write_file)
 
@@ -362,7 +362,7 @@ class TestBaseSpace(unittest.TestCase):
         basespace_fs = self._init_default_fs()
 
         # act & assert
-        with self.assertRaises(NoURL):
+        with self.assertRaises(FileExpected):
             basespace_fs.openbin(folder_name, mode='rb')
 
     def test_openbin_non_existing_folder(self):

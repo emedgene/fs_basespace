@@ -251,37 +251,26 @@ class BASESPACEFS(FS):
 
         try:
             current_context = self.get_context_by_path(path)
-            result = self.verify_upload_complete(path, context=current_context)
-            if result:
-                logger.exception(result)
-
+            self.verify_upload_complete(path, context=current_context)
             s3_url = current_context.raw_obj.getFileUrl(self.basespace.base_api)
+        except errors.ResourceInvalid as e:
+            raise e
         except Exception as e:
+            logging.exception(f"Failed to get URL for path: {path}")
             raise errors.NoURL(path, purpose, msg=str(e))
 
         return s3_url
 
     def verify_upload_complete(self, path, context=None):
-        if not context:
-            context = self.get_context_by_path(path)
-        try:
-            is_complete = context.raw_obj.UploadStatus == 'complete'
-            if not is_complete:
-                raise errors.ResourceInvalid(path=path, msg="File has not been uploaded yet")
-        except Exception as e:
-            logger.debug(e)
-            return e
-
-        return None
+        is_complete = context.raw_obj.UploadStatus == 'complete'
+        if not is_complete:
+            raise errors.ResourceInvalid(path=path, msg=f"File has not been uploaded yet. status: {context.raw_obj.UploadStatus}")
 
     def get_context_by_path(self, path):
         _path = self.validatepath(path)
-        try:
-            _key = self._path_to_key(_path)
-        except Exception:
-            raise errors.ResourceNotFound(path)
 
         try:
+            _key = self._path_to_key(_path)
             info = self.getinfo(path)
         except Exception:
             raise errors.ResourceNotFound(path)
