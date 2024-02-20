@@ -5,6 +5,8 @@ from __future__ import unicode_literals
 import os
 import threading
 import logging
+from time import sleep
+
 from fs import errors
 from fs import ResourceType
 from fs import tools
@@ -230,6 +232,8 @@ class BASESPACEFS(FS):
             raise
 
         try:
+            logger.info(f"Downloaded file: {file} path: {path}, sleep 1 before validating...")
+            sleep(1)
             self.validate_files_has_same_size(path, file)
         except Exception as e:
             logger.exception(f'download failed: {path} err: {str(e)}')
@@ -239,10 +243,12 @@ class BASESPACEFS(FS):
         current_context = self.get_context_by_path(path)
         file_size_in_path = current_context.raw_obj.Size
         downloaded_file_size = os.path.getsize(file.name)
+        logger.info(f"validating downloaded file size of: {file}")
         if file_size_in_path != downloaded_file_size:
             error_msg = f'download failed: {path} err: "downloaded file size: {downloaded_file_size} ' \
                         f'while file size in path: {file_size_in_path}'
             raise errors.ResourceInvalid(path=path, msg=error_msg)
+        logger.info(f"Successfully validated file: {file}")
 
     def geturl(self, path, purpose="download"):
         logger.debug(f'geturl path: {path}')
