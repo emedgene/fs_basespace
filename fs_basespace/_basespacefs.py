@@ -225,6 +225,7 @@ class BASESPACEFS(FS):
         try:
             with self.openbin(path, "rb") as basespace_f:
                 tools.copy_file_data(basespace_f, file)
+            file.flush()
         except Exception as e:
             logger.exception(f'download failed: {path} err: {str(e)}')
             raise
