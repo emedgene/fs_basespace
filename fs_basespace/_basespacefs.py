@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import io
 import os
 import threading
 import logging
@@ -225,7 +226,6 @@ class BASESPACEFS(FS):
         try:
             with self.openbin(path, "rb") as basespace_f:
                 tools.copy_file_data(basespace_f, file)
-            file.flush()
         except Exception as e:
             logger.exception(f'download failed: {path} err: {str(e)}')
             raise
@@ -239,7 +239,8 @@ class BASESPACEFS(FS):
     def validate_files_has_same_size(self, path, file):
         current_context = self.get_context_by_path(path)
         file_size_in_path = current_context.raw_obj.Size
-        downloaded_file_size = os.path.getsize(file.name)
+        file.seek(0, io.SEEK_END)
+        downloaded_file_size = file.tell()
         if file_size_in_path != downloaded_file_size:
             error_msg = f'download failed: {path} err: "downloaded file size: {downloaded_file_size} ' \
                         f'while file size in path: {file_size_in_path}'

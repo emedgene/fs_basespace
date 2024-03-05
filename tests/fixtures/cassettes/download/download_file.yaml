@@ -25,7 +25,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 05 Mar 2024 10:08:33 GMT
+      - Tue, 05 Mar 2024 10:42:04 GMT
       Expires:
       - '0'
       Pragma:
@@ -42,7 +42,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.03.05.10.08.33.ZOdUNZO5xkqBMrW_mjTcLg
+      - 2024.03.05.10.42.04.OrrE9kIYLUm873KFADAqCA
     status:
       code: 200
       message: OK
@@ -72,7 +72,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 05 Mar 2024 10:08:33 GMT
+      - Tue, 05 Mar 2024 10:42:05 GMT
       Expires:
       - '0'
       Pragma:
@@ -89,7 +89,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.03.05.10.08.33.HFx-pAWSqEuQLx90UmnSCg
+      - 2024.03.05.10.42.05.C8f-yt7s50aY2gPynjd_UQ
     status:
       code: 200
       message: OK
@@ -110,7 +110,7 @@ interactions:
     uri: https://api.basespace.illumina.com/v1pre3/files/1556834803/content?redirect=meta
   response:
     body:
-      string: '{"Response":{"Expires":"2024-03-05T10:21:34.1926460Z","HrefContent":"https://stratus-gds-euc1.s3.eu-central-1.amazonaws.com/9f19417f-402c-488d-9fae-08dbadeff81f/ilmn-analyses/20240223_LH00384_0010_B22F53NLT3_cd0304_34ad4b-BclConvert_v4_1_23_patch1-2e0ce630-2765-436a-9035-37b0d9afaf1b/output/Samples/Lane_6/D021820-srWGS-Seq-X/D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz?X-Amz-Expires=604800&response-content-disposition=attachment%3Bfilename%3D%22D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz%22&response-content-type=application%2Fx-gzip&x-userId=ica&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARFCPI2IGXXE3IMF2/20240305/eu-central-1/s3/aws4_request&X-Amz-Date=20240305T100835Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e890fdb0112e9848505563aee5a638b512a28840b20c97c13d972f01664065bb","SupportsRange":true},"ResponseStatus":{},"Notifications":[]}'
+      string: '{"Response":{"Expires":"2024-03-05T10:55:05.4106780Z","HrefContent":"https://stratus-gds-euc1.s3.eu-central-1.amazonaws.com/9f19417f-402c-488d-9fae-08dbadeff81f/ilmn-analyses/20240223_LH00384_0010_B22F53NLT3_cd0304_34ad4b-BclConvert_v4_1_23_patch1-2e0ce630-2765-436a-9035-37b0d9afaf1b/output/Samples/Lane_6/D021820-srWGS-Seq-X/D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz?X-Amz-Expires=604800&response-content-disposition=attachment%3Bfilename%3D%22D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz%22&response-content-type=application%2Fx-gzip&x-userId=ica&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARFCPI2IGXXE3IMF2/20240305/eu-central-1/s3/aws4_request&X-Amz-Date=20240305T104206Z&X-Amz-SignedHeaders=host&X-Amz-Signature=368afa79c8c3ddda64a9fdf0973a1b9da329199f8d3ca5c039e3a8d354e2eaa9","SupportsRange":true},"ResponseStatus":{},"Notifications":[]}'
     headers:
       Accept-Ranges:
       - bytes
@@ -121,9 +121,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 05 Mar 2024 10:08:35 GMT
+      - Tue, 05 Mar 2024 10:42:06 GMT
       Expires:
-      - Tue, 12 Mar 2024 10:06:35 GMT
+      - Tue, 12 Mar 2024 10:40:06 GMT
       Pragma:
       - no-cache
       Server:
@@ -138,7 +138,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.03.05.10.08.34.iPU2YODjc0C4CJJQVYl8mw
+      - 2024.03.05.10.42.05.zbavB1nE4U-jB1bS67Mytw
     status:
       code: 200
       message: OK
@@ -154,7 +154,7 @@ interactions:
       User-Agent:
       - python-requests/2.27.1
     method: GET
-    uri: https://stratus-gds-euc1.s3.eu-central-1.amazonaws.com/9f19417f-402c-488d-9fae-08dbadeff81f/ilmn-analyses/20240223_LH00384_0010_B22F53NLT3_cd0304_34ad4b-BclConvert_v4_1_23_patch1-2e0ce630-2765-436a-9035-37b0d9afaf1b/output/Samples/Lane_6/D021820-srWGS-Seq-X/D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz?X-Amz-Expires=604800&response-content-disposition=attachment%3Bfilename%3D%22D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz%22&response-content-type=application%2Fx-gzip&x-userId=ica&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARFCPI2IGXXE3IMF2/20240305/eu-central-1/s3/aws4_request&X-Amz-Date=20240305T100835Z&X-Amz-SignedHeaders=host&X-Amz-Signature=e890fdb0112e9848505563aee5a638b512a28840b20c97c13d972f01664065bb
+    uri: https://stratus-gds-euc1.s3.eu-central-1.amazonaws.com/9f19417f-402c-488d-9fae-08dbadeff81f/ilmn-analyses/20240223_LH00384_0010_B22F53NLT3_cd0304_34ad4b-BclConvert_v4_1_23_patch1-2e0ce630-2765-436a-9035-37b0d9afaf1b/output/Samples/Lane_6/D021820-srWGS-Seq-X/D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz?X-Amz-Expires=604800&response-content-disposition=attachment%3Bfilename%3D%22D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz%22&response-content-type=application%2Fx-gzip&x-userId=ica&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARFCPI2IGXXE3IMF2/20240305/eu-central-1/s3/aws4_request&X-Amz-Date=20240305T104206Z&X-Amz-SignedHeaders=host&X-Amz-Signature=368afa79c8c3ddda64a9fdf0973a1b9da329199f8d3ca5c039e3a8d354e2eaa9
   response:
     body:
       string: !!binary |
@@ -187,7 +187,7 @@ interactions:
       Content-Type:
       - application/x-gzip
       Date:
-      - Tue, 05 Mar 2024 10:08:36 GMT
+      - Tue, 05 Mar 2024 10:42:08 GMT
       ETag:
       - '"5dcb5a97098c624f20428d323a3a54c4"'
       Last-Modified:
@@ -195,9 +195,9 @@ interactions:
       Server:
       - AmazonS3
       x-amz-id-2:
-      - A5nlohU6J8BC9L22J3rOdfpUfxbsNp6J4XzdP/i+iCtppp0uusjwqQVWvs5Ba7UcM06/d2SUyc9Z3L6kNLIGhA==
+      - 8kl2rCps1Et8cPBDX5l1plbaHlty3kO95FL30JmI05ZHqeBhi3lOYjxYMH4PukiGrYuuxnItzTuc1SH8EBNn5A==
       x-amz-request-id:
-      - JC98PD9GYDR8ZQ0Y
+      - GKW6F5XZ4AZ2JFEQ
       x-amz-server-side-encryption:
       - AES256
     status:
@@ -229,7 +229,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 05 Mar 2024 10:08:47 GMT
+      - Tue, 05 Mar 2024 10:42:07 GMT
       Expires:
       - '0'
       Pragma:
@@ -246,7 +246,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.03.05.10.08.47.nN1l9RYVhU-oxgqTMMWYnA
+      - 2024.03.05.10.42.07.8lMClX0RZUu4mJZWNuZ2RA
     status:
       code: 200
       message: OK
@@ -276,7 +276,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 05 Mar 2024 10:08:48 GMT
+      - Tue, 05 Mar 2024 10:42:07 GMT
       Expires:
       - '0'
       Pragma:
@@ -293,7 +293,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.03.05.10.08.48.nbUD_Axro0ODGt8K9tvL7A
+      - 2024.03.05.10.42.07.y1JgkmdzD0aoVQBAk1qAwA
     status:
       code: 200
       message: OK
