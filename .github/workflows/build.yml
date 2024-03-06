@@ -31,6 +31,4 @@ jobs:
       - name: Publish pip src package
         uses: pypa/gh-action-pypi-publish@master
         with:
-          user: ${{ secrets.JFROG_USER }}
-          password: ${{ secrets.JFROG_PASSWORD }}
-          repository_url: https://emg.jfrog.io/artifactory/api/pypi/pypi
+          password: ${{ secrets.PYPI_EMEDGENE_API_KEY }}
