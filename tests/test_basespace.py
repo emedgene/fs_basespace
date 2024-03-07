@@ -123,6 +123,29 @@ class TestBaseSpace(unittest.TestCase):
         # cleanup
         os.remove(out_file_name)
 
+    @vcr.use_cassette('download/download_file.yaml', cassette_library_dir=cassette_lib_dir)
+    def test_download_existing_file(self):
+        # prepare
+        file_name = '/projects/28784764/biosamples/27357369/datasets/ds.095bbee060934bd0bd792fae88b60f84/sequenced files/1556834803'
+        expected_file_size = 1062
+        out_file_name = 'my_downloaded_binary_file'
+
+        # init
+        basespace_fs = self._init_default_fs()
+
+        # act
+        with open(out_file_name, 'wb') as write_file:
+            basespace_fs.download(file_name, write_file)
+
+        # assert
+        self.assertIsNotNone(write_file)
+        with open(out_file_name, "rb") as binary_file:
+            data = binary_file.read()
+        self.assertEqual(len(data), expected_file_size)
+
+        # cleanup
+        os.remove(out_file_name)
+
     @vcr.use_cassette('download/download_non_existing_file_1.yaml', cassette_library_dir=cassette_lib_dir)
     def test_download_non_existing_file(self):
         # prepare

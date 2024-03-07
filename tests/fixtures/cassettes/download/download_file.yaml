@@ -1,0 +1,300 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Authorization:
+      - Bearer 92c834f683934c22b447336c17ba2a41
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Host:
+      - api.basespace.illumina.com
+      User-Agent:
+      - Python-urllib/3.7
+    method: GET
+    uri: https://api.basespace.illumina.com/v1pre3/files/1556834803
+  response:
+    body:
+      string: '{"Response":{"UploadStatus":"complete","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/files/1556834803/properties"},"Id":"1556834803","Href":"v1pre3/files/1556834803","HrefContent":"v1pre3/files/1556834803/content","Name":"D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz","ContentType":"application/x-gzip","Size":1062,"Path":"D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz","IsArchived":false,"DateCreated":"2024-02-24T17:36:55.0000000Z","DateModified":"2024-02-24T17:36:55.0000000Z","ETag":"5dcb5a97098c624f20428d323a3a54c4"},"ResponseStatus":{},"Notifications":[]}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 05 Mar 2024 10:42:04 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Server:
+      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Unknown
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-BaseSpace-Source:
+      - master/readonly
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-ID:
+      - 2024.03.05.10.42.04.OrrE9kIYLUm873KFADAqCA
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Authorization:
+      - Bearer 92c834f683934c22b447336c17ba2a41
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Host:
+      - api.basespace.illumina.com
+      User-Agent:
+      - Python-urllib/3.7
+    method: GET
+    uri: https://api.basespace.illumina.com/v1pre3/files/1556834803
+  response:
+    body:
+      string: '{"Response":{"UploadStatus":"complete","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/files/1556834803/properties"},"Id":"1556834803","Href":"v1pre3/files/1556834803","HrefContent":"v1pre3/files/1556834803/content","Name":"D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz","ContentType":"application/x-gzip","Size":1062,"Path":"D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz","IsArchived":false,"DateCreated":"2024-02-24T17:36:55.0000000Z","DateModified":"2024-02-24T17:36:55.0000000Z","ETag":"5dcb5a97098c624f20428d323a3a54c4"},"ResponseStatus":{},"Notifications":[]}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 05 Mar 2024 10:42:05 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Server:
+      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Unknown
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-BaseSpace-Source:
+      - master/readonly
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-ID:
+      - 2024.03.05.10.42.05.C8f-yt7s50aY2gPynjd_UQ
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Authorization:
+      - Bearer 92c834f683934c22b447336c17ba2a41
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Host:
+      - api.basespace.illumina.com
+      User-Agent:
+      - Python-urllib/3.7
+    method: GET
+    uri: https://api.basespace.illumina.com/v1pre3/files/1556834803/content?redirect=meta
+  response:
+    body:
+      string: '{"Response":{"Expires":"2024-03-05T10:55:05.4106780Z","HrefContent":"https://stratus-gds-euc1.s3.eu-central-1.amazonaws.com/9f19417f-402c-488d-9fae-08dbadeff81f/ilmn-analyses/20240223_LH00384_0010_B22F53NLT3_cd0304_34ad4b-BclConvert_v4_1_23_patch1-2e0ce630-2765-436a-9035-37b0d9afaf1b/output/Samples/Lane_6/D021820-srWGS-Seq-X/D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz?X-Amz-Expires=604800&response-content-disposition=attachment%3Bfilename%3D%22D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz%22&response-content-type=application%2Fx-gzip&x-userId=ica&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARFCPI2IGXXE3IMF2/20240305/eu-central-1/s3/aws4_request&X-Amz-Date=20240305T104206Z&X-Amz-SignedHeaders=host&X-Amz-Signature=368afa79c8c3ddda64a9fdf0973a1b9da329199f8d3ca5c039e3a8d354e2eaa9","SupportsRange":true},"ResponseStatus":{},"Notifications":[]}'
+    headers:
+      Accept-Ranges:
+      - bytes
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 05 Mar 2024 10:42:06 GMT
+      Expires:
+      - Tue, 12 Mar 2024 10:40:06 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Unknown
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-BaseSpace-Source:
+      - master/readonly
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-ID:
+      - 2024.03.05.10.42.05.zbavB1nE4U-jB1bS67Mytw
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - identity
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.27.1
+    method: GET
+    uri: https://stratus-gds-euc1.s3.eu-central-1.amazonaws.com/9f19417f-402c-488d-9fae-08dbadeff81f/ilmn-analyses/20240223_LH00384_0010_B22F53NLT3_cd0304_34ad4b-BclConvert_v4_1_23_patch1-2e0ce630-2765-436a-9035-37b0d9afaf1b/output/Samples/Lane_6/D021820-srWGS-Seq-X/D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz?X-Amz-Expires=604800&response-content-disposition=attachment%3Bfilename%3D%22D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz%22&response-content-type=application%2Fx-gzip&x-userId=ica&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARFCPI2IGXXE3IMF2/20240305/eu-central-1/s3/aws4_request&X-Amz-Date=20240305T104206Z&X-Amz-SignedHeaders=host&X-Amz-Signature=368afa79c8c3ddda64a9fdf0973a1b9da329199f8d3ca5c039e3a8d354e2eaa9
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAA/9WWy47zNgyF936K7gcGLF9iS6sKBMoaGMyK7/8sxXdk58/kNl0UaCsnkkhRVHJ4
+        SPn3zz+HYdrmkoYyjn8s09dnTOVSUkqpzHldljIOeRuKu5vVqPFbKl9lKFarVbP4MPeobtHVcI+I
+        sJDsVmsNi4oVA4JFNZngKax6VLOmqoGN06kxC6+YRYRbpcM/qsoefo57RYG9TqjGLjlGdu8+uv1f
+        af0PR3avoZ9SmdZ5vZQxpyUV/h94+j309YTeBQfxqGYKU0OduZ9KOqZIfBuKGGIZrDoh4TQzsCYy
+        hooYqK/tlOOwtkshYZUY1ZMXbmZg3+973nPuc86MCPu+97nP/d7n3DNT3/c9RkjY0m60h04i38z2
+        PvNlrsZGxusUB7nndDRHw21+A/5lKPOclrGslzkXaOUQ7h57O7EPh3YekK4CqiGLhuFmgZnWEDB2
+        5n7aWTgCwIIgEgASCRLIAfPGCWZagPtt6gQEjzc/pPvo8g7231o+p9fJz/296SEfQ/9wxnvpNe7j
+        vJUxXfJU0pCGVMwB4W29cUhHiQClozyIgaoYcFbMVHc8UL8SD8WJihRgawZ2wIgx2RbnJuIqkwgj
+        ThV+KxUwlIafiai06/7pepOfezvV+VUA7vVvoL/MZRqXcShjmvNYBCn/+B56SAbruoCRYmqcSFEn
+        UAUdZcfNEMV1AGe5MVmhqq4SgzW2LSe0gXRjSRmjLOB6wALkcYEVYdbYCphTqJ5gf8L0d7qr7T10
+        j8LPFt+X34C/ziWNadtKWnPKRdjx116CLwYGxcZIeSgLuiAGE4kdtQTcUMJ46E4JpzHHhnYUKZyo
+        MBEP4Uplxw2dgoEx2aYY6mOuvRwrp0/A/4/Ib8DftjJeppzLlqd20VIIHohvJ/FhKdhRKqAdiQ9A
+        ANDwZwR1jRBYGDEKMyLEUjOg+MBmSSRMswppCDDpxFHE2eG40gF/4gkVidB37aLlqqVlDXnvuWx1
+        QXJHcgH3jDeX4eP4ZFWyuvbsv0QNcolnNQ15P/y8xH5M01Sm9bLmMi6XZSu8jejf3YNfr+ADL3+b
+        29aJAcWCegAUYjwT5QVhYh3awnbuU+Km/UAMuzFj6kZQqVnaJKg5glWZAzkqLWKHBy4ND14wBT0P
+        E2H/7Tk15yiz88lX7W1PrLSgrj1t2vrz83x3U72DfinTMi25jMOy5iKiUVHvobcTeuM9W1goTEjE
+        QmjQAX5wFaosARdICU3KjuJwbJApxURblR0Na4qQFhUvsqL+ulsZSYXQMr+DOtX9/2rOOG5rSeOU
+        2vulSEXBfwk9MIFIo6wmIKqXEK5BLVMf8EJjSg5oBzOCQdC0LOBAkExR0ScScqpXXaypOgIbpQ5t
+        FzgOKlR4+5rzlJI3ylv2fyP4zeyZ9pnuUdH9BYG5ckvSDgAA
+    headers:
+      Accept-Ranges:
+      - bytes
+      Content-Disposition:
+      - attachment;filename="D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz"
+      Content-Length:
+      - '1062'
+      Content-Type:
+      - application/x-gzip
+      Date:
+      - Tue, 05 Mar 2024 10:42:08 GMT
+      ETag:
+      - '"5dcb5a97098c624f20428d323a3a54c4"'
+      Last-Modified:
+      - Sat, 24 Feb 2024 16:57:18 GMT
+      Server:
+      - AmazonS3
+      x-amz-id-2:
+      - 8kl2rCps1Et8cPBDX5l1plbaHlty3kO95FL30JmI05ZHqeBhi3lOYjxYMH4PukiGrYuuxnItzTuc1SH8EBNn5A==
+      x-amz-request-id:
+      - GKW6F5XZ4AZ2JFEQ
+      x-amz-server-side-encryption:
+      - AES256
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Authorization:
+      - Bearer 92c834f683934c22b447336c17ba2a41
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Host:
+      - api.basespace.illumina.com
+      User-Agent:
+      - Python-urllib/3.7
+    method: GET
+    uri: https://api.basespace.illumina.com/v1pre3/files/1556834803
+  response:
+    body:
+      string: '{"Response":{"UploadStatus":"complete","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/files/1556834803/properties"},"Id":"1556834803","Href":"v1pre3/files/1556834803","HrefContent":"v1pre3/files/1556834803/content","Name":"D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz","ContentType":"application/x-gzip","Size":1062,"Path":"D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz","IsArchived":false,"DateCreated":"2024-02-24T17:36:55.0000000Z","DateModified":"2024-02-24T17:36:55.0000000Z","ETag":"5dcb5a97098c624f20428d323a3a54c4"},"ResponseStatus":{},"Notifications":[]}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 05 Mar 2024 10:42:07 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Server:
+      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Unknown
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-BaseSpace-Source:
+      - master/readonly
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-ID:
+      - 2024.03.05.10.42.07.8lMClX0RZUu4mJZWNuZ2RA
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Authorization:
+      - Bearer 92c834f683934c22b447336c17ba2a41
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Host:
+      - api.basespace.illumina.com
+      User-Agent:
+      - Python-urllib/3.7
+    method: GET
+    uri: https://api.basespace.illumina.com/v1pre3/files/1556834803
+  response:
+    body:
+      string: '{"Response":{"UploadStatus":"complete","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/files/1556834803/properties"},"Id":"1556834803","Href":"v1pre3/files/1556834803","HrefContent":"v1pre3/files/1556834803/content","Name":"D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz","ContentType":"application/x-gzip","Size":1062,"Path":"D021820-srWGS-Seq-X_S20_L006_R1_001.fastq.gz","IsArchived":false,"DateCreated":"2024-02-24T17:36:55.0000000Z","DateModified":"2024-02-24T17:36:55.0000000Z","ETag":"5dcb5a97098c624f20428d323a3a54c4"},"ResponseStatus":{},"Notifications":[]}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - close
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 05 Mar 2024 10:42:07 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Server:
+      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Unknown
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-BaseSpace-Source:
+      - master/readonly
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-ID:
+      - 2024.03.05.10.42.07.y1JgkmdzD0aoVQBAk1qAwA
+    status:
+      code: 200
+      message: OK
+version: 1
