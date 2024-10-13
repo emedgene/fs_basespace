@@ -179,7 +179,10 @@ class DatasetsContext(CategoryContextDirect):
     ENTITY_CONTEXT = SequencedFileGroupsContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
-        return list(self.raw_obj)
+        offset, limit = translate_page_to_offset_and_limit(page)
+        params = {'sortby': 'Name', 'offset': offset, 'limit': limit}
+        datasets_list = self.raw_obj.get_v2_datasets(api.datasets_api, query_params=params)
+        return datasets_list
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, dataset_id: str, page: Page):
