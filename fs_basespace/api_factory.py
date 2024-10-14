@@ -2,6 +2,8 @@ from BaseSpacePy.api.BaseSpaceAPI import BaseSpaceAPI
 from BaseSpacePy.api.BiosamplesApi import BiosamplesApi
 from BaseSpacePy.api.DatasetsApi import DatasetsApi
 
+import bssh_sdk_2
+
 
 class BasespaceApiFactory():
 
@@ -15,6 +17,13 @@ class BasespaceApiFactory():
                                             api_server_and_version=v2_server)
         self.datasets_api = DatasetsApi(access_token=self.base_api.apiClient.apiKey,
                                         api_server_and_version=v2_server)
+
+        # api SDK-V2 configuration
+        v2_configuration = bssh_sdk_2.Configuration()
+        v2_configuration.access_token = access_token
+        api_v2 = bssh_sdk_2.BasespaceApi(bssh_sdk_2.ApiClient(v2_configuration))
+
+        self.v2 = api_v2
 
     def get_v2_server(self, basespace_server: str) -> str:
         if basespace_server.endswith('/'):
