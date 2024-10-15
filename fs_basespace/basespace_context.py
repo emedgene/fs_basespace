@@ -208,7 +208,7 @@ class BioSampleGroupContext(CategoryContextDirect):
     def list_raw(self, api: BasespaceApiFactory, page: Page):
         offset, limit = translate_page_to_offset_and_limit(page)
         params = {'sortby': 'Name', 'offset': offset, 'limit': limit}
-        bio_sample_list = self.raw_obj.get_biosamples(api.biosamples_api, query_params=params)
+        bio_sample_list = self.raw_obj.get_v2_biosamples(api.v2, query_params=params)
         return bio_sample_list
 
     @classmethod
