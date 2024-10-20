@@ -41,10 +41,10 @@ class EntityContext(metaclass=EntityContextMeta):
         return cls.CATEGORY_MAP[category]
 
     def get_name(self):
-        return getattr(self.raw_obj, 'Name', getattr(self.raw_obj, 'name'))
+        return getattr(self.raw_obj, 'Name', getattr(self.raw_obj, 'name', None))
 
     def get_id(self):
-        return getattr(self.raw_obj, 'Id', getattr(self.raw_obj, 'id'))
+        return getattr(self.raw_obj, 'Id', getattr(self.raw_obj, 'id', None))
 
 
 class CategoryContext:
