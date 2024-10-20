@@ -39,10 +39,13 @@ class EntityContext(metaclass=EntityContextMeta):
         return cls.CATEGORY_MAP[category]
 
     def get_name(self):
-        return self.raw_obj.Name
+        return getattr(self.raw_obj, 'Name', getattr(self.raw_obj, 'name', None))
 
     def get_id(self):
-        return self.raw_obj.Id
+        return getattr(self.raw_obj, 'Id', getattr(self.raw_obj, 'id', None))
+
+    def get_date_created(self):
+        return getattr(self.raw_obj, 'DateCreated', getattr(self.raw_obj, 'date_created', None))
 
 
 class CategoryContext:
@@ -179,22 +182,22 @@ class DatasetsContext(CategoryContextDirect):
     ENTITY_CONTEXT = SequencedFileGroupsContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
-        return list(self.raw_obj)
+        return list(self.raw_obj.items)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, dataset_id: str, page: Page):
         offset, limit = translate_page_to_offset_and_limit(page)
-        return api.datasets_api.get_v2_datasets_id_files(excludevcfindexfolder=False,
-                                                         excludebamcoveragefolder=False,
-                                                         excludesystemfolder=False,
-                                                         excludeemptyfiles=False,
-                                                         filehrefcontentresolution=False,
-                                                         turbomode=False,
-                                                         id=dataset_id,
-                                                         sortdir='Asc',
-                                                         sortby='Name',
-                                                         offset=offset,
-                                                         limit=limit)
+        return api.v2.get_v2_datasets_id_files(excludevcfindexfolder=False,
+                                               excludebamcoveragefolder=False,
+                                               excludesystemfolder=False,
+                                               excludeemptyfiles=False,
+                                               filehrefcontentresolution=False,
+                                               turbomode=False,
+                                               id=dataset_id,
+                                               sortdir='Asc',
+                                               sortby='Name',
+                                               offset=offset,
+                                               limit=limit)
 
 
 class BioSampleContext(EntityContext, categories=[DatasetsContext]):
@@ -214,14 +217,14 @@ class BioSampleGroupContext(CategoryContextDirect):
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, biosample_id: str, page: Page):
         offset, limit = translate_page_to_offset_and_limit(page)
-        return api.datasets_api.get_v2_datasets(offset=offset,
-                                                limit=limit,
-                                                sortby='Name',
-                                                sortdir='Asc',
-                                                include="properties",
-                                                datasettypes="~common.fastq",
-                                                propertyfilters="Input.Libraries,Input.Runs,BaseSpace.Metrics.FastQ",
-                                                inputbiosamples=biosample_id)
+        return api.v2.get_v2_datasets(offset=offset,
+                                      limit=limit,
+                                      sortby='Name',
+                                      sortdir='Asc',
+                                      include=["properties"],
+                                      datasettypes=["~common.fastq"],
+                                      propertyfilters=["Input.Libraries,Input.Runs,BaseSpace.Metrics.FastQ"],
+                                      inputbiosamples=[biosample_id])
 
 
 class ProjectContext(EntityContext, categories=[AppResultsContext,
