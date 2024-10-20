@@ -39,13 +39,13 @@ class EntityContext(metaclass=EntityContextMeta):
         return cls.CATEGORY_MAP[category]
 
     def get_name(self):
-        return getattr(self.raw_obj, 'Name', getattr(self.raw_obj, 'bio_sample_name'))
+        return getattr(self.raw_obj, 'Name', getattr(self.raw_obj, 'bio_sample_name', None))
 
     def get_id(self):
-        return getattr(self.raw_obj, 'Id', getattr(self.raw_obj, 'id'))
+        return getattr(self.raw_obj, 'Id', getattr(self.raw_obj, 'id', None))
 
     def get_date_created(self):
-        return getattr(self.raw_obj, 'DateCreated', getattr(self.raw_obj, 'date_created'))
+        return getattr(self.raw_obj, 'DateCreated', getattr(self.raw_obj, 'date_created', None))
 
 
 class CategoryContext:
