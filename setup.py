@@ -25,7 +25,7 @@ with open(os.path.join(os.path.dirname(__file__), "README.rst"), "rt") as f:
 
 BASESPACE_PYTHON_SDK_VERSION = "basespace-python-sdk @ git+https://github.com/emedgene/basespace-python-sdk@0.6.0" \
                                "#subdirectory=src"
-REQUIREMENTS = [BASESPACE_PYTHON_SDK_VERSION, "bssh-sdk-2==0.0.1+pr1.18.1", "fs~=2.4", "smart-open~=5.1"]
+REQUIREMENTS = [BASESPACE_PYTHON_SDK_VERSION, "fs~=2.4", "smart-open~=5.1"]
 
 setup(
     name="fs-basespace",

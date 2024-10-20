@@ -2,3 +2,4 @@
 fs~=2.4
 smart-open~=5.1
 vcrpy~=4.1
+bssh_sdk_2-0.0.1+pr1.18.1.tar.gz
