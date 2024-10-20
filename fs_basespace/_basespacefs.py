@@ -138,6 +138,13 @@ class BASESPACEFS(FS):
 
         return Info(info_dict)
 
+    @staticmethod
+    def _get_extras(raw_obj):
+        if qc_status := getattr(raw_obj, "qc_status", None):
+            return {
+                "qc_status": qc_status
+            }
+
     def _info_from_object(self, obj, namespaces):
         """ Make an info dict from the basespace context object
             List of functional namespaces: https://github.com/PyFilesystem/pyfilesystem2/blob/master/fs/info.py
@@ -158,6 +165,8 @@ class BASESPACEFS(FS):
                 "type": _type,
                 "created": str(raw_obj.DateCreated)
             }
+            if extras := self._get_extras(raw_obj):
+                details_info["extras"] = extras
             if not is_dir:
                 details_info["size"] = raw_obj.Size
             info["details"] = details_info
