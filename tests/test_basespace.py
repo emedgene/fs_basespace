@@ -594,6 +594,36 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
+    @vcr.use_cassette('scandir/datasets_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    def test_scandir_details_datasets_folder(self):
+        # prepare
+        expected_list = [
+            {'name': 'ds.ac82a306af3847f2b53ecb695bc22400', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep1_L001',
+             "extras": {"qc_status": "Undefined"}}]
+
+        # init
+        basespace_fs = self._init_default_fs()
+
+        # act
+        biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets'
+        resource_list = basespace_fs.scandir(biosamples_path, namespaces=["details"])
+
+        # assert
+        resources = []
+        for index, fs_resource in enumerate(resource_list):
+            resource = {
+                "name": fs_resource.name,
+                "directory": fs_resource.is_dir
+            }
+            alias = fs_resource.get('basic', 'alias')
+            if alias:
+                resource['alias'] = alias
+            if extras := fs_resource.get('details', 'extras'):
+                resource['extras'] = extras
+            resources.append(resource)
+
+        self.assertListEqual(resources, expected_list)
+
     def test_scandir_non_existing_folder(self):
         # prepare
         no_such_folder_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasetsssss/'
