@@ -156,7 +156,7 @@ class BASESPACEFS(FS):
             _type = int(ResourceType.directory if is_dir else ResourceType.file)
             details_info = {
                 "type": _type,
-                "created": str(raw_obj.date_created)
+                "created": getattr(raw_obj, 'DateCreated', getattr(raw_obj, 'date_created', None))
             }
             if not is_dir:
                 details_info["size"] = raw_obj.Size
