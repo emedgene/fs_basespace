@@ -163,7 +163,7 @@ class BASESPACEFS(FS):
             _type = int(ResourceType.directory if is_dir else ResourceType.file)
             details_info = {
                 "type": _type,
-                "created": str(raw_obj.DateCreated)
+                "created": str(obj.get_date_created())
             }
             if extras := self._get_extras(raw_obj):
                 details_info["extras"] = extras
