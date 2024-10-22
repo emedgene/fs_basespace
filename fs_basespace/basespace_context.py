@@ -46,6 +46,13 @@ class EntityContext(metaclass=EntityContextMeta):
     def get_id(self):
         return getattr(self.raw_obj, 'Id', getattr(self.raw_obj, 'id', None))
 
+    def get_date_created(self):
+        return getattr(self.raw_obj, 'DateCreated', getattr(self.raw_obj, 'date_created', None))
+
+    def get_size(self):
+        return getattr(self.raw_obj, 'Size', getattr(self.raw_obj, 'size', None))
+
+
 
 class CategoryContext:
     NAME = "undefined"
