@@ -468,7 +468,8 @@ class TestBaseSpace(unittest.TestCase):
         # prepare
         expected_list = [{'alias': 'appresults', 'directory': True, 'name': 'appresults'},
                          {'alias': 'samples', 'directory': True, 'name': 'samples'},
-                         {'alias': 'biosamples', 'directory': True, 'name': 'biosamples'}]
+                         {'alias': 'biosamples', 'directory': True, 'name': 'biosamples'},
+                         {'alias': 'appsessions', 'directory': True, 'name': 'appsessions'}]
 
         # init
         basespace_fs = self._init_default_fs()
