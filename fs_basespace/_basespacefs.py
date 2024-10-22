@@ -159,7 +159,7 @@ class BASESPACEFS(FS):
                 "created": str(getattr(raw_obj, 'DateCreated', getattr(raw_obj, 'date_created', None)))
             }
             if not is_dir:
-                details_info["size"] = raw_obj.Size
+                details_info["size"] = getattr(raw_obj, 'Size', getattr(raw_obj, 'size', None))
             info["details"] = details_info
 
         if "access" in namespaces:
