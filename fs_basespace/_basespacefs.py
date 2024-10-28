@@ -21,6 +21,8 @@ from .basespace_context import FileContext
 from .basespace_context import CategoryContext
 from .basespace_context import get_last_direct_context
 from .basespace_context import get_context_by_key
+from .const import DATASET_PREFIX
+from .const import BASESPACE_SECTIONS
 
 __all__ = ["BASESPACEFS"]
 _BASESPACE_DEFAULT_SERVER = "https://api.basespace.illumina.com/"
@@ -156,10 +158,10 @@ class BASESPACEFS(FS):
             _type = int(ResourceType.directory if is_dir else ResourceType.file)
             details_info = {
                 "type": _type,
-                "created": str(raw_obj.DateCreated)
+                "created": str(obj.get_date_created())
             }
             if not is_dir:
-                details_info["size"] = raw_obj.Size
+                details_info["size"] = obj.get_size()
             info["details"] = details_info
 
         if "access" in namespaces:
@@ -170,6 +172,47 @@ class BASESPACEFS(FS):
             info["access"] = access_info
         return info
 
+    def _path_uses_ids(self, path: str) -> bool:
+        if not path:
+            return True
+        path_parts = [part for part in path.split('/') if part]
+        file_name = path_parts[-1]
+        if file_name in BASESPACE_SECTIONS or file_name.startswith(DATASET_PREFIX):
+            return True
+        return file_name.isdigit()
+
+    def _get_path_from_path_list(self, path_list: list[str]) -> str:
+        return '/'.join(path_list)
+
+    def _recursive_construct_ids_path(self, current_ids_list: list, split_path: list):
+        if not split_path:
+            return current_ids_list
+        base = split_path[0]
+        end = split_path[1:]
+        current_ids_path = self._get_path_from_path_list(current_ids_list)
+        logger.debug(f'Current ids path: {current_ids_path}')
+        # find base id from alias
+        resources = self.scandir(current_ids_path)
+        for resource in resources:
+            if resource.get('basic', 'alias').lower() == base.lower():
+                current_ids_list.append(resource.get('basic', 'name'))
+                final_path = self._recursive_construct_ids_path(current_ids_list, end)
+                if final_path:
+                    return final_path
+        if len(current_ids_list) == 0:
+            raise Exception(f"Path not found on basespace. path: {self._get_path_from_path_list(split_path)}")
+        current_ids_list.pop()
+        return
+
+    def _convert_names_path_to_ids_path(self, path: str) -> str:
+        logger.debug(f'Converting {path} to ids path.')
+        path = path[1:] if path.startswith('/') else path
+        path_parts = path.split('/')
+        ids_list = self._recursive_construct_ids_path([], path_parts)
+        ids_path = "/" + self._get_path_from_path_list(ids_list)
+        logger.debug(f'Converted {path} to ids path {ids_path}.')
+        return ids_path
+
     def scandir(
             self,
             path,  # type: Text     # noqa
@@ -179,6 +222,8 @@ class BASESPACEFS(FS):
         # type: (...) -> Iterator[Info] # noqa
         logger.debug(f'scandir path: {path}')
         namespaces = namespaces or ()
+        if not self._path_uses_ids(path):
+            path = self._convert_names_path_to_ids_path(path)
         _path = self.validatepath(path)
 
         try:
