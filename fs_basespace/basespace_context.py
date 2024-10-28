@@ -39,13 +39,13 @@ class EntityContext(metaclass=EntityContextMeta):
         return cls.CATEGORY_MAP[category]
 
     def get_name(self):
-        return getattr(self.raw_obj, 'Name', getattr(self.raw_obj, 'name'))
+        return getattr(self.raw_obj, 'Name', getattr(self.raw_obj, 'name', None))
 
     def get_id(self):
-        return getattr(self.raw_obj, 'Id', getattr(self.raw_obj, 'id'))
+        return getattr(self.raw_obj, 'Id', getattr(self.raw_obj, 'id', None))
 
     def get_date_created(self):
-        return getattr(self.raw_obj, 'DateCreated', getattr(self.raw_obj, 'date_created'))
+        return getattr(self.raw_obj, 'DateCreated', getattr(self.raw_obj, 'date_created', None))
 
 
 class CategoryContext:
@@ -165,7 +165,7 @@ class SequencedFileGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
-        return list(self.raw_obj)
+        return list(self.raw_obj.items)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id: str, page: Page):
