@@ -184,7 +184,7 @@ class BASESPACEFS(FS):
         return file_name.isdigit()
 
     def _get_path_from_path_list(self, path_list: list[str]) -> str:
-        return '/'.join(path_list)
+        return '/'.join(path_list) + '/'
 
     def _recursive_construct_ids_path(self, current_ids_list: list, split_path: list):
         if not split_path:
