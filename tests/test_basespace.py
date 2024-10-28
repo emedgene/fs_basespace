@@ -296,7 +296,7 @@ class TestBaseSpace(unittest.TestCase):
         basespace_fs = self._init_default_fs()
 
         # act
-        folder_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples'
+        folder_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/'
         biosamples_list = basespace_fs.listdir(folder_name)
 
         # assert
@@ -541,6 +541,66 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertGreaterEqual(len(resources), 24)
         self.assertListEqual(resources, expected_list)
+
+    @vcr.use_cassette('scandir/project_appsessions_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    def test_scandir_project_appsessions_folder(self):
+        # prepare
+        expected_list = [{'name': '751869300', 'directory': True, 'alias': 'blood1.hard-filtered.vcf.gz'},
+                         {'name': '751859288', 'directory': True, 'alias': 'blood2.hard-filtered.vcf.gz'},
+                         {'name': '752603918', 'directory': True, 'alias': 'blood3.hard-filtered.vcf.gz'},
+                         {'name': '751941381', 'directory': True, 'alias': 'Ethanol1.hard-filtered.vcf.gz'},
+                         {'name': '751869301', 'directory': True, 'alias': 'Ethanol2.hard-filtered.vcf.gz'},
+                         {'name': '752475811', 'directory': True, 'alias': 'Ethanol3.hard-filtered.vcf.gz'},
+                         {'name': '751844294', 'directory': True, 'alias': 'lipstick1.hard-filtered.vcf.gz'},
+                         {'name': '751923371', 'directory': True, 'alias': 'lipstick2.hard-filtered.vcf.gz'},
+                         {'name': '751890337', 'directory': True, 'alias': 'lipstick3.hard-filtered.vcf.gz'},
+                         {'name': '751901355', 'directory': True, 'alias': 'NA05789.hard-filtered.vcf.gz'},
+                         {'name': '751918371', 'directory': True, 'alias': 'NA11468.hard-filtered.vcf.gz'},
+                         {'name': '752558872', 'directory': True, 'alias': 'NA12877-A.hard-filtered.vcf.gz'},
+                         {'name': '751897341', 'directory': True, 'alias': 'NA12877-B.hard-filtered.vcf.gz'},
+                         {'name': '751877329', 'directory': True, 'alias': 'NA12877-C.hard-filtered.vcf.gz'},
+                         {'name': '752593906', 'directory': True, 'alias': 'NA12878-D.hard-filtered.vcf.gz'},
+                         {'name': '752603919', 'directory': True, 'alias': 'NA12878-E.hard-filtered.vcf.gz'},
+                         {'name': '751945374', 'directory': True, 'alias': 'NA12878-F.hard-filtered.vcf.gz'},
+                         {'name': '751960389', 'directory': True, 'alias': 'NA14626-D.hard-filtered.vcf.gz'},
+                         {'name': '752591895', 'directory': True, 'alias': 'NA18949.hard-filtered.vcf.gz'},
+                         {'name': '751900349', 'directory': True, 'alias': 'NA21148.hard-filtered.vcf.gz'},
+                         {'name': '752592906', 'directory': True, 'alias': 'NA21284.hard-filtered.vcf.gz'},
+                         {'name': '751929348', 'directory': True, 'alias': 'NA27335.hard-filtered.vcf.gz'},
+                         {'name': '753387728', 'directory': True, 'alias': 'SampleSheet_requeue_run2'},
+                         {'name': '751897342', 'directory': True, 'alias': 'SeraseqCardio-D.hard-filtered.vcf.gz'},
+                         {'name': '752546866', 'directory': True, 'alias': 'Seraseq_IC_v1-A.hard-filtered.vcf.gz'},
+                         {'name': '751908340', 'directory': True, 'alias': 'Seraseq_IC_v1-B.hard-filtered.vcf.gz'},
+                         {'name': '752592907', 'directory': True, 'alias': 'Seraseq_IC_v1-C.hard-filtered.vcf.gz'},
+                         {'name': '752475812', 'directory': True, 'alias': 'Seraseq_IC_v2-A.hard-filtered.vcf.gz'},
+                         {'name': '751851284', 'directory': True, 'alias': 'Seraseq_IC_v2-B.hard-filtered.vcf.gz'},
+                         {'name': '751861317', 'directory': True, 'alias': 'Seraseq_IC_v2-C.hard-filtered.vcf.gz'},
+                         {'name': '752477829', 'directory': True, 'alias': 'toothpaste1.hard-filtered.vcf.gz'},
+                         {'name': '751849266', 'directory': True, 'alias': 'toothpaste2.hard-filtered.vcf.gz'},
+                         {'name': '752633952', 'directory': True, 'alias': 'toothpaste3.hard-filtered.vcf.gz'}]
+
+        # mock init
+        basespace_fs = self._init_default_fs()
+
+        # act
+        appsessions_path = '/projects/425571151/appsessions'
+        resource_list = basespace_fs.scandir(appsessions_path)
+
+        # assert
+        resources = []
+        for index, fs_resource in enumerate(resource_list):
+            resource = {
+                "name": fs_resource.name,
+                "directory": fs_resource.is_dir
+            }
+            alias = fs_resource.get('basic', 'alias')
+            if alias:
+                resource['alias'] = alias
+            resources.append(resource)
+
+        self.assertGreaterEqual(len(resources), 33)
+        self.assertListEqual(resources, expected_list)
+
 
     @vcr.use_cassette('scandir/biosample_folder.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_biosample_folder(self):
