@@ -176,6 +176,8 @@ class BASESPACEFS(FS):
         if not path:
             return True
         path_parts = [part for part in path.split('/') if part]
+        if not path_parts:
+            return True
         file_name = path_parts[-1]
         if file_name in BASESPACE_SECTIONS or file_name.startswith(DATASET_PREFIX):
             return True
