@@ -296,7 +296,7 @@ class TestBaseSpace(unittest.TestCase):
         basespace_fs = self._init_default_fs()
 
         # act
-        folder_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/'
+        folder_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples'
         biosamples_list = basespace_fs.listdir(folder_name)
 
         # assert
