@@ -194,7 +194,10 @@ class BASESPACEFS(FS):
         current_ids_path = self._get_path_from_path_list(current_ids_list)
         logger.debug(f'Current ids path: {current_ids_path}')
         # find base id from alias
-        resources = self.scandir(current_ids_path)
+        try:
+            resources = self.scandir(current_ids_path)
+        except Exception:
+            raise errors.ResourceNotFound(current_ids_path)
         for resource in resources:
             if resource.get('basic', 'alias').lower() == base.lower():
                 current_ids_list.append(resource.get('basic', 'name'))
