@@ -17,9 +17,3 @@ class BasespaceApiFactory():
         api_v2 = bssh_sdk_2.BasespaceApi(bssh_sdk_2.ApiClient(v2_configuration))
 
         self.v2 = api_v2
-
-    def get_v2_server(self, basespace_server: str) -> str:
-        if basespace_server.endswith('/'):
-            basespace_server = basespace_server[:-1]
-        return f'{basespace_server}/v2'
-
