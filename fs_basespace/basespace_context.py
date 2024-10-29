@@ -5,7 +5,9 @@ from typing import Tuple
 from fs import errors
 from fs_basespace.api_factory import BasespaceApiFactory
 
+
 Page = Tuple[int, int]
+
 
 class classproperty:
     def __init__(self, getter):
@@ -39,10 +41,16 @@ class EntityContext(metaclass=EntityContextMeta):
         return cls.CATEGORY_MAP[category]
 
     def get_name(self):
-        return self.raw_obj.Name
+        return getattr(self.raw_obj, 'Name', getattr(self.raw_obj, 'name', None))
 
     def get_id(self):
-        return self.raw_obj.Id
+        return getattr(self.raw_obj, 'Id', getattr(self.raw_obj, 'id', None))
+
+    def get_date_created(self):
+        return getattr(self.raw_obj, 'DateCreated', getattr(self.raw_obj, 'date_created', None))
+
+    def get_size(self):
+        return getattr(self.raw_obj, 'Size', getattr(self.raw_obj, 'size', None))
 
 
 class CategoryContext:
@@ -197,6 +205,10 @@ class DatasetsContext(CategoryContextDirect):
                                                          limit=limit)
 
 
+class AppSessionContext(EntityContext, categories=[DatasetsContext]):
+    pass
+
+
 class BioSampleContext(EntityContext, categories=[DatasetsContext]):
     pass
 
@@ -224,9 +236,25 @@ class BioSampleGroupContext(CategoryContextDirect):
                                                 inputbiosamples=biosample_id)
 
 
+class AppSessionsContext(CategoryContextDirect):
+    NAME = "appsessions"
+    ENTITY_CONTEXT = AppSessionContext
+
+    def list_raw(self, api: BasespaceApiFactory, page: Page):
+        offset, limit = translate_page_to_offset_and_limit(page)
+        params = {'sortby': 'Name', 'offset': offset, 'limit': limit, 'output_projects': [self.raw_obj.Id]}
+        return api.v2.get_v2_appsessions(**params).items
+
+    @classmethod
+    def get_raw_entity_direct(cls, api: BasespaceApiFactory, result_id: str, page: Page):
+        offset, limit = translate_page_to_offset_and_limit(page)
+        return api.v2.get_v2_datasets(offset=offset, limit=limit, appsessionids=[result_id]).items
+
+
 class ProjectContext(EntityContext, categories=[AppResultsContext,
                                                 SamplesContext,
-                                                BioSampleGroupContext]):
+                                                BioSampleGroupContext,
+                                                AppSessionsContext]):
     pass
 
 
