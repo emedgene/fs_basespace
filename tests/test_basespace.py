@@ -655,7 +655,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    @vcr.use_cassette('scandir/datasets_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_details_datasets_folder(self):
         # prepare
         expected_list = [
