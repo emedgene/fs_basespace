@@ -232,7 +232,7 @@ class BioSampleGroupContext(CategoryContextDirect):
                                       sortdir='Asc',
                                       include=["properties"],
                                       datasettypes=["~common.fastq"],
-                                      propertyfilters=["Input.Libraries,Input.Runs,BaseSpace.Metrics.FastQ"],
+                                      propertyfilters=["Input.Libraries", "Input.Runs", "BaseSpace.Metrics.FastQ"],
                                       inputbiosamples=[biosample_id])
 
 
