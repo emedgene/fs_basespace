@@ -41,7 +41,7 @@ class EntityContext(metaclass=EntityContextMeta):
         return cls.CATEGORY_MAP[category]
 
     def get_name(self):
-        return getattr(self.raw_obj, 'Name', getattr(self.raw_obj, 'name', None))
+        return getattr(self.raw_obj, 'Name', getattr(self.raw_obj, 'name', getattr(self.raw_obj, 'bio_sample_name', None)))
 
     def get_id(self):
         return getattr(self.raw_obj, 'Id', getattr(self.raw_obj, 'id', None))
@@ -219,8 +219,8 @@ class BioSampleGroupContext(CategoryContextDirect):
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
         offset, limit = translate_page_to_offset_and_limit(page)
-        params = {'sortby': 'Name', 'offset': offset, 'limit': limit}
-        bio_sample_list = self.raw_obj.get_biosamples(api.biosamples_api, query_params=params)
+        params = {'projectid': [self.raw_obj.Id], 'sortby': 'Name', 'offset': offset, 'limit': limit}
+        bio_sample_list = api.v2.get_v2_biosamples(**params).items
         return bio_sample_list
 
     @classmethod
