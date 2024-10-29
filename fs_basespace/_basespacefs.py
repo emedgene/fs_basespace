@@ -163,7 +163,6 @@ class BASESPACEFS(FS):
             if not is_dir:
                 details_info["size"] = obj.get_size()
             info["details"] = details_info
-
         if "access" in namespaces:
             access_info = dict()
             if is_dir:
