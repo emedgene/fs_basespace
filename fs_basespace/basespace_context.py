@@ -5,9 +5,9 @@ from typing import Tuple
 from fs import errors
 from fs_basespace.api_factory import BasespaceApiFactory
 
-from BaseSpacePy.model.V2DatasetCompactList import V2DatasetCompactList
 
 Page = Tuple[int, int]
+
 
 class classproperty:
     def __init__(self, getter):
