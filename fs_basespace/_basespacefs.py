@@ -159,7 +159,7 @@ class BASESPACEFS(FS):
                 "created": str(obj.get_date_created())
             }
             if not is_dir:
-                details_info["size"] = raw_obj.Size
+                details_info["size"] = obj.get_size()
             info["details"] = details_info
 
         if "access" in namespaces:
