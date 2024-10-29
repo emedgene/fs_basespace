@@ -284,7 +284,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertIsNotNone(datasets_list)
         self.assertListEqual(datasets_list, expected_list)
 
-    @vcr.use_cassette('listdir/existing_dir_biosamples.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('listdir/existing_dir_biosamples_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_listdir_existing_dir_biosamples(self):
         # prepare
         expected_list = ['104555093', '104555094', '104555095', '104555096', '104555097', '104555098', '104555099',
@@ -492,7 +492,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    @vcr.use_cassette('scandir/project_biosamples_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/project_biosamples_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_project_biosamples_folder(self):
         # prepare
         expected_list = [{'name': '104555093', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep1'},
@@ -602,7 +602,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertListEqual(resources, expected_list)
 
 
-    @vcr.use_cassette('scandir/biosample_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/biosample_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_biosample_folder(self):
         # prepare
         expected_list = [{'name': 'datasets', 'directory': True, 'alias': 'datasets'}]
@@ -774,7 +774,7 @@ class TestBaseSpace(unittest.TestCase):
             basespace_fs.geturl(no_such_file_name)
 
     # PAGINATION
-    @vcr.use_cassette('scandir/project_biosamples_folder_pagination.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/project_biosamples_folder_pagination_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_project_biosamples_folder_pagination(self):
         # prepare
         expected_list = [{'name': '104555093', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep1'},
