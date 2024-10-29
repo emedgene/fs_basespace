@@ -168,7 +168,7 @@ class BASESPACEFS(FS):
             if extras := self._get_extras(raw_obj):
                 details_info["extras"] = extras
             if not is_dir:
-                details_info["size"] = raw_obj.Size
+                details_info["size"] = obj.get_size()
             info["details"] = details_info
 
         if "access" in namespaces:
