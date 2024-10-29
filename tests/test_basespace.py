@@ -268,7 +268,7 @@ class TestBaseSpace(unittest.TestCase):
             basespace_fs.getinfo(no_such_folder_name)
 
     # listdir
-    @vcr.use_cassette('listdir/existing_dir_datasets.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('listdir/existing_dir_datasets_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_listdir_existing_dir_datasets(self):
         # prepare
         expected_list = [EMEDGENE_DATASET_ID]
@@ -284,7 +284,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertIsNotNone(datasets_list)
         self.assertListEqual(datasets_list, expected_list)
 
-    @vcr.use_cassette('listdir/existing_dir_biosamples.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('listdir/existing_dir_biosamples_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_listdir_existing_dir_biosamples(self):
         # prepare
         expected_list = ['104555093', '104555094', '104555095', '104555096', '104555097', '104555098', '104555099',
@@ -492,7 +492,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    @vcr.use_cassette('scandir/project_biosamples_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/project_biosamples_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_project_biosamples_folder(self):
         # prepare
         expected_list = [{'name': '104555093', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep1'},
@@ -602,7 +602,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertListEqual(resources, expected_list)
 
 
-    @vcr.use_cassette('scandir/biosample_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/biosample_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_biosample_folder(self):
         # prepare
         expected_list = [{'name': 'datasets', 'directory': True, 'alias': 'datasets'}]
@@ -628,7 +628,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    @vcr.use_cassette('scandir/datasets_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_datasets_folder(self):
         # prepare
         expected_list = [
@@ -729,7 +729,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertEqual(folder_count, 0)
         self.assertEqual(file_count, 0)
 
-    @vcr.use_cassette('scandir/dataset_files.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/dataset_files_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_dataset_files(self):
         # prepare
         expected_file_list = [
@@ -804,7 +804,7 @@ class TestBaseSpace(unittest.TestCase):
             basespace_fs.geturl(no_such_file_name)
 
     # PAGINATION
-    @vcr.use_cassette('scandir/project_biosamples_folder_pagination.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/project_biosamples_folder_pagination_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_project_biosamples_folder_pagination(self):
         # prepare
         expected_list = [{'name': '104555093', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep1'},
@@ -875,7 +875,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertGreaterEqual(len(full_resources_list), len(expected_list))
         self.assertListEqual(full_resources_list, expected_list)
 
-    @vcr.use_cassette('scandir/datasets_folder_pagination.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/datasets_folder_pagination_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_datasets_folder_pagination(self):
         # prepare
         expected_list = [
@@ -925,7 +925,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(full_resources_list, expected_list)
 
-    @vcr.use_cassette('scandir/dataset_files_pagination.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/dataset_files_pagination_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_dataset_files_pagination(self):
         # prepare
         expected_file_list = [
