@@ -13,8 +13,6 @@ class BasespaceApiFactory():
         v2_server = self.get_v2_server(basespace_server)
         self.biosamples_api = BiosamplesApi(access_token=self.base_api.apiClient.apiKey,
                                             api_server_and_version=v2_server)
-        self.datasets_api = DatasetsApi(access_token=self.base_api.apiClient.apiKey,
-                                        api_server_and_version=v2_server)
 
         # api SDK-V2 configuration
         v2_configuration = bssh_sdk_2.Configuration()

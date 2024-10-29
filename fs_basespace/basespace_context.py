@@ -170,7 +170,7 @@ class SequencedFileGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
-        return list(self.raw_obj)
+        return self.raw_obj.items
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id: str, page: Page):
@@ -187,22 +187,22 @@ class DatasetsContext(CategoryContextDirect):
     ENTITY_CONTEXT = SequencedFileGroupsContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
-        return list(self.raw_obj)
+        return self.raw_obj.items
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, dataset_id: str, page: Page):
         offset, limit = translate_page_to_offset_and_limit(page)
-        return api.datasets_api.get_v2_datasets_id_files(excludevcfindexfolder=False,
-                                                         excludebamcoveragefolder=False,
-                                                         excludesystemfolder=False,
-                                                         excludeemptyfiles=False,
-                                                         filehrefcontentresolution=False,
-                                                         turbomode=False,
-                                                         id=dataset_id,
-                                                         sortdir='Asc',
-                                                         sortby='Name',
-                                                         offset=offset,
-                                                         limit=limit)
+        return api.v2.get_v2_datasets_id_files(excludevcfindexfolder=False,
+                                               excludebamcoveragefolder=False,
+                                               excludesystemfolder=False,
+                                               excludeemptyfiles=False,
+                                               filehrefcontentresolution=False,
+                                               turbomode=False,
+                                               id=dataset_id,
+                                               sortdir='Asc',
+                                               sortby='Name',
+                                               offset=offset,
+                                               limit=limit)
 
 
 class AppSessionContext(EntityContext, categories=[DatasetsContext]):
@@ -226,14 +226,14 @@ class BioSampleGroupContext(CategoryContextDirect):
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, biosample_id: str, page: Page):
         offset, limit = translate_page_to_offset_and_limit(page)
-        return api.datasets_api.get_v2_datasets(offset=offset,
-                                                limit=limit,
-                                                sortby='Name',
-                                                sortdir='Asc',
-                                                include="properties",
-                                                datasettypes="~common.fastq",
-                                                propertyfilters="Input.Libraries,Input.Runs,BaseSpace.Metrics.FastQ",
-                                                inputbiosamples=biosample_id)
+        return api.v2.get_v2_datasets(offset=offset,
+                                      limit=limit,
+                                      sortby='Name',
+                                      sortdir='Asc',
+                                      include=["properties"],
+                                      datasettypes=["~common.fastq"],
+                                      propertyfilters=["Input.Libraries", "Input.Runs", "BaseSpace.Metrics.FastQ"],
+                                      inputbiosamples=[biosample_id])
 
 
 class AppSessionsContext(CategoryContextDirect):
