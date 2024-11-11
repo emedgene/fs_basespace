@@ -685,6 +685,46 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
+    @vcr.use_cassette('scandir/appsessions_datasets.yaml', cassette_library_dir=cassette_lib_dir)
+    def test_scandir_appsessions_datasets_folder(self):
+        # prepare
+        expected_list = [
+            {'name': 'ds.2fd7a5b5f7a143779eea5426fc16de32', 'directory': True,
+             'alias': '240304_MP2-12_P3_TwistRefSeq-24plex_1000pM-20'},
+            {'name': 'ds.a4dd83ebf3f64b4eaa5ec71b44c51391', 'directory': True,
+             'alias': '240304_MP2-12_P3_TwistRefSeq-24plex_1000pM-7'},
+            {'name': 'ds.b59a8ea6d2964a2e97fdae0bac27b4c0', 'directory': True, 'alias': 'pon'},
+            {'name': 'ds.9cc818d038ae45749e6c503e28f61bb7', 'directory': True,
+             'alias': '240304_MP2-12_P3_TwistRefSeq-24plex_1000pM-19'},
+            {'name': 'ds.a6eca5c04139499a95f366ab62af3c50', 'directory': True,
+             'alias': '240304_MP2-12_P3_TwistRefSeq-24plex_1000pM-5'},
+            {'name': 'ds.4202a380042c4c1ca21d5de4f84812c5', 'directory': True,
+             'alias': '240304_MP2-12_P3_TwistRefSeq-24plex_1000pM-23'},
+            {'name': 'ds.25898d9223fc4818b550339110e82501', 'directory': True,
+             'alias': 'Extra Files (BSSH DRAGEN Baseline Builder 4-3-6-ab5e03 2024-07-15 10:57:14Z)'}
+            ]
+
+        # init
+        basespace_fs = self._init_default_fs()
+
+        # act
+        biosamples_path = f'/projects/424682258/appsessions/748822213/datasets/'
+        resource_list = basespace_fs.scandir(biosamples_path)
+
+        # assert
+        resources = []
+        for index, fs_resource in enumerate(resource_list):
+            resource = {
+                "name": fs_resource.name,
+                "directory": fs_resource.is_dir
+            }
+            alias = fs_resource.get('basic', 'alias')
+            if alias:
+                resource['alias'] = alias
+            resources.append(resource)
+
+        self.assertListEqual(resources, expected_list)
+
     def test_scandir_non_existing_folder(self):
         # prepare
         no_such_folder_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasetsssss/'
