@@ -248,7 +248,7 @@ class AppSessionsContext(CategoryContextDirect):
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, result_id: str, page: Page):
         offset, limit = translate_page_to_offset_and_limit(page)
-        return api.v2.get_v2_datasets(offset=offset, limit=limit, appsessionids=[result_id]).items
+        return api.v2.get_v2_datasets(offset=offset, limit=limit, appsessionids=[result_id])
 
 
 class ProjectContext(EntityContext, categories=[AppResultsContext,
