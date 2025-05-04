@@ -1,6 +1,6 @@
 import re
 from abc import abstractmethod
-from typing import Tuple
+from typing import Tuple, Optional
 
 from fs import errors
 from fs_basespace.api_factory import BasespaceApiFactory
@@ -131,14 +131,18 @@ class FileGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
-        params = qp({'Offset': offset, 'Limit': limit})
+        params = None
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            params = qp({'Offset': offset, 'Limit': limit})
         return self.raw_obj.getFiles(api.base_api, queryPars=params)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id: str, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
-        params = qp({'Offset': offset, 'Limit': limit})
+        params = None
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            params = qp({'Offset': offset, 'Limit': limit})
         return api.base_api.getFileById(file_id, queryPars=params)
 
 
@@ -151,15 +155,21 @@ class AppResultsContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileGroupsContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
-        params = qp({'Offset': offset, 'Limit': limit})
+        params = None
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            params = qp({'Offset': offset, 'Limit': limit})
         return self.raw_obj.getAppResults(api.base_api, queryPars=params)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, result_id: str, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
-        params = qp({'Offset': offset, 'Limit': limit})
+        params = None
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            params = qp({'Offset': offset, 'Limit': limit})
         return api.base_api.getAppResultById(result_id, queryPars=params)
+
+
 
 
 class SamplesContext(CategoryContextDirect):
@@ -167,14 +177,18 @@ class SamplesContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileGroupsContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
-        params = qp({'Offset': offset, 'Limit': limit})
+        params = None
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            params = qp({'Offset': offset, 'Limit': limit})
         return self.raw_obj.getSamples(api.base_api, queryPars=params)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, sample_id: str, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
-        params = qp({'Offset': offset, 'Limit': limit})
+        params = None
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            params = qp({'Offset': offset, 'Limit': limit})
         return api.base_api.getSampleById(sample_id, queryPars=params)
 
 
@@ -187,8 +201,10 @@ class SequencedFileGroupContext(CategoryContextDirect):
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id: str, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
-        params = qp({'Offset': offset, 'Limit': limit})
+        params = None
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            params = qp({'Offset': offset, 'Limit': limit})
         return api.base_api.getFileById(file_id, queryPars=params)
 
 
@@ -206,7 +222,19 @@ class DatasetsContext(CategoryContextDirect):
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, dataset_id: str, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            return api.v2.get_v2_datasets_id_files(excludevcfindexfolder=False,
+                                                   excludebamcoveragefolder=False,
+                                                   excludesystemfolder=False,
+                                                   excludeemptyfiles=False,
+                                                   filehrefcontentresolution=False,
+                                                   turbomode=False,
+                                                   id=dataset_id,
+                                                   sortdir='Asc',
+                                                   sortby='Name',
+                                                   offset=offset,
+                                                   limit=limit)
         return api.v2.get_v2_datasets_id_files(excludevcfindexfolder=False,
                                                excludebamcoveragefolder=False,
                                                excludesystemfolder=False,
@@ -215,9 +243,7 @@ class DatasetsContext(CategoryContextDirect):
                                                turbomode=False,
                                                id=dataset_id,
                                                sortdir='Asc',
-                                               sortby='Name',
-                                               offset=offset,
-                                               limit=limit)
+                                               sortby='Name')
 
 
 class AppSessionContext(EntityContext, categories=[DatasetsContext]):
@@ -233,17 +259,26 @@ class BioSampleGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = BioSampleContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
-        params = {'projectid': [self.raw_obj.Id], 'sortby': 'Name', 'offset': offset, 'limit': limit}
+        params = {'projectid': [self.raw_obj.Id], 'sortby': 'Name'}
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            params.update({'offset': offset, 'limit': limit})
         bio_sample_list = api.v2.get_v2_biosamples(**params).items
         return bio_sample_list
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, biosample_id: str, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
-        return api.v2.get_v2_datasets(offset=offset,
-                                      limit=limit,
-                                      sortby='Name',
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            return api.v2.get_v2_datasets(offset=offset,
+                                          limit=limit,
+                                          sortby='Name',
+                                          sortdir='Asc',
+                                          include=["properties"],
+                                          datasettypes=["~common.fastq"],
+                                          propertyfilters=["Input.Libraries", "Input.Runs", "BaseSpace.Metrics.FastQ"],
+                                          inputbiosamples=[biosample_id])
+        return api.v2.get_v2_datasets(sortby='Name',
                                       sortdir='Asc',
                                       include=["properties"],
                                       datasettypes=["~common.fastq"],
@@ -256,14 +291,18 @@ class AppSessionsContext(CategoryContextDirect):
     ENTITY_CONTEXT = AppSessionContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
-        params = {'sortby': 'Name', 'offset': offset, 'limit': limit, 'output_projects': [self.raw_obj.Id]}
+        params = {'sortby': 'Name', 'output_projects': [self.raw_obj.Id]}
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            params.update({'offset': offset, 'limit': limit})
         return api.v2.get_v2_appsessions(**params).items
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, result_id: str, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
-        return api.v2.get_v2_datasets(offset=offset, limit=limit, appsessionids=[result_id])
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            return api.v2.get_v2_datasets(offset=offset, limit=limit, appsessionids=[result_id])
+        return api.v2.get_v2_datasets(appsessionids=[result_id])
 
 
 class ProjectContext(EntityContext, categories=[AppResultsContext,
@@ -278,14 +317,18 @@ class ProjectGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = ProjectContext
 
     def list_raw(self, api, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
-        params = qp({'Offset': offset, 'Limit': limit})
-        return api.base_api.getProjectByUser(queryPars = params)
+        params = None
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            params = qp({'Offset': offset, 'Limit': limit})
+        return api.base_api.getProjectByUser(queryPars=params)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, project_id: str, page: Page):
-        offset, limit = translate_page_to_offset_and_limit(page)
-        params = qp({'Offset': offset, 'Limit': limit})
+        params = None
+        if page:
+            offset, limit = translate_page_to_offset_and_limit(page)
+            params = qp({'Offset': offset, 'Limit': limit})
         return api.base_api.getProjectById(project_id, queryPars=params)
 
 
@@ -337,9 +380,10 @@ def get_context_by_key(api: BasespaceApiFactory, key: str, page: Page):
     return latest_context
 
 
-def translate_page_to_offset_and_limit(page: Page):
-    offset, limit = 0, 50
-    if page:
-        offset, offset_end = page
-        limit = offset_end - offset
+def translate_page_to_offset_and_limit(page: Page) -> Optional[Tuple[int, int]]:
+    # offset, limit = 0, 50
+    offset, offset_end = page
+    limit = offset_end - offset
     return offset, limit
+    # else:
+    #     return None, None

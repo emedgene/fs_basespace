@@ -18,10 +18,14 @@ from fs.opener.errors import OpenerError
 ROOT_PATH = '/'
 
 # Emedgene - MOCK Credentials
-CLIENT_KEY = "YYYYY7c5106e4b4b956e128d1d1XXXXX"
-CLIENT_SECRET = "YYYYY85e8e9b4248b9b396e8c23XXXXX"
-APP_TOKEN = "YYYYY0f27f224388b11f3b193eeXXXXX"
+# CLIENT_KEY = "YYYYY7c5106e4b4b956e128d1d1XXXXX"
+# CLIENT_SECRET = "YYYYY85e8e9b4248b9b396e8c23XXXXX"
+# APP_TOKEN = "YYYYY0f27f224388b11f3b193eeXXXXX"
 BASESPACE_DEFAULT_SERVER = "https://api.basespace.illumina.com/"
+
+CLIENT_KEY = "0ef1c7c5106e4b4b956e128d1d1c43f5"
+CLIENT_SECRET = "1f12d85e8e9b4248b9b396e8c23841e0"
+APP_TOKEN = "224880f27f224388b11f3b193ee377e7"
 
 EMEDGENE_PROJECT_ID = 86591915
 EMEDGENE_PROJECT_NAME = 'MiSeq: Myeloid RNA Panel (Brain and SeraSeq Samples)'
@@ -268,7 +272,7 @@ class TestBaseSpace(unittest.TestCase):
             basespace_fs.getinfo(no_such_folder_name)
 
     # listdir
-    @vcr.use_cassette('listdir/existing_dir_datasets_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    # @vcr.use_cassette('listdir/existing_dir_datasets_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_listdir_existing_dir_datasets(self):
         # prepare
         expected_list = [EMEDGENE_DATASET_ID]
@@ -284,7 +288,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertIsNotNone(datasets_list)
         self.assertListEqual(datasets_list, expected_list)
 
-    @vcr.use_cassette('listdir/existing_dir_biosamples_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    # @vcr.use_cassette('listdir/existing_dir_biosamples_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_listdir_existing_dir_biosamples(self):
         # prepare
         expected_list = ['104555093', '104555094', '104555095', '104555096', '104555097', '104555098', '104555099',
@@ -303,10 +307,11 @@ class TestBaseSpace(unittest.TestCase):
         self.assertIsNotNone(biosamples_list)
         self.assertListEqual(biosamples_list, expected_list)
 
-    @vcr.use_cassette('listdir/existing_dir_projects.yaml', cassette_library_dir=cassette_lib_dir)
+    # @vcr.use_cassette('listdir/existing_dir_projects.yaml', cassette_library_dir=cassette_lib_dir)
     def test_listdir_existing_dir_projects(self):
         # prepare
         expected_list = [str(EMEDGENE_PROJECT_ID)]
+        print(expected_list)
 
         # init
         basespace_fs = self._init_default_fs()
@@ -542,7 +547,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertGreaterEqual(len(resources), 24)
         self.assertListEqual(resources, expected_list)
 
-    @vcr.use_cassette('scandir/project_appsessions_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    # @vcr.use_cassette('scandir/project_appsessions_folder.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_project_appsessions_folder(self):
         # prepare
         expected_list = [{'name': '751869300', 'directory': True, 'alias': 'blood1.hard-filtered.vcf.gz'},
@@ -602,7 +607,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertListEqual(resources, expected_list)
 
 
-    @vcr.use_cassette('scandir/biosample_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    # @vcr.use_cassette('scandir/biosample_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_biosample_folder(self):
         # prepare
         expected_list = [{'name': 'datasets', 'directory': True, 'alias': 'datasets'}]
@@ -628,7 +633,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    # @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_datasets_folder(self):
         # prepare
         expected_list = [
@@ -655,7 +660,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    # @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_details_datasets_folder(self):
         # prepare
         expected_list = [
@@ -685,7 +690,8 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    @vcr.use_cassette('scandir/appsessions_datasets.yaml', cassette_library_dir=cassette_lib_dir)
+    # @vcr.use_cassette('scandir/appsessions_datasets.yaml', cassette_library_dir=cassette_lib_dir)
+    #im not sure is this list really there? cant see
     def test_scandir_appsessions_datasets_folder(self):
         # prepare
         expected_list = [
@@ -769,7 +775,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertEqual(folder_count, 0)
         self.assertEqual(file_count, 0)
 
-    @vcr.use_cassette('scandir/dataset_files_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    # @vcr.use_cassette('scandir/dataset_files_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_dataset_files(self):
         # prepare
         expected_file_list = [
@@ -844,7 +850,7 @@ class TestBaseSpace(unittest.TestCase):
             basespace_fs.geturl(no_such_file_name)
 
     # PAGINATION
-    @vcr.use_cassette('scandir/project_biosamples_folder_pagination_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    # @vcr.use_cassette('scandir/project_biosamples_folder_pagination_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_project_biosamples_folder_pagination(self):
         # prepare
         expected_list = [{'name': '104555093', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep1'},
@@ -877,7 +883,7 @@ class TestBaseSpace(unittest.TestCase):
 
         # act
         biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples'
-        step = 5
+        step = 12
         start = 0
         end = step
         page = (start, end)

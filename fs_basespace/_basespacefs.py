@@ -207,6 +207,10 @@ class BASESPACEFS(FS):
         return [entry for entry in destination.list(self.basespace, page)]
 
     def listdir(self, path):
+        all_entities_list = []
+        offset = 0
+        limit = 1000
+
         logger.debug(f'listdir path: {path}')
         if not self.isdir(path) and not self.isfile(path):
             raise errors.DirectoryExpected(path)
@@ -214,11 +218,17 @@ class BASESPACEFS(FS):
         try:
             _path = self.validatepath(path)
             _key = self._path_to_key(_path)
-            entities_list = self._listdir_entities(_key)
+            while True:
+                entities_list = self._listdir_entities(_key, (offset, limit))
+                all_entities_list.extend(entities_list)
+                if len(entities_list) < limit:
+                    break
+                offset += limit
+
         except Exception:
             raise errors.ResourceNotFound(path)
 
-        return sorted([entry.get_id() for entry in entities_list])
+        return sorted([entry.get_id() for entry in all_entities_list])
 
     def openbin(self, path, mode="r", buffering=-1, **options):
         _mode = Mode(mode)
