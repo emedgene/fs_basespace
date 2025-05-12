@@ -272,7 +272,7 @@ class TestBaseSpace(unittest.TestCase):
             basespace_fs.getinfo(no_such_folder_name)
 
     # listdir
-    # @vcr.use_cassette('listdir/existing_dir_datasets_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('listdir/existing_dir_datasets_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_listdir_existing_dir_datasets(self):
         # prepare
         expected_list = [EMEDGENE_DATASET_ID]
@@ -288,7 +288,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertIsNotNone(datasets_list)
         self.assertListEqual(datasets_list, expected_list)
 
-    # @vcr.use_cassette('listdir/existing_dir_biosamples_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('c', cassette_library_dir=cassette_lib_dir)
     def test_listdir_existing_dir_biosamples(self):
         # prepare
         expected_list = ['104555093', '104555094', '104555095', '104555096', '104555097', '104555098', '104555099',
@@ -307,10 +307,10 @@ class TestBaseSpace(unittest.TestCase):
         self.assertIsNotNone(biosamples_list)
         self.assertListEqual(biosamples_list, expected_list)
 
-    # @vcr.use_cassette('listdir/existing_dir_projects.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('listdir/existing_dir_projects.yaml', cassette_library_dir=cassette_lib_dir)
     def test_listdir_existing_dir_projects(self):
         # prepare
-        expected_list = [str(EMEDGENE_PROJECT_ID)]
+        expected_list = ['238837599', '257330073', '312651341', '372438067', '394318963', '48078043', '86591915']
         print(expected_list)
 
         # init
@@ -509,21 +509,7 @@ class TestBaseSpace(unittest.TestCase):
                          {'name': '104555099', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep3'},
                          {'name': '104555100', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep3'},
                          {'name': '104555101', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep11'},
-                         {'name': '104555102', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep4'},
-                         {'name': '104555103', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep4'},
-                         {'name': '104555104', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep12'},
-                         {'name': '104555105', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep5'},
-                         {'name': '104555106', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep5'},
-                         {'name': '104555107', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep13'},
-                         {'name': '104555108', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep6'},
-                         {'name': '104555109', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep6'},
-                         {'name': '104555110', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep14'},
-                         {'name': '104555111', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep7'},
-                         {'name': '104555112', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep7'},
-                         {'name': '104555113', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep15'},
-                         {'name': '104555114', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep8'},
-                         {'name': '104555115', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep8'},
-                         {'name': '104555116', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep16'}]
+                         {'name': '104555102', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep4'}]
 
         # init
         basespace_fs = self._init_default_fs()
@@ -544,51 +530,28 @@ class TestBaseSpace(unittest.TestCase):
                 resource['alias'] = alias
             resources.append(resource)
 
-        self.assertGreaterEqual(len(resources), 24)
+        self.assertGreaterEqual(len(resources), 10)
         self.assertListEqual(resources, expected_list)
 
-    # @vcr.use_cassette('scandir/project_appsessions_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/project_appsessions_folder.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_project_appsessions_folder(self):
         # prepare
-        expected_list = [{'name': '751869300', 'directory': True, 'alias': 'blood1.hard-filtered.vcf.gz'},
-                         {'name': '751859288', 'directory': True, 'alias': 'blood2.hard-filtered.vcf.gz'},
-                         {'name': '752603918', 'directory': True, 'alias': 'blood3.hard-filtered.vcf.gz'},
-                         {'name': '751941381', 'directory': True, 'alias': 'Ethanol1.hard-filtered.vcf.gz'},
-                         {'name': '751869301', 'directory': True, 'alias': 'Ethanol2.hard-filtered.vcf.gz'},
-                         {'name': '752475811', 'directory': True, 'alias': 'Ethanol3.hard-filtered.vcf.gz'},
-                         {'name': '751844294', 'directory': True, 'alias': 'lipstick1.hard-filtered.vcf.gz'},
-                         {'name': '751923371', 'directory': True, 'alias': 'lipstick2.hard-filtered.vcf.gz'},
-                         {'name': '751890337', 'directory': True, 'alias': 'lipstick3.hard-filtered.vcf.gz'},
-                         {'name': '751901355', 'directory': True, 'alias': 'NA05789.hard-filtered.vcf.gz'},
-                         {'name': '751918371', 'directory': True, 'alias': 'NA11468.hard-filtered.vcf.gz'},
-                         {'name': '752558872', 'directory': True, 'alias': 'NA12877-A.hard-filtered.vcf.gz'},
-                         {'name': '751897341', 'directory': True, 'alias': 'NA12877-B.hard-filtered.vcf.gz'},
-                         {'name': '751877329', 'directory': True, 'alias': 'NA12877-C.hard-filtered.vcf.gz'},
-                         {'name': '752593906', 'directory': True, 'alias': 'NA12878-D.hard-filtered.vcf.gz'},
-                         {'name': '752603919', 'directory': True, 'alias': 'NA12878-E.hard-filtered.vcf.gz'},
-                         {'name': '751945374', 'directory': True, 'alias': 'NA12878-F.hard-filtered.vcf.gz'},
-                         {'name': '751960389', 'directory': True, 'alias': 'NA14626-D.hard-filtered.vcf.gz'},
-                         {'name': '752591895', 'directory': True, 'alias': 'NA18949.hard-filtered.vcf.gz'},
-                         {'name': '751900349', 'directory': True, 'alias': 'NA21148.hard-filtered.vcf.gz'},
-                         {'name': '752592906', 'directory': True, 'alias': 'NA21284.hard-filtered.vcf.gz'},
-                         {'name': '751929348', 'directory': True, 'alias': 'NA27335.hard-filtered.vcf.gz'},
-                         {'name': '753387728', 'directory': True, 'alias': 'SampleSheet_requeue_run2'},
-                         {'name': '751897342', 'directory': True, 'alias': 'SeraseqCardio-D.hard-filtered.vcf.gz'},
-                         {'name': '752546866', 'directory': True, 'alias': 'Seraseq_IC_v1-A.hard-filtered.vcf.gz'},
-                         {'name': '751908340', 'directory': True, 'alias': 'Seraseq_IC_v1-B.hard-filtered.vcf.gz'},
-                         {'name': '752592907', 'directory': True, 'alias': 'Seraseq_IC_v1-C.hard-filtered.vcf.gz'},
-                         {'name': '752475812', 'directory': True, 'alias': 'Seraseq_IC_v2-A.hard-filtered.vcf.gz'},
-                         {'name': '751851284', 'directory': True, 'alias': 'Seraseq_IC_v2-B.hard-filtered.vcf.gz'},
-                         {'name': '751861317', 'directory': True, 'alias': 'Seraseq_IC_v2-C.hard-filtered.vcf.gz'},
-                         {'name': '752477829', 'directory': True, 'alias': 'toothpaste1.hard-filtered.vcf.gz'},
-                         {'name': '751849266', 'directory': True, 'alias': 'toothpaste2.hard-filtered.vcf.gz'},
-                         {'name': '752633952', 'directory': True, 'alias': 'toothpaste3.hard-filtered.vcf.gz'}]
+        expected_list = [{'name': '629024454', 'directory': True, 'alias': 'BaseSpace CLI 2022-11-13 14:35:21Z'},
+                         {'name': '629189565', 'directory': True, 'alias': 'BaseSpace CLI 2022-11-13 14:35:36Z'},
+                         {'name': '628791234', 'directory': True, 'alias': 'BaseSpace CLI 2022-11-13 14:35:51Z'},
+                         {'name': '628393885', 'directory': True, 'alias': 'BaseSpace CLI 2022-11-13 14:36:03Z'},
+                         {'name': '629171554', 'directory': True, 'alias': 'BaseSpace CLI 2022-11-13 14:36:18Z'},
+                         {'name': '628393886', 'directory': True, 'alias': 'BaseSpace CLI 2022-11-13 14:36:31Z'},
+                         {'name': '629208580', 'directory': True, 'alias': 'BaseSpace CLI 2022-11-13 14:36:44Z'},
+                         {'name': '629208581', 'directory': True, 'alias': 'BaseSpace CLI 2022-11-13 14:36:59Z'},
+                         {'name': '628976393', 'directory': True, 'alias': 'BaseSpace CLI 2022-11-13 14:37:14Z'},
+                         {'name': '629151562', 'directory': True, 'alias': 'BaseSpace CLI 2022-11-13 14:37:28Z'}]
 
         # mock init
         basespace_fs = self._init_default_fs()
 
         # act
-        appsessions_path = '/projects/425571151/appsessions'
+        appsessions_path = '/projects/372438067/appsessions'
         resource_list = basespace_fs.scandir(appsessions_path)
 
         # assert
@@ -603,11 +566,11 @@ class TestBaseSpace(unittest.TestCase):
                 resource['alias'] = alias
             resources.append(resource)
 
-        self.assertGreaterEqual(len(resources), 33)
+        self.assertGreaterEqual(len(resources), 10)
         self.assertListEqual(resources, expected_list)
 
 
-    # @vcr.use_cassette('scandir/biosample_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/biosample_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_biosample_folder(self):
         # prepare
         expected_list = [{'name': 'datasets', 'directory': True, 'alias': 'datasets'}]
@@ -633,7 +596,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    # @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_datasets_folder(self):
         # prepare
         expected_list = [
@@ -660,7 +623,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    # @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_details_datasets_folder(self):
         # prepare
         expected_list = [
@@ -690,31 +653,16 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    # @vcr.use_cassette('scandir/appsessions_datasets.yaml', cassette_library_dir=cassette_lib_dir)
-    #im not sure is this list really there? cant see
+    @vcr.use_cassette('scandir/appsessions_datasets.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_appsessions_datasets_folder(self):
         # prepare
-        expected_list = [
-            {'name': 'ds.2fd7a5b5f7a143779eea5426fc16de32', 'directory': True,
-             'alias': '240304_MP2-12_P3_TwistRefSeq-24plex_1000pM-20'},
-            {'name': 'ds.a4dd83ebf3f64b4eaa5ec71b44c51391', 'directory': True,
-             'alias': '240304_MP2-12_P3_TwistRefSeq-24plex_1000pM-7'},
-            {'name': 'ds.b59a8ea6d2964a2e97fdae0bac27b4c0', 'directory': True, 'alias': 'pon'},
-            {'name': 'ds.9cc818d038ae45749e6c503e28f61bb7', 'directory': True,
-             'alias': '240304_MP2-12_P3_TwistRefSeq-24plex_1000pM-19'},
-            {'name': 'ds.a6eca5c04139499a95f366ab62af3c50', 'directory': True,
-             'alias': '240304_MP2-12_P3_TwistRefSeq-24plex_1000pM-5'},
-            {'name': 'ds.4202a380042c4c1ca21d5de4f84812c5', 'directory': True,
-             'alias': '240304_MP2-12_P3_TwistRefSeq-24plex_1000pM-23'},
-            {'name': 'ds.25898d9223fc4818b550339110e82501', 'directory': True,
-             'alias': 'Extra Files (BSSH DRAGEN Baseline Builder 4-3-6-ab5e03 2024-07-15 10:57:14Z)'}
-            ]
+        expected_list = [{'alias': 'in3529-18V3V4', 'directory': True, 'name': 'ds.a6802fbf9b274ca08a9796b5bcd0e8e2'}]
 
         # init
         basespace_fs = self._init_default_fs()
 
         # act
-        biosamples_path = f'/projects/424682258/appsessions/748822213/datasets/'
+        biosamples_path = f'/projects/372438067/appsessions/628976393/datasets/'
         resource_list = basespace_fs.scandir(biosamples_path)
 
         # assert
@@ -755,7 +703,7 @@ class TestBaseSpace(unittest.TestCase):
 
         # assert
         resources = []
-        folder_count = 24
+        folder_count = 10
         file_count = 0
         for index, fs_resource in enumerate(resource_list):
             if fs_resource.is_dir:
@@ -775,7 +723,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertEqual(folder_count, 0)
         self.assertEqual(file_count, 0)
 
-    # @vcr.use_cassette('scandir/dataset_files_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/dataset_files_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_dataset_files(self):
         # prepare
         expected_file_list = [
@@ -850,7 +798,7 @@ class TestBaseSpace(unittest.TestCase):
             basespace_fs.geturl(no_such_file_name)
 
     # PAGINATION
-    # @vcr.use_cassette('scandir/project_biosamples_folder_pagination_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/project_biosamples_folder_pagination_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_project_biosamples_folder_pagination(self):
         # prepare
         expected_list = [{'name': '104555093', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep1'},
@@ -883,7 +831,7 @@ class TestBaseSpace(unittest.TestCase):
 
         # act
         biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples'
-        step = 12
+        step = 5
         start = 0
         end = step
         page = (start, end)
@@ -984,7 +932,7 @@ class TestBaseSpace(unittest.TestCase):
         # act
         biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets/{EMEDGENE_DATASET_ID}/sequenced files'
 
-        step = 5
+        step = 1
         start = 0
         size = step
         page = (start, size)
@@ -1021,6 +969,198 @@ class TestBaseSpace(unittest.TestCase):
             page = (start, size)
 
         self.assertListEqual(full_resources_list, expected_file_list)
+
+    def test_scandir_projects_pagination(self):
+        # prepare
+        expected_file_list = [{'name': '48078043', 'directory': True, 'alias': 'HiSeqX: Nextera DNA Flex (replicates of Coriell Trio Samples)'},
+                              {'name': '86591915', 'directory': True, 'alias': 'MiSeq: Myeloid RNA Panel (Brain and SeraSeq Samples)'},
+                              {'name': '238837599', 'directory': True, 'alias': 'NextSeq2000: AmpliSeq for Illumina - Focus Panel (Somatic)'},
+                              {'name': '257330073', 'directory': True, 'alias': 'NextSeq2000: Illumina DNA Prep with Enrichment - Exome Germline (Twist/RefSeq Panel)'},
+                              {'name': '312651341', 'directory': True, 'alias': 'PGx Analysis v1.1.1 Demo Project'},
+                              {'name': '372438067', 'directory': True, 'alias': 'NextSeq2000: Zymo Quick-16S Plus NGS Library Prep Kit (V3-V4) on P1 600 cycles kit'},
+                              {'name': '394318963', 'directory': True, 'alias': 'Default Project For Biosample'}]
+
+        # init
+        basespace_fs = self._init_default_fs()
+
+        # act
+        project_path = '/projects/'
+
+        step = 300
+        start = 0
+        size = step
+        page = (start, size)
+        full_resources_list = []
+        while True:
+            resource_list = basespace_fs.scandir(project_path, page=page)
+
+            # assert
+            resources = []
+            for index, fs_resource in enumerate(resource_list):
+                resource = {
+                    "name": fs_resource.name,
+                    "directory": fs_resource.is_dir
+                }
+                alias = fs_resource.get('basic', 'alias')
+                if alias:
+                    resource['alias'] = alias
+                resources.append(resource)
+
+            full_resources_list += resources
+
+            for resource in resources:
+                print(
+                    f"resource: name: {resource['name']} directory: {resource['directory']}   alias: {resource['alias']}")
+                if 'size' in resource.keys():
+                    print(f"resource: size: {resource['size']}")
+            if len(resources) < step:
+                offset, _ = page
+                print(f"last ({offset} {offset + len(resources)}) --------------------------------")
+                break
+            print(f"{page}--------------------------------")
+            start = size
+            size += step
+            page = (start, size)
+        # print(full_resources_list)
+        self.assertListEqual(full_resources_list, expected_file_list)
+
+    def test_scandir_appsessions_pagination(self):
+        # prepare
+        # init
+        basespace_fs = self._init_default_fs()
+
+        # act
+        appsessions_path = '/projects/372438067/appsessions'
+
+        step = 100
+        start = 0
+        size = step
+        page = (start, size)
+        full_resources_list = []
+        while True:
+            resource_list = basespace_fs.scandir(appsessions_path, page=page)
+
+            # assert
+            resources = []
+            for index, fs_resource in enumerate(resource_list):
+                resource = {
+                    "name": fs_resource.name,
+                    "directory": fs_resource.is_dir
+                }
+                alias = fs_resource.get('basic', 'alias')
+                if alias:
+                    resource['alias'] = alias
+                resources.append(resource)
+
+            full_resources_list += resources
+
+            for resource in resources:
+                print(
+                    f"resource: name: {resource['name']} directory: {resource['directory']}   alias: {resource['alias']}")
+                if 'size' in resource.keys():
+                    print(f"resource: size: {resource['size']}")
+            if len(resources) < step:
+                offset, _ = page
+                print(f"last ({offset} {offset + len(resources)}) --------------------------------")
+                break
+            print(f"{page}--------------------------------")
+            start = size
+            size += step
+            page = (start, size)
+        self.assertIsNotNone(full_resources_list)
+        self.assertGreaterEqual(len(full_resources_list), 200)
+
+    def test_scandir_appresults_pagination(self):
+        # prepare
+        # init
+        basespace_fs = self._init_default_fs()
+
+        # act
+        appresults_path = '/projects/86591915/appresults'
+
+        step = 55
+        start = 0
+        size = step
+        page = (start, size)
+        full_resources_list = []
+        while True:
+            resource_list = basespace_fs.scandir(appresults_path, page=page)
+
+            # assert
+            resources = []
+            for index, fs_resource in enumerate(resource_list):
+                resource = {
+                    "name": fs_resource.name,
+                    "directory": fs_resource.is_dir
+                }
+                alias = fs_resource.get('basic', 'alias')
+                if alias:
+                    resource['alias'] = alias
+                resources.append(resource)
+
+            full_resources_list += resources
+
+            for resource in resources:
+                print(
+                    f"resource: name: {resource['name']} directory: {resource['directory']}   alias: {resource['alias']}")
+                if 'size' in resource.keys():
+                    print(f"resource: size: {resource['size']}")
+            if len(resources) < step:
+                offset, _ = page
+                print(f"last ({offset} {offset + len(resources)}) --------------------------------")
+                break
+            print(f"{page}--------------------------------")
+            start = size
+            size += step
+            page = (start, size)
+        self.assertIsNotNone(full_resources_list)
+        self.assertGreaterEqual(len(resources), 51)
+
+    def test_scandir_sequenced_files_pagination(self):
+        # prepare
+        # init
+        basespace_fs = self._init_default_fs()
+
+        # act
+        sequenced_files_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets/{EMEDGENE_DATASET_ID}/sequenced files'
+
+        step = 1
+        start = 0
+        size = step
+        page = (start, size)
+        full_resources_list = []
+        while True:
+            resource_list = basespace_fs.scandir(sequenced_files_path, page=page)
+
+            # assert
+            resources = []
+            for index, fs_resource in enumerate(resource_list):
+                resource = {
+                    "name": fs_resource.name,
+                    "directory": fs_resource.is_dir
+                }
+                alias = fs_resource.get('basic', 'alias')
+                if alias:
+                    resource['alias'] = alias
+                resources.append(resource)
+
+            full_resources_list += resources
+
+            for resource in resources:
+                print(
+                    f"resource: name: {resource['name']} directory: {resource['directory']}   alias: {resource['alias']}")
+                if 'size' in resource.keys():
+                    print(f"resource: size: {resource['size']}")
+            if len(resources) < step:
+                offset, _ = page
+                print(f"last ({offset} {offset + len(resources)}) --------------------------------")
+                break
+            print(f"{page}--------------------------------")
+            start = size
+            size += step
+            page = (start, size)
+        self.assertIsNotNone(full_resources_list)
+        self.assertGreaterEqual(len(full_resources_list), 2)
 
 
 if __name__ == '__main__':

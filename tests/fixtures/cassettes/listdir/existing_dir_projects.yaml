@@ -11,17 +11,32 @@ interactions:
       Host:
       - api.basespace.illumina.com
       User-Agent:
-      - Python-urllib/3.6
+      - Python-urllib/3.11
     method: GET
-    uri: https://api.basespace.illumina.com/v1pre3/users/current/projects?Limit=1024&SortBy=DateCreated&Offset=0
+    uri: https://api.basespace.illumina.com/v1pre3/users/current/projects?Offset=0&Limit=1024&SortBy=DateCreated
   response:
     body:
-      string: '{"Response":{"Items":[{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+      string: '{"Response":{"Items":[{"Id":"48078043","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/48078043","Name":"HiSeqX:
+        Nextera DNA Flex (replicates of Coriell Trio Samples)","Description":"4 replicates
+        each of the human genetic trio Coriell samples NA12878, NA12891, and NA12892
+        were prepared using the Nextera DNA Flex library prep kit and sequenced at
+        2x151 on a HiSeqX instrument.","DateCreated":"2017-09-21T19:19:28.0000000Z","DateModified":"2020-02-01T01:23:32.0000000Z","HasCollaborators":true,"TotalSize":3613767739481},{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
         Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
         Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
         samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
         were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
-        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577}],"DisplayedCount":1,"TotalCount":1,"Offset":0,"Limit":1024,"SortDir":"Asc","SortBy":"DateCreated"},"ResponseStatus":{},"Notifications":[]}'
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},{"Id":"238837599","UserOwnedBy":{"Id":"19228209","Href":"v1pre3/users/19228209","Name":"Illumina
+        Demo Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/7506c25caeba72f27a39c83767e9e103.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/238837599","Name":"NextSeq2000:
+        AmpliSeq for Illumina - Focus Panel (Somatic)","Description":"","DateCreated":"2021-03-22T20:57:37.0000000Z","DateModified":"2024-03-02T00:31:26.0000000Z","HasCollaborators":true,"TotalSize":86023641797},{"Id":"257330073","UserOwnedBy":{"Id":"19228209","Href":"v1pre3/users/19228209","Name":"Illumina
+        Demo Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/7506c25caeba72f27a39c83767e9e103.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/257330073","Name":"NextSeq2000:
+        Illumina DNA Prep with Enrichment - Exome Germline (Twist/RefSeq Panel)","Description":"","DateCreated":"2021-05-06T19:31:51.0000000Z","DateModified":"2024-03-02T00:30:37.0000000Z","HasCollaborators":true,"TotalSize":374145472063},{"Id":"312651341","UserOwnedBy":{"Id":"24427403","Href":"v1pre3/users/24427403","Name":"Arrays
+        Analysis","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/0b1c6cd570718b73bdaffcfcad40feb8.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/312651341","Name":"PGx
+        Analysis v1.1.1 Demo Project","Description":"","DateCreated":"2021-12-02T22:08:15.0000000Z","DateModified":"2021-12-03T20:18:43.0000000Z","HasCollaborators":true,"TotalSize":23080302547},{"Id":"372438067","UserOwnedBy":{"Id":"19228209","Href":"v1pre3/users/19228209","Name":"Illumina
+        Demo Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/7506c25caeba72f27a39c83767e9e103.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/372438067","Name":"NextSeq2000:
+        Zymo Quick-16S Plus NGS Library Prep Kit (V3-V4) on P1 600 cycles kit","Description":"","DateCreated":"2022-11-13T11:04:55.0000000Z","DateModified":"2022-11-30T18:57:12.0000000Z","HasCollaborators":true,"TotalSize":24209077861},{"Id":"394318963","UserOwnedBy":{"Id":"23630620","Href":"v1pre3/users/23630620","Name":"Yair
+        Fischer","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/593f82fb07b659f02bd4d78d6af8fd64.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/394318963","Name":"Default
+        Project For Biosample","Description":"Default Project For Biosample","DateCreated":"2023-07-28T00:49:58.0000000Z","DateModified":"2023-07-28T00:49:58.0000000Z","HasCollaborators":false,"TotalSize":0}],"DisplayedCount":7,"TotalCount":7,"Offset":0,"Limit":1024,"SortDir":"Asc","SortBy":"DateCreated"},"ResponseStatus":{},"Notifications":[]}'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
@@ -30,22 +45,24 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 23 Nov 2021 19:19:19 GMT
+      - Sun, 11 May 2025 07:54:28 GMT
       Expires:
       - '0'
       Pragma:
       - no-cache
       Server:
-      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Mono.WebServer.XSP/4.8.0.0 Linux
       - Unknown
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
       Transfer-Encoding:
       - chunked
+      X-BaseSpace-Source:
+      - master/readonly
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2021.11.23.19.19.19.1Fhp_SWkMkSfMczFP5_s6A
+      - 2025.05.11.07.54.28.kNYIvtvmmUe2jZAAXG7XSQ
     status:
       code: 200
       message: OK

@@ -28,7 +28,7 @@ _BASESPACE_DEFAULT_SERVER = "https://api.basespace.illumina.com/"
 logger = logging.getLogger("BaseSpaceFs")
 logger.setLevel(logging.DEBUG)
 
-
+MAX_PAGE_SIZE = 1024
 def _make_repr(class_name, *args, **kwargs):
     """
     Generate a repr string.
@@ -209,7 +209,7 @@ class BASESPACEFS(FS):
     def listdir(self, path):
         all_entities_list = []
         offset = 0
-        limit = 1000
+        limit = MAX_PAGE_SIZE
 
         logger.debug(f'listdir path: {path}')
         if not self.isdir(path) and not self.isfile(path):
