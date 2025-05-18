@@ -445,8 +445,14 @@ class TestBaseSpace(unittest.TestCase):
     @vcr.use_cassette('scandir/projects_folder.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_projects_folder(self):
         # prepare
-        expected_list = [{'name': str(EMEDGENE_PROJECT_ID), 'directory': True, 'alias': EMEDGENE_PROJECT_NAME}]
-
+        # expected_list = [{'name': str(EMEDGENE_PROJECT_ID), 'directory': True, 'alias': EMEDGENE_PROJECT_NAME}]
+        expected_list = [{'name': '48078043', 'directory': True, 'alias': 'HiSeqX: Nextera DNA Flex (replicates of Coriell Trio Samples)'},
+                         {'name': '86591915', 'directory': True, 'alias': 'MiSeq: Myeloid RNA Panel (Brain and SeraSeq Samples)'},
+                         {'name': '238837599', 'directory': True, 'alias': 'NextSeq2000: AmpliSeq for Illumina - Focus Panel (Somatic)'},
+                         {'name': '257330073', 'directory': True, 'alias': 'NextSeq2000: Illumina DNA Prep with Enrichment - Exome Germline (Twist/RefSeq Panel)'},
+                         {'name': '312651341', 'directory': True, 'alias': 'PGx Analysis v1.1.1 Demo Project'},
+                         {'name': '372438067', 'directory': True, 'alias': 'NextSeq2000: Zymo Quick-16S Plus NGS Library Prep Kit (V3-V4) on P1 600 cycles kit'},
+                         {'name': '394318963', 'directory': True, 'alias': 'Default Project For Biosample'}]
         # init
         basespace_fs = self._init_default_fs()
 
@@ -986,7 +992,7 @@ class TestBaseSpace(unittest.TestCase):
         # act
         project_path = '/projects/'
 
-        step = 300
+        step = 3
         start = 0
         size = step
         page = (start, size)

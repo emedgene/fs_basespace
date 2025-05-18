@@ -13,7 +13,7 @@ interactions:
       User-Agent:
       - Python-urllib/3.11
     method: GET
-    uri: https://api.basespace.illumina.com/v1pre3/users/current/projects?Offset=0&Limit=1024&SortBy=DateCreated
+    uri: https://api.basespace.illumina.com/v1pre3/users/current/projects?Offset=0&Limit=1024
   response:
     body:
       string: '{"Response":{"Items":[{"Id":"48078043","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
@@ -36,7 +36,7 @@ interactions:
         Demo Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/7506c25caeba72f27a39c83767e9e103.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/372438067","Name":"NextSeq2000:
         Zymo Quick-16S Plus NGS Library Prep Kit (V3-V4) on P1 600 cycles kit","Description":"","DateCreated":"2022-11-13T11:04:55.0000000Z","DateModified":"2022-11-30T18:57:12.0000000Z","HasCollaborators":true,"TotalSize":24209077861},{"Id":"394318963","UserOwnedBy":{"Id":"23630620","Href":"v1pre3/users/23630620","Name":"Yair
         Fischer","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/593f82fb07b659f02bd4d78d6af8fd64.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/394318963","Name":"Default
-        Project For Biosample","Description":"Default Project For Biosample","DateCreated":"2023-07-28T00:49:58.0000000Z","DateModified":"2023-07-28T00:49:58.0000000Z","HasCollaborators":false,"TotalSize":0}],"DisplayedCount":7,"TotalCount":7,"Offset":0,"Limit":1024,"SortDir":"Asc","SortBy":"DateCreated"},"ResponseStatus":{},"Notifications":[]}'
+        Project For Biosample","Description":"Default Project For Biosample","DateCreated":"2023-07-28T00:49:58.0000000Z","DateModified":"2023-07-28T00:49:58.0000000Z","HasCollaborators":false,"TotalSize":0}],"DisplayedCount":7,"TotalCount":7,"Offset":0,"Limit":1024,"SortDir":"Asc","SortBy":"Id"},"ResponseStatus":{},"Notifications":[]}'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
@@ -45,7 +45,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 May 2025 07:54:28 GMT
+      - Sun, 18 May 2025 10:36:22 GMT
       Expires:
       - '0'
       Pragma:
@@ -62,7 +62,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2025.05.11.07.54.28.kNYIvtvmmUe2jZAAXG7XSQ
+      - 2025.05.18.10.36.22.9fzAk_Z3bkSe39c1eS5HJA
     status:
       code: 200
       message: OK
