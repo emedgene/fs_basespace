@@ -13,7 +13,7 @@ interactions:
       User-Agent:
       - Python-urllib/3.11
     method: GET
-    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915
+    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915?Offset=0&Limit=512
   response:
     body:
       string: '{"Response":{"HrefSamples":"v1pre3/projects/86591915/samples","HrefAppResults":"v1pre3/projects/86591915/appresults","HrefBaseSpaceUI":"https://basespace.illumina.com/project/86591915/MiSeq-Myeloid-RNA-Panel-Brain-and-SeraSeq-Samples","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/projects/86591915/properties"},"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
@@ -30,7 +30,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 May 2025 10:11:23 GMT
+      - Wed, 21 May 2025 08:02:58 GMT
       Expires:
       - '0'
       Pragma:
@@ -47,7 +47,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2025.05.11.10.11.23.piFvPqwtUU6PzYAGbls0gg
+      - 2025.05.21.08.02.57.fCm64uHpTEe-NtbvaOOI1w
     status:
       code: 200
       message: OK
@@ -82,7 +82,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 May 2025 10:11:24 GMT
+      - Wed, 21 May 2025 08:02:58 GMT
       Expires:
       - '0'
       Pragma:
@@ -99,7 +99,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2025.05.11.10.11.24.UFShC95HakWxJDee3t7nlQ
+      - 2025.05.21.08.02.58.YdQgB1fccUSwexr2DVH_nQ
     status:
       code: 200
       message: OK
@@ -247,7 +247,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 11 May 2025 10:11:26 GMT
+      - Wed, 21 May 2025 08:02:59 GMT
       Expires:
       - '0'
       Pragma:
@@ -262,7 +262,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2025.05.11.10.11.26.k8oyH6FWW0GyyMqpG4ycdg
+      - 2025.05.21.08.02.59.gdlFp7DY3Uye3xSLG4LOCg
     status:
       code: 200
       message: OK

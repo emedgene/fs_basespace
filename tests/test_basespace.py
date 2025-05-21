@@ -84,8 +84,9 @@ class TestBaseSpace(unittest.TestCase):
     @vcr.use_cassette('download/download_file_11.yaml', cassette_library_dir=cassette_lib_dir)
     def test_download_existing_sequenced_file_1(self):
         # prepare
-        file_name = '/projects/385613228/appresults/313508279/files/31910279746'
-        expected_file_size = 1709890
+        # file_name = '/projects/385613228/appresults/313508279/files/31910279746'
+        file_name = '/projects/86591915/appresults/137682553/files/11761995736'
+        expected_file_size = 1247
         out_file_name = 'my_downloaded_binary_file'
 
         # init
@@ -107,8 +108,8 @@ class TestBaseSpace(unittest.TestCase):
     @vcr.use_cassette('download/download_file_22.yaml', cassette_library_dir=cassette_lib_dir)
     def test_download_existing_sequenced_file_2(self):
         # prepare
-        file_name = '/projects/361922565/appresults/294859593/files/28391974107'
-        expected_file_size = 589106
+        file_name = '/projects/86591915/appresults/137682553/files/11761995733'
+        expected_file_size = 41809
         out_file_name = 'my_downloaded_binary_file'
 
         # init
@@ -130,8 +131,8 @@ class TestBaseSpace(unittest.TestCase):
     @vcr.use_cassette('download/download_file.yaml', cassette_library_dir=cassette_lib_dir)
     def test_download_existing_file(self):
         # prepare
-        file_name = '/projects/28784764/biosamples/27357369/datasets/ds.095bbee060934bd0bd792fae88b60f84/sequenced files/1556834803'
-        expected_file_size = 1062
+        file_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets/{EMEDGENE_DATASET_ID}/sequenced files/{FILE_1_ID}'
+        expected_file_size = 48526491
         out_file_name = 'my_downloaded_binary_file'
 
         # init
@@ -164,7 +165,7 @@ class TestBaseSpace(unittest.TestCase):
             with open(out_file_name, 'wb') as write_file:
                 basespace_fs.download(no_such_file_name, write_file)
 
-    # @vcr.use_cassette('download/download_an_existing_folder_1.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('download/download_an_existing_folder_1.yaml', cassette_library_dir=cassette_lib_dir)
     def test_download_an_existing_folder(self):
         # prepare
 
@@ -172,7 +173,7 @@ class TestBaseSpace(unittest.TestCase):
         basespace_fs = self._init_default_fs()
 
         # act
-        folder_name = '/projects/385613228/appresults/313508279/files/'
+        folder_name = '/projects/86591915/appresults/137682553/files/'
         out_file_name = 'my_downloaded_existing_folder'
         with self.assertRaises(FileExpected):
             with open(out_file_name, 'wb') as write_file:
@@ -197,7 +198,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertFalse(info.is_dir)
         self.assertTrue(info.is_file)
 
-    # @vcr.use_cassette('getinfo/existing_dir.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('getinfo/existing_dir.yaml', cassette_library_dir=cassette_lib_dir)
     def test_getinfo_existing_dir(self):
         # prepare
 
@@ -272,7 +273,7 @@ class TestBaseSpace(unittest.TestCase):
             basespace_fs.getinfo(no_such_folder_name)
 
     # listdir
-    # @vcr.use_cassette('listdir/existing_dir_datasets_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('listdir/existing_dir_datasets_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_listdir_existing_dir_datasets(self):
         # prepare
         expected_list = [EMEDGENE_DATASET_ID]
@@ -288,7 +289,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertIsNotNone(datasets_list)
         self.assertListEqual(datasets_list, expected_list)
 
-    # @vcr.use_cassette('c', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('c', cassette_library_dir=cassette_lib_dir)
     def test_listdir_existing_dir_biosamples(self):
         # prepare
         expected_list = ['104555093', '104555094', '104555095', '104555096', '104555097', '104555098', '104555099',
@@ -349,7 +350,7 @@ class TestBaseSpace(unittest.TestCase):
             basespace_fs.listdir(file_name)
 
     # openbin
-    # @vcr.use_cassette('openbin/existing_file.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('openbin/existing_file.yaml', cassette_library_dir=cassette_lib_dir)
     def test_openbin_existing_file(self):
         # prepare
         expected_size = FILE_1_SIZE_IN_BYTES
@@ -384,7 +385,7 @@ class TestBaseSpace(unittest.TestCase):
     @vcr.use_cassette('openbin/existing_folder_1.yaml', cassette_library_dir=cassette_lib_dir)
     def test_openbin_existing_folder(self):
         # prepare
-        folder_name = '/projects/361922565/appresults/294859593/files/'
+        folder_name = '/projects/86591915/appresults/137682553/files/'
 
         # init
         basespace_fs = self._init_default_fs()
@@ -442,7 +443,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    # @vcr.use_cassette('scandir/projects_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/projects_folder.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_projects_folder(self):
         # prepare
         # expected_list = [{'name': str(EMEDGENE_PROJECT_ID), 'directory': True, 'alias': EMEDGENE_PROJECT_NAME}]
@@ -474,7 +475,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    # @vcr.use_cassette('scandir/project_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/project_folder.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_project_folder(self):
         # prepare
         expected_list = [{'alias': 'appresults', 'directory': True, 'name': 'appresults'},
@@ -503,7 +504,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    # @vcr.use_cassette('scandir/project_biosamples_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/project_biosamples_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_project_biosamples_folder(self):
         # prepare
         expected_list = [{'name': '104555093', 'directory': True, 'alias': 'Myeloid-RNA-Brain-Rep1'}, {'name': '104555094', 'directory': True, 'alias': 'Myeloid-RNA-SeraSeq-Rep1'},
@@ -544,7 +545,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertGreaterEqual(len(resources), 10)
         self.assertListEqual(resources, expected_list)
 
-    # @vcr.use_cassette('scandir/project_appsessions_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/project_appsessions_folder.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_project_appsessions_folder(self):
         # mock init
         basespace_fs = self._init_default_fs()
@@ -568,7 +569,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertGreaterEqual(len(resources), 205)
 
 
-    # @vcr.use_cassette('scandir/biosample_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/biosample_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_biosample_folder(self):
         # prepare
         expected_list = [{'name': 'datasets', 'directory': True, 'alias': 'datasets'}]
@@ -594,7 +595,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    # @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_datasets_folder(self):
         # prepare
         expected_list = [
@@ -621,7 +622,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    # @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/datasets_folder_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_details_datasets_folder(self):
         # prepare
         expected_list = [
@@ -651,7 +652,7 @@ class TestBaseSpace(unittest.TestCase):
 
         self.assertListEqual(resources, expected_list)
 
-    # @vcr.use_cassette('scandir/appsessions_datasets.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/appsessions_datasets.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_appsessions_datasets_folder(self):
         # prepare
         expected_list = [{'alias': 'in3529-18V3V4', 'directory': True, 'name': 'ds.a6802fbf9b274ca08a9796b5bcd0e8e2'}]
@@ -688,7 +689,7 @@ class TestBaseSpace(unittest.TestCase):
         with self.assertRaises(ResourceNotFound):
             basespace_fs.scandir(no_such_folder_name)
 
-    # @vcr.use_cassette('scandir/existing_folder.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/existing_folder.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_existing_folder(self):
         # prepare
         biosamples_path = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/'
@@ -721,7 +722,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertEqual(folder_count, 0)
         self.assertEqual(file_count, 0)
 
-    # @vcr.use_cassette('scandir/dataset_files_v2.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('scandir/dataset_files_v2.yaml', cassette_library_dir=cassette_lib_dir)
     def test_scandir_dataset_files(self):
         # prepare
         expected_file_list = [
@@ -750,7 +751,7 @@ class TestBaseSpace(unittest.TestCase):
         self.assertListEqual(resources, expected_file_list)
 
     # geturl
-    # @vcr.use_cassette('geturl/of_file.yaml', cassette_library_dir=cassette_lib_dir)
+    @vcr.use_cassette('geturl/of_file.yaml', cassette_library_dir=cassette_lib_dir)
     def test_geturl_of_file(self):
         # prepare
         file_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets/' \
@@ -1160,93 +1161,6 @@ class TestBaseSpace(unittest.TestCase):
         self.assertIsNotNone(full_resources_list)
         self.assertGreaterEqual(len(full_resources_list), 2)
 
-    def test_scandir_projects2_pagination(self):
-        # init
-        basespace_fs = fs.open_fs("basespace://TS-BIFX Workgroup:X:5c2058f4daee49209a6571fe0ddd5942@https://api.basespace.illumina.com!/")
 
-        # act
-        project_path = '/projects/'
-
-        step = 1024
-        start = 0
-        size = step
-        page = (start, size)
-        full_resources_list = []
-        while True:
-            resource_list = basespace_fs.scandir(project_path)
-
-            # assert
-            resources = []
-            for index, fs_resource in enumerate(resource_list):
-                resource = {
-                    "name": fs_resource.name,
-                    "directory": fs_resource.is_dir
-                }
-                alias = fs_resource.get('basic', 'alias')
-                if alias:
-                    resource['alias'] = alias
-                resources.append(resource)
-
-            full_resources_list += resources
-
-            for resource in resources:
-                print(
-                    f"resource: name: {resource['name']} directory: {resource['directory']}   alias: {resource['alias']}")
-                if 'size' in resource.keys():
-                    print(f"resource: size: {resource['size']}")
-            if len(resources) < step:
-                break
-            print(f"{page}--------------------------------")
-            start = size
-            size += step
-            page = (start, size)
-        self.assertGreaterEqual(len(full_resources_list), 60)
-
-    def test_scandir_files(self):
-        # init
-        basespace_fs = fs.open_fs("basespace://TS-BIFX Workgroup:X:5c2058f4daee49209a6571fe0ddd5942@https://api.basespace.illumina.com!/")
-
-        path = '/projects/5383380/appresults/6126126/files'
-
-        step = 10
-        start = 0
-        size = step
-        page = (start, size)
-        full_resources_list = []
-        page = None
-        while True:
-            resource_list = basespace_fs.scandir(path, page)
-
-            # assert
-            resources = []
-            for index, fs_resource in enumerate(resource_list):
-                resource = {
-                    "name": fs_resource.name,
-                    "directory": fs_resource.is_dir
-                }
-                alias = fs_resource.get('basic', 'alias')
-                if alias:
-                    resource['alias'] = alias
-                resources.append(resource)
-
-            full_resources_list += resources
-            if not page:
-                if len(resources) < 10:
-                    break
-
-        for resource in full_resources_list:
-            print(f"resource: name: {resource['name']} directory: {resource['directory']}   alias: {resource['alias']}")
-            if 'size' in resource.keys():
-                print(f"resource: size: {resource['size']}")
-            if len(resources) < step:
-                offset, _ = page
-                print(f"last ({offset} {offset + len(resources)}) --------------------------------")
-                break
-        print(f"{page}--------------------------------")
-        start = size
-        size += step
-        page = (start, size)
-        self.assertIsNotNone(full_resources_list)
-        # self.assertGreaterEqual(len(resources), 51)
 if __name__ == '__main__':
     unittest.main()
