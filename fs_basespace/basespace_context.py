@@ -10,6 +10,7 @@ from BaseSpacePy.model.QueryParameters import QueryParameters as qp
 Page = Tuple[int, int]
 DEFAULT_OFFSET = 0
 DEFAULT_LIMIT = 512
+MAX_PAGE_SIZE = 1024
 
 class classproperty:
     def __init__(self, getter):

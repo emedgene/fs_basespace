@@ -17,7 +17,7 @@ from fs.path import relpath
 from smart_open.http import SeekableBufferedInputBase
 
 from .api_factory import BasespaceApiFactory
-from .basespace_context import FileContext
+from .basespace_context import FileContext, MAX_PAGE_SIZE
 from .basespace_context import CategoryContext
 from .basespace_context import get_last_direct_context
 from .basespace_context import get_context_by_key
@@ -28,7 +28,6 @@ _BASESPACE_DEFAULT_SERVER = "https://api.basespace.illumina.com/"
 logger = logging.getLogger("BaseSpaceFs")
 logger.setLevel(logging.DEBUG)
 
-MAX_PAGE_SIZE = 1024
 def _make_repr(class_name, *args, **kwargs):
     """
     Generate a repr string.
@@ -228,7 +227,7 @@ class BASESPACEFS(FS):
         except Exception:
             raise errors.ResourceNotFound(path)
 
-        return sorted([entry.get_id() for entry in all_entities_list])
+        return sorted(entry.get_id() for entry in all_entities_list)
 
     def openbin(self, path, mode="r", buffering=-1, **options):
         _mode = Mode(mode)
