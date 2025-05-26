@@ -1,6 +1,6 @@
 import re
 from abc import abstractmethod
-from typing import Tuple, Optional
+from typing import Tuple
 
 from fs import errors
 from fs_basespace.api_factory import BasespaceApiFactory
@@ -8,8 +8,8 @@ from BaseSpacePy.model.QueryParameters import QueryParameters as qp
 
 
 Page = Tuple[int, int]
-DEFAULT_PAGE_SIZE = 256
-
+DEFAULT_OFFSET = 0
+DEFAULT_LIMIT = 512
 
 class classproperty:
     def __init__(self, getter):
@@ -229,7 +229,7 @@ class BioSampleGroupContext(CategoryContextDirect):
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
         offset, limit = translate_page_to_offset_and_limit(page)
-        params = ({'projectid': [self.raw_obj.Id], 'sortby': 'Name', 'offset': offset, 'limit': limit})
+        params = {'projectid': [self.raw_obj.Id], 'sortby': 'Name', 'offset': offset, 'limit': limit}
         bio_sample_list = api.v2.get_v2_biosamples(**params).items
         return bio_sample_list
 
@@ -252,7 +252,7 @@ class AppSessionsContext(CategoryContextDirect):
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
         offset, limit = translate_page_to_offset_and_limit(page)
-        params = ({'sortby': 'Name', 'output_projects': [self.raw_obj.Id], 'offset': offset, 'limit': limit})
+        params = {'sortby': 'Name', 'output_projects': [self.raw_obj.Id], 'offset': offset, 'limit': limit}
         return api.v2.get_v2_appsessions(**params).items
 
     @classmethod
@@ -331,7 +331,7 @@ def get_context_by_key(api: BasespaceApiFactory, key: str, page: Page):
 
 
 def translate_page_to_offset_and_limit(page: Page):
-    offset, limit = 0, 512
+    offset, limit = DEFAULT_OFFSET, DEFAULT_LIMIT
     if page:
         offset, offset_end = page
         limit = offset_end - offset
