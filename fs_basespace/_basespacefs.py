@@ -17,7 +17,7 @@ from fs.path import relpath
 from smart_open.http import SeekableBufferedInputBase
 
 from .api_factory import BasespaceApiFactory
-from .basespace_context import FileContext
+from .basespace_context import FileContext, MAX_PAGE_SIZE
 from .basespace_context import CategoryContext
 from .basespace_context import get_last_direct_context
 from .basespace_context import get_context_by_key
@@ -27,7 +27,6 @@ _BASESPACE_DEFAULT_SERVER = "https://api.basespace.illumina.com/"
 
 logger = logging.getLogger("BaseSpaceFs")
 logger.setLevel(logging.DEBUG)
-
 
 def _make_repr(class_name, *args, **kwargs):
     """
@@ -207,6 +206,10 @@ class BASESPACEFS(FS):
         return [entry for entry in destination.list(self.basespace, page)]
 
     def listdir(self, path):
+        all_entities_list = []
+        offset = 0
+        limit = MAX_PAGE_SIZE
+
         logger.debug(f'listdir path: {path}')
         if not self.isdir(path) and not self.isfile(path):
             raise errors.DirectoryExpected(path)
@@ -214,11 +217,17 @@ class BASESPACEFS(FS):
         try:
             _path = self.validatepath(path)
             _key = self._path_to_key(_path)
-            entities_list = self._listdir_entities(_key)
+            while True:
+                entities_list = self._listdir_entities(_key, (offset, limit))
+                all_entities_list.extend(entities_list)
+                if len(entities_list) < limit:
+                    break
+                offset += limit
+
         except Exception:
             raise errors.ResourceNotFound(path)
 
-        return sorted([entry.get_id() for entry in entities_list])
+        return sorted(entry.get_id() for entry in all_entities_list)
 
     def openbin(self, path, mode="r", buffering=-1, **options):
         _mode = Mode(mode)

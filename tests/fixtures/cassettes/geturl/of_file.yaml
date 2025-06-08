@@ -11,9 +11,9 @@ interactions:
       Host:
       - api.basespace.illumina.com
       User-Agent:
-      - Python-urllib/3.6
+      - Python-urllib/3.11
     method: GET
-    uri: https://api.basespace.illumina.com/v1pre3/files/11710715826
+    uri: https://api.basespace.illumina.com/v1pre3/files/11710715826?Offset=0&Limit=512
   response:
     body:
       string: '{"Response":{"UploadStatus":"complete","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/files/11710715826/properties"},"Id":"11710715826","Href":"v1pre3/files/11710715826","HrefContent":"v1pre3/files/11710715826/content","Name":"Myeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz","ContentType":"application/x-gzip","Size":48526491,"Path":"Myeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz","IsArchived":false,"DateCreated":"2018-07-19T23:50:10.0000000Z","DateModified":"2018-07-19T23:50:10.0000000Z","ETag":"3a1f3ea201911c15cf166a58ecc783d0-6"},"ResponseStatus":{},"Notifications":[]}'
@@ -25,22 +25,24 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 25 Nov 2021 10:54:58 GMT
+      - Wed, 21 May 2025 08:02:56 GMT
       Expires:
       - '0'
       Pragma:
       - no-cache
       Server:
-      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Mono.WebServer.XSP/4.8.0.0 Linux
       - Unknown
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
       Transfer-Encoding:
       - chunked
+      X-BaseSpace-Source:
+      - master/readonly
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2021.11.25.10.54.58.i7MldKX6B0Cm7IpABIUMQQ
+      - 2025.05.21.08.02.56.n73RfI9C9k2DDzUAmk5pgg
     status:
       code: 200
       message: OK
@@ -56,9 +58,9 @@ interactions:
       Host:
       - api.basespace.illumina.com
       User-Agent:
-      - Python-urllib/3.6
+      - Python-urllib/3.11
     method: GET
-    uri: https://api.basespace.illumina.com/v1pre3/files/11710715826
+    uri: https://api.basespace.illumina.com/v1pre3/files/11710715826?Offset=0&Limit=512
   response:
     body:
       string: '{"Response":{"UploadStatus":"complete","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/files/11710715826/properties"},"Id":"11710715826","Href":"v1pre3/files/11710715826","HrefContent":"v1pre3/files/11710715826/content","Name":"Myeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz","ContentType":"application/x-gzip","Size":48526491,"Path":"Myeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz","IsArchived":false,"DateCreated":"2018-07-19T23:50:10.0000000Z","DateModified":"2018-07-19T23:50:10.0000000Z","ETag":"3a1f3ea201911c15cf166a58ecc783d0-6"},"ResponseStatus":{},"Notifications":[]}'
@@ -70,22 +72,24 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 25 Nov 2021 10:54:59 GMT
+      - Wed, 21 May 2025 08:02:56 GMT
       Expires:
       - '0'
       Pragma:
       - no-cache
       Server:
-      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Mono.WebServer.XSP/4.8.0.0 Linux
       - Unknown
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
       Transfer-Encoding:
       - chunked
+      X-BaseSpace-Source:
+      - master/readonly
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2021.11.25.10.54.59.aCdRTwpxyk-f2nROhD_2Xw
+      - 2025.05.21.08.02.56.2B5LlxPJ50q_09-Scpas8w
     status:
       code: 200
       message: OK
@@ -101,12 +105,12 @@ interactions:
       Host:
       - api.basespace.illumina.com
       User-Agent:
-      - Python-urllib/3.6
+      - Python-urllib/3.11
     method: GET
     uri: https://api.basespace.illumina.com/v1pre3/files/11710715826/content?redirect=meta
   response:
     body:
-      string: '{"Response":{"Expires":"2021-12-02T10:53:02.1720910Z","HrefContent":"https://basespace-data-east.s3-external-1.amazonaws.com/52120ea6461047299326a922018851c9/Myeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz?AWSAccessKeyId=AKIARPYQJSWQ3VMWNJWH&Expires=1638442502&response-content-disposition=filename%3DMyeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz&response-content-type=application%2Fx-gzip&Signature=fiR6ZDYm7Rm%2BeJmzNXNOITZBTOw%3D","SupportsRange":true},"ResponseStatus":{},"Notifications":[]}'
+      string: '{"Response":{"Expires":"2025-05-28T08:00:57.3893800Z","HrefContent":"https://basespace-data-east.s3.us-east-1.amazonaws.com/52120ea6461047299326a922018851c9/Myeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz?AWSAccessKeyId=AKIARPYQJSWQZKU3DBUF&Expires=1748419377&response-content-disposition=filename%3DMyeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz&response-content-type=application%2Fx-gzip&Signature=Y6xLk0XZCPDHK%2BX2YpdOphWDZmw%3D","SupportsRange":true},"ResponseStatus":{},"Notifications":[]}'
     headers:
       Accept-Ranges:
       - bytes
@@ -117,22 +121,24 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 25 Nov 2021 10:55:02 GMT
+      - Wed, 21 May 2025 08:02:57 GMT
       Expires:
-      - Thu, 02 Dec 2021 10:53:02 GMT
+      - Wed, 28 May 2025 08:00:57 GMT
       Pragma:
       - no-cache
       Server:
-      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Mono.WebServer.XSP/4.8.0.0 Linux
       - Unknown
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
       Transfer-Encoding:
       - chunked
+      X-BaseSpace-Source:
+      - master/readonly
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2021.11.25.10.55.02.NlTWnHWvQ0KwMobfRQb39A
+      - 2025.05.21.08.02.57.OP-YZ7_6BkOVXCQfS-QVeA
     status:
       code: 200
       message: OK

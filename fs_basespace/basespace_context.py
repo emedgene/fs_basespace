@@ -4,10 +4,13 @@ from typing import Tuple
 
 from fs import errors
 from fs_basespace.api_factory import BasespaceApiFactory
+from BaseSpacePy.model.QueryParameters import QueryParameters as qp
 
 
 Page = Tuple[int, int]
-
+DEFAULT_OFFSET = 0
+DEFAULT_LIMIT = 512
+MAX_PAGE_SIZE = 1024
 
 class classproperty:
     def __init__(self, getter):
@@ -130,11 +133,13 @@ class FileGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
-        return self.raw_obj.getFiles(api.base_api)
+        params = translate_offset_and_limit_to_queryparams(page)
+        return self.raw_obj.getFiles(api.base_api, queryPars=params)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id: str, page: Page):
-        return api.base_api.getFileById(file_id)
+        params = translate_offset_and_limit_to_queryparams(page)
+        return api.base_api.getFileById(file_id, queryPars=params)
 
 
 class FileGroupsContext(EntityContext, categories=[FileGroupContext]):
@@ -146,11 +151,15 @@ class AppResultsContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileGroupsContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
-        return self.raw_obj.getAppResults(api.base_api)
+        params = translate_offset_and_limit_to_queryparams(page)
+        return self.raw_obj.getAppResults(api.base_api, queryPars=params)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, result_id: str, page: Page):
-        return api.base_api.getAppResultById(result_id)
+        params = translate_offset_and_limit_to_queryparams(page)
+        return api.base_api.getAppResultById(result_id, queryPars=params)
+
+
 
 
 class SamplesContext(CategoryContextDirect):
@@ -158,11 +167,13 @@ class SamplesContext(CategoryContextDirect):
     ENTITY_CONTEXT = FileGroupsContext
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
-        return self.raw_obj.getSamples(api.base_api)
+        params = translate_offset_and_limit_to_queryparams(page)
+        return self.raw_obj.getSamples(api.base_api, queryPars=params)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, sample_id: str, page: Page):
-        return api.base_api.getSampleById(sample_id)
+        params = translate_offset_and_limit_to_queryparams(page)
+        return api.base_api.getSampleById(sample_id, queryPars=params)
 
 
 class SequencedFileGroupContext(CategoryContextDirect):
@@ -174,7 +185,8 @@ class SequencedFileGroupContext(CategoryContextDirect):
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, file_id: str, page: Page):
-        return api.base_api.getFileById(file_id)
+        params = translate_offset_and_limit_to_queryparams(page)
+        return api.base_api.getFileById(file_id, queryPars=params)
 
 
 class SequencedFileGroupsContext(EntityContext, categories=[SequencedFileGroupContext]):
@@ -203,7 +215,6 @@ class DatasetsContext(CategoryContextDirect):
                                                sortby='Name',
                                                offset=offset,
                                                limit=limit)
-
 
 class AppSessionContext(EntityContext, categories=[DatasetsContext]):
     pass
@@ -242,7 +253,7 @@ class AppSessionsContext(CategoryContextDirect):
 
     def list_raw(self, api: BasespaceApiFactory, page: Page):
         offset, limit = translate_page_to_offset_and_limit(page)
-        params = {'sortby': 'Name', 'offset': offset, 'limit': limit, 'output_projects': [self.raw_obj.Id]}
+        params = {'sortby': 'Name', 'output_projects': [self.raw_obj.Id], 'offset': offset, 'limit': limit}
         return api.v2.get_v2_appsessions(**params).items
 
     @classmethod
@@ -263,11 +274,13 @@ class ProjectGroupContext(CategoryContextDirect):
     ENTITY_CONTEXT = ProjectContext
 
     def list_raw(self, api, page: Page):
-        return api.base_api.getProjectByUser()
+        params = translate_offset_and_limit_to_queryparams(page)
+        return api.base_api.getProjectByUser(queryPars=params)
 
     @classmethod
     def get_raw_entity_direct(cls, api: BasespaceApiFactory, project_id: str, page: Page):
-        return api.base_api.getProjectById(project_id)
+        params = translate_offset_and_limit_to_queryparams(page)
+        return api.base_api.getProjectById(project_id, queryPars=params)
 
 
 class UserContext(EntityContext, categories=[ProjectGroupContext]):
@@ -319,8 +332,14 @@ def get_context_by_key(api: BasespaceApiFactory, key: str, page: Page):
 
 
 def translate_page_to_offset_and_limit(page: Page):
-    offset, limit = 0, 50
+    offset, limit = DEFAULT_OFFSET, DEFAULT_LIMIT
     if page:
         offset, offset_end = page
         limit = offset_end - offset
     return offset, limit
+
+def translate_offset_and_limit_to_queryparams(page: Page):
+    offset, limit = translate_page_to_offset_and_limit(page)
+    params = qp({'Offset': offset, 'Limit': limit})
+    return params
+

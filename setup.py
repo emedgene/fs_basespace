@@ -23,7 +23,7 @@ CLASSIFIERS = [
 with open(os.path.join(os.path.dirname(__file__), "README.rst"), "rt") as f:
     DESCRIPTION = f.read()
 
-BASESPACE_PYTHON_SDK_VERSION = "basespace-python-sdk @ git+https://github.com/emedgene/basespace-python-sdk@0.6.0" \
+BASESPACE_PYTHON_SDK_VERSION = "basespace-python-sdk @ git+https://github.com/emedgene/basespace-python-sdk@0.7.0" \
                                "#subdirectory=src"
 BASESPACE_SDK_2_VERSION = "bssh-sdk-2 @ git+https://github.com/emedgene/basespace-python-sdk-v2@1.2.4"
 
