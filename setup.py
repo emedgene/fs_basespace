@@ -29,6 +29,7 @@ BASESPACE_SDK_2_VERSION = "bssh-sdk-2 @ git+https://github.com/emedgene/basespac
 
 REQUIREMENTS = [BASESPACE_PYTHON_SDK_VERSION, BASESPACE_SDK_2_VERSION, "fs~=2.4", "smart-open~=5.1"]
 
+
 setup(
     name="fs-basespace",
     author="emedgene",
