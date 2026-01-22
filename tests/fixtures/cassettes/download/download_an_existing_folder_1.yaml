@@ -3,7 +3,7 @@ interactions:
     body: null
     headers:
       Authorization:
-      - Bearer 72007ae76ac14a27b389765fd01b509e
+      - Bearer 224880f27f224388b11f3b193ee377e7
       Connection:
       - close
       Content-Type:
@@ -11,21 +11,38 @@ interactions:
       Host:
       - api.basespace.illumina.com
       User-Agent:
-      - Python-urllib/3.7
+      - Python-urllib/3.11
     method: GET
-    uri: https://api.basespace.illumina.com/v1pre3/appresults/313508279
+    uri: https://api.basespace.illumina.com/v1pre3/appresults/137682553?Offset=0&Limit=512
   response:
     body:
-      string: '{"Response":{"Description":"","HrefFiles":"v1pre3/appresults/313508279/files","References":[],"Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/appresults/313508279/properties"},"Id":"313508279","Href":"v1pre3/appresults/313508279","UserOwnedBy":{"Id":"19228209","Href":"v1pre3/users/19228209","Name":"Illumina
-        Demo Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/7506c25caeba72f27a39c83767e9e103.jpg?s=20&d=mm&r=PG"},"Name":"Illumina
-        Complete Long Reads WGS","Status":"Complete","StatusSummary":"CLI Upload","DateCreated":"2023-05-05T23:07:39.0000000Z","TotalSize":163795629989,"AppSession":{"Id":"668487865","Name":"Uploaded
-        Files","Href":"v1pre3/appsessions/668487865","Application":{"Id":"1375375","Href":"v1pre3/applications/1375375","Name":"BaseSpace
-        CLI","CompanyName":"Illumina, Inc.","VersionNumber":"1.0.0","HomepageUri":"","ShortDescription":"Command
-        line interface to BaseSpace","DateCreated":"2015-04-02T07:44:12.0000000Z","PublishStatus":"Development","IsBillingActivated":false,"Category":"Other","Classifications":["Illumina"],"AppFamilySlug":"illumina-inc.basespace-cli","AppVersionSlug":"illumina-inc.basespace-cli.1.0.0","Features":["GrantInheritanceDisabled","IsAppRegisteredToPlatform"],"LockStatus":"Unlocked"},"UserCreatedBy":{"Id":"19228209","Href":"v1pre3/users/19228209","Name":"Illumina
-        Demo Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/7506c25caeba72f27a39c83767e9e103.jpg?s=20&d=mm&r=PG"},"Status":"Complete","QcStatus":"Undefined","StatusSummary":"CLI
-        Upload","DateCreated":"2023-05-05T23:07:39.0000000Z","ModifiedOn":"2023-05-06T00:19:03.0000000Z","DateCompleted":"2023-05-06T00:12:21.0000000Z","TotalSize":163795629989},"Projects":[{"Id":"385613228","UserOwnedBy":{"Id":"19228209","Href":"v1pre3/users/19228209","Name":"Illumina
-        Demo Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/7506c25caeba72f27a39c83767e9e103.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/385613228","Name":"DRAGEN
-        ICLR Demo Data","Description":"","DateCreated":"2023-04-05T00:43:54.0000000Z","DateModified":"2023-05-16T20:55:08.0000000Z","HasCollaborators":true,"TotalSize":163795629989}]},"ResponseStatus":{},"Notifications":[]}'
+      string: '{"Response":{"Description":"Myeloid-RNA-SeraSeq-Rep7","HrefFiles":"v1pre3/appresults/137682553/files","References":[],"Properties":{"Items":[{"Type":"sample[]","Href":"v1pre3/appresults/137682553/properties/Input.Samples","Name":"Input.Samples","Description":"","Items":[{"Id":"155135036","Href":"v1pre3/samples/155135036","IsMerged":false,"UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Name":"Myeloid-RNA-SeraSeq-Rep7","ExperimentName":"Myeloid_RNA_Public_Data_MiSeq","SampleId":"Myeloid-RNA-SeraSeq-Rep7","Status":"Complete","StatusSummary":"Application
+        completed successfully","DateCreated":"2018-07-19T23:49:49.0000000Z","TotalSize":112647499,"Library":{"OwnerUser":{"Id":"10154153","Href":"v1pre3/users/10154153","Name":"Lightning","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Id":"58863469","Href":"v1pre3/libraries/58863469","BiologicalSample":{"Id":"104555112","Href":"v1pre3/biologicalsamples/104555112","UserSampleId":"Myeloid-RNA-SeraSeq-Rep7","NucleicAcid":"Undefined","Project":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"UserOwnedBy":{"Id":"10154153","Href":"v1pre3/users/10154153","Name":"Lightning","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"DateModified":"2018-08-03T02:42:15.0000000Z"},"Index1":{"Id":"6497500","Name":"7024","Sequence":"ATGAGGCC","Incompatibility":"None"},"Index2":{"Id":"6497510","Name":"5014","Sequence":"GGTTATAA","Incompatibility":"None"},"DateModified":"2018-07-18T18:49:09.0000000Z","LibraryPrep":{"Id":"1014015","Href":"v1pre3/libraryprepkits/1014015","Name":"Unknown","ValidIndexingStrategies":"None,SingleIndex,DualIndex","ValidReadTypes":"SingleRead,PairedEnd","NumIndexCycles":0,"DateModified":"2024-04-24T05:48:18.0000000Z","State":"Active","DefaultRead1Cycles":0,"DefaultRead2Cycles":0},"Project":{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577},"LibraryName":"Myeloid-RNA-SeraSeq-Rep7","State":"Active"},"Genome":{"Id":"4","DisplayName":"Homo
+        sapiens - UCSC (hg19)","SpeciesName":"Homo sapiens","Source":"UCSC","Build":"hg19","Href":"v1pre3/genomes/4","HrefAnnotations":"v1pre3/genomes/4/annotations"},"Read1":151,"Read2":151,"NumReadsPF":1014257,"NumReadsRaw":1014257,"TotalReadsRaw":2028514,"TotalReadsPF":2028514,"TotalClustersRaw":1014257,"TotalClustersPF":1014257,"IsPairedEnd":true}],"HrefItems":"v1pre3/appresults/137682553/properties/Input.Samples/items","ItemsDisplayedCount":1,"ItemsTotalCount":1}],"DisplayedCount":1,"TotalCount":1,"Href":"v1pre3/appresults/137682553/properties"},"Id":"137682553","Href":"v1pre3/appresults/137682553","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Name":"Myeloid-RNA-SeraSeq-Rep7","Status":"Complete","StatusSummary":"Application
+        completed successfully","DateCreated":"2018-07-24T21:22:27.0000000Z","TotalSize":680468,"AppSession":{"Id":"111537916","Name":"RNA
+        Amplicon 07/24/2018 1:39:05","Href":"v1pre3/appsessions/111537916","Application":{"Id":"4856852","Href":"v1pre3/applications/4856852","Name":"RNA
+        Amplicon","CompanyName":"Illumina, Inc.","VersionNumber":"1.0.0","HomepageUri":"https://support.illumina.com/downloads/basespace-rna-amplicon-app.html","ShortDescription":"The
+        RNA Amplicon app enables gene expression profiling using amplicon panels sequenced
+        on Illumina platforms.","DateCreated":"2017-11-16T02:37:56.0000000Z","DatePublished":"2018-01-09T16:39:25.0000000Z","PublishStatus":"Published","IsBillingActivated":false,"Category":"Native","Classifications":["TargetedSequencing","RNASeq","GeneFusionDetection","DifferentialExpression","Hipaa","Illumina"],"AppFamilySlug":"illumina-inc.rna-amplicon","AppVersionSlug":"illumina-inc.rna-amplicon.1.0.0","Features":["IsAppRegisteredToPlatform"],"LockStatus":"Unlocked"},"UserCreatedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Status":"Complete","QcStatus":"Undefined","StatusSummary":"Application
+        completed successfully","DateCreated":"2018-07-24T21:00:54.0000000Z","ModifiedOn":"2018-07-24T21:22:49.0000000Z","DateCompleted":"2018-07-24T21:22:44.0000000Z","TotalSize":17780405},"Projects":[{"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
+        samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
+        were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
+        Analysis was performed on BaseSpace using the RNA Amplicon app.","DateCreated":"2018-07-18T18:49:07.0000000Z","DateModified":"2020-02-01T02:32:16.0000000Z","HasCollaborators":true,"TotalSize":2971103577}]},"ResponseStatus":{},"Notifications":[]}'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
@@ -34,13 +51,13 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 18 Sep 2023 13:35:42 GMT
+      - Wed, 21 May 2025 08:01:51 GMT
       Expires:
       - '0'
       Pragma:
       - no-cache
       Server:
-      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Mono.WebServer.XSP/4.8.0.0 Linux
       - Unknown
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
@@ -51,7 +68,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2023.09.18.13.35.42.iri-6T3I0UqYuDv7gY2vEQ
+      - 2025.05.21.08.01.51.zYcV_ZZmbkmB-CWW8zZSKg
     status:
       code: 200
       message: OK

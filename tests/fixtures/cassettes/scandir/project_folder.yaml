@@ -11,13 +11,13 @@ interactions:
       Host:
       - api.basespace.illumina.com
       User-Agent:
-      - Python-urllib/3.6
+      - Python-urllib/3.11
     method: GET
-    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915
+    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915?Offset=0&Limit=512
   response:
     body:
       string: '{"Response":{"HrefSamples":"v1pre3/projects/86591915/samples","HrefAppResults":"v1pre3/projects/86591915/appresults","HrefBaseSpaceUI":"https://basespace.illumina.com/project/86591915/MiSeq-Myeloid-RNA-Panel-Brain-and-SeraSeq-Samples","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/projects/86591915/properties"},"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
-        Public Data","DateCreated":"2016-10-25T17:38:36.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG","ExternalDomainId":"YXdzLXVzLXBsYXRmb3JtOjEwMDAwMDAzOjJlNmJhM2MyLWUwNGEtNGU0YS05NGRkLTgwZTM1Njc0OTRkMw"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
+        Public Data","DateCreated":"0001-01-01T00:00:00.0000000Z","GravatarUrl":"https://secure.gravatar.com/avatar/c028aa9f7bb49e5c99efd2c6a329d8d6.jpg?s=20&d=mm&r=PG"},"Href":"v1pre3/projects/86591915","Name":"MiSeq:
         Myeloid RNA Panel (Brain and SeraSeq Samples)","Description":"Brain and SeraSeq
         samples were prepared using the AmpliSeq for Illumina Myeloid Panel kit. Samples
         were sequenced on the MiSeq system at 2x151 bp read length with dual indexing.
@@ -30,22 +30,24 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 24 Nov 2021 11:44:27 GMT
+      - Wed, 21 May 2025 08:03:23 GMT
       Expires:
       - '0'
       Pragma:
       - no-cache
       Server:
-      - Mono.WebServer.XSP/4.7.1.0 Linux
+      - Mono.WebServer.XSP/4.8.0.0 Linux
       - Unknown
       Strict-Transport-Security:
       - max-age=10886400; includeSubDomains; preload
       Transfer-Encoding:
       - chunked
+      X-BaseSpace-Source:
+      - master/readonly
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2021.11.24.11.44.26.gihmaTTriEytDcbos51mYA
+      - 2025.05.21.08.03.23.GfsWOsfYUEmtCLpTohxfAg
     status:
       code: 200
       message: OK

@@ -11,9 +11,9 @@ interactions:
       Host:
       - api.basespace.illumina.com
       User-Agent:
-      - Python-urllib/3.10
+      - Python-urllib/3.11
     method: GET
-    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915
+    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915?Offset=0&Limit=5
   response:
     body:
       string: '{"Response":{"HrefSamples":"v1pre3/projects/86591915/samples","HrefAppResults":"v1pre3/projects/86591915/appresults","HrefBaseSpaceUI":"https://basespace.illumina.com/project/86591915/MiSeq-Myeloid-RNA-Panel-Brain-and-SeraSeq-Samples","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/projects/86591915/properties"},"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
@@ -30,7 +30,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 29 Oct 2024 13:39:16 GMT
+      - Sun, 11 May 2025 10:35:50 GMT
       Expires:
       - '0'
       Pragma:
@@ -47,7 +47,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.10.29.13.39.16.hL_cxCZ_6UyHOw7ZdVR4mA
+      - 2025.05.11.10.35.50.CjzOMhbTvk-O3m5gumOkCw
     status:
       code: 200
       message: OK
@@ -100,7 +100,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 29 Oct 2024 13:39:17 GMT
+      - Sun, 11 May 2025 10:35:52 GMT
       Expires:
       - '0'
       Pragma:
@@ -115,7 +115,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.10.29.13.39.17.MezRik1UjkSXnjyrdQaxxg
+      - 2025.05.11.10.35.52.pBwQjJBnNUSYSIrXQHhzrw
     status:
       code: 200
       message: OK
@@ -131,9 +131,9 @@ interactions:
       Host:
       - api.basespace.illumina.com
       User-Agent:
-      - Python-urllib/3.10
+      - Python-urllib/3.11
     method: GET
-    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915
+    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915?Offset=5&Limit=5
   response:
     body:
       string: '{"Response":{"HrefSamples":"v1pre3/projects/86591915/samples","HrefAppResults":"v1pre3/projects/86591915/appresults","HrefBaseSpaceUI":"https://basespace.illumina.com/project/86591915/MiSeq-Myeloid-RNA-Panel-Brain-and-SeraSeq-Samples","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/projects/86591915/properties"},"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
@@ -150,7 +150,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 29 Oct 2024 13:39:17 GMT
+      - Sun, 11 May 2025 10:35:53 GMT
       Expires:
       - '0'
       Pragma:
@@ -167,7 +167,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.10.29.13.39.17.SUgED3XI7EajHzt864s_cQ
+      - 2025.05.11.10.35.53.Arvt3-DB0k-EtGKPNi3-Iw
     status:
       code: 200
       message: OK
@@ -220,7 +220,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 29 Oct 2024 13:39:19 GMT
+      - Sun, 11 May 2025 10:35:55 GMT
       Expires:
       - '0'
       Pragma:
@@ -235,7 +235,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.10.29.13.39.19.XCe8JSy09kWDP4usBVsZ0A
+      - 2025.05.11.10.35.55.222Vh7jg1EKMItxFnYbM-g
     status:
       code: 200
       message: OK
@@ -251,9 +251,9 @@ interactions:
       Host:
       - api.basespace.illumina.com
       User-Agent:
-      - Python-urllib/3.10
+      - Python-urllib/3.11
     method: GET
-    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915
+    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915?Offset=10&Limit=5
   response:
     body:
       string: '{"Response":{"HrefSamples":"v1pre3/projects/86591915/samples","HrefAppResults":"v1pre3/projects/86591915/appresults","HrefBaseSpaceUI":"https://basespace.illumina.com/project/86591915/MiSeq-Myeloid-RNA-Panel-Brain-and-SeraSeq-Samples","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/projects/86591915/properties"},"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
@@ -270,7 +270,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 29 Oct 2024 13:39:20 GMT
+      - Sun, 11 May 2025 10:35:56 GMT
       Expires:
       - '0'
       Pragma:
@@ -287,7 +287,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.10.29.13.39.20._3UlZasChkCzjFt6aGnCig
+      - 2025.05.11.10.35.56.n7fElWWAcUyjwi47Dq6dJA
     status:
       code: 200
       message: OK
@@ -340,7 +340,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 29 Oct 2024 13:39:21 GMT
+      - Sun, 11 May 2025 10:35:58 GMT
       Expires:
       - '0'
       Pragma:
@@ -355,7 +355,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.10.29.13.39.21.Aoisz3nww0iJ1Jao35bZSw
+      - 2025.05.11.10.35.58.a1wBir9-K0SKQaMvzOpIIg
     status:
       code: 200
       message: OK
@@ -371,9 +371,9 @@ interactions:
       Host:
       - api.basespace.illumina.com
       User-Agent:
-      - Python-urllib/3.10
+      - Python-urllib/3.11
     method: GET
-    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915
+    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915?Offset=15&Limit=5
   response:
     body:
       string: '{"Response":{"HrefSamples":"v1pre3/projects/86591915/samples","HrefAppResults":"v1pre3/projects/86591915/appresults","HrefBaseSpaceUI":"https://basespace.illumina.com/project/86591915/MiSeq-Myeloid-RNA-Panel-Brain-and-SeraSeq-Samples","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/projects/86591915/properties"},"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
@@ -390,7 +390,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 29 Oct 2024 13:39:22 GMT
+      - Sun, 11 May 2025 10:36:00 GMT
       Expires:
       - '0'
       Pragma:
@@ -407,7 +407,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.10.29.13.39.22.34rql9r1Mka_Tyf1nAnoMg
+      - 2025.05.11.10.36.00.DA1GuLKd506t1qXa_rum9w
     status:
       code: 200
       message: OK
@@ -460,7 +460,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 29 Oct 2024 13:39:22 GMT
+      - Sun, 11 May 2025 10:36:01 GMT
       Expires:
       - '0'
       Pragma:
@@ -475,7 +475,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.10.29.13.39.22.0NVxQTB_qEKUoxxdDEZRaw
+      - 2025.05.11.10.36.01.5nVuHw0XckmISNo-wFVIpg
     status:
       code: 200
       message: OK
@@ -491,9 +491,9 @@ interactions:
       Host:
       - api.basespace.illumina.com
       User-Agent:
-      - Python-urllib/3.10
+      - Python-urllib/3.11
     method: GET
-    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915
+    uri: https://api.basespace.illumina.com/v1pre3/projects/86591915?Offset=20&Limit=5
   response:
     body:
       string: '{"Response":{"HrefSamples":"v1pre3/projects/86591915/samples","HrefAppResults":"v1pre3/projects/86591915/appresults","HrefBaseSpaceUI":"https://basespace.illumina.com/project/86591915/MiSeq-Myeloid-RNA-Panel-Brain-and-SeraSeq-Samples","Properties":{"Items":[],"DisplayedCount":0,"TotalCount":0,"Href":"v1pre3/projects/86591915/properties"},"Id":"86591915","UserOwnedBy":{"Id":"9319322","Href":"v1pre3/users/9319322","Name":"Illumina
@@ -510,7 +510,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 29 Oct 2024 13:39:23 GMT
+      - Sun, 11 May 2025 10:36:03 GMT
       Expires:
       - '0'
       Pragma:
@@ -527,7 +527,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.10.29.13.39.23.2EBYJpoRikiX-Mo1E0FYhA
+      - 2025.05.11.10.36.03.scva1J61BkKniLKJPVTMtQ
     status:
       code: 200
       message: OK
@@ -575,7 +575,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 29 Oct 2024 13:39:24 GMT
+      - Sun, 11 May 2025 10:36:05 GMT
       Expires:
       - '0'
       Pragma:
@@ -590,7 +590,7 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.10.29.13.39.24.aq-6ugYzJk-r-U7P0n1fNg
+      - 2025.05.11.10.36.05.YdC-pcrnUEGGDXPdxLsKeA
     status:
       code: 200
       message: OK

@@ -9,7 +9,8 @@ class BasespaceApiFactory():
         self.base_api = BaseSpaceAPI(client_id,
                                      client_secret,
                                      basespace_server,
-                                     AccessToken=access_token)
+                                     AccessToken=access_token,
+                                     timeout=60)
 
         # api SDK-V2 configuration
         v2_configuration = bssh_sdk_2.Configuration()

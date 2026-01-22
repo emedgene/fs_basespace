@@ -11,10 +11,10 @@ interactions:
       User-Agent:
       - Swagger-Codegen/1.0.0/python
     method: GET
-    uri: https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/files?excludevcfindexfolder=False&excludebamcoveragefolder=False&excludesystemfolder=False&excludeemptyfiles=False&filehrefcontentresolution=False&turbomode=False&sortby=Name&offset=0&limit=5&sortdir=Asc
+    uri: https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/files?excludevcfindexfolder=False&excludebamcoveragefolder=False&excludesystemfolder=False&excludeemptyfiles=False&filehrefcontentresolution=False&turbomode=False&sortby=Name&offset=0&limit=1&sortdir=Asc
   response:
     body:
-      string: '{"Items":[{"Id":"11710715826","Href":"https://api.basespace.illumina.com/v2/files/11710715826","HrefContent":"https://api.basespace.illumina.com/v2/files/11710715826/content","Name":"Myeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz","ContentType":"application/x-gzip","Size":48526491,"Path":"Myeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz","IsArchived":false,"DateCreated":"2018-07-19T23:50:10.0000000Z","DateModified":"2018-07-19T23:50:10.0000000Z","ETag":"3a1f3ea201911c15cf166a58ecc783d0-6","IdAsLong":11710715826},{"Id":"11710715827","Href":"https://api.basespace.illumina.com/v2/files/11710715827","HrefContent":"https://api.basespace.illumina.com/v2/files/11710715827/content","Name":"Myeloid-RNA-Brain-Rep1_S1_L001_R2_001.fastq.gz","ContentType":"application/x-gzip","Size":50934554,"Path":"Myeloid-RNA-Brain-Rep1_S1_L001_R2_001.fastq.gz","IsArchived":false,"DateCreated":"2018-07-19T23:50:10.0000000Z","DateModified":"2018-07-19T23:50:10.0000000Z","ETag":"b270e3ed6754e7c66be4f20ce13f0a98-7","IdAsLong":11710715827}],"Paging":{"DisplayedCount":2,"TotalCount":2,"Offset":0,"Limit":5,"SortDir":"Asc","SortBy":"Name"}}'
+      string: '{"Items":[{"Id":"11710715826","Href":"https://api.basespace.illumina.com/v2/files/11710715826","HrefContent":"https://api.basespace.illumina.com/v2/files/11710715826/content","Name":"Myeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz","ContentType":"application/x-gzip","Size":48526491,"Path":"Myeloid-RNA-Brain-Rep1_S1_L001_R1_001.fastq.gz","IsArchived":false,"DateCreated":"2018-07-19T23:50:10.0000000Z","DateModified":"2018-07-19T23:50:10.0000000Z","ETag":"3a1f3ea201911c15cf166a58ecc783d0-6","IdAsLong":11710715826}],"Paging":{"DisplayedCount":1,"TotalCount":2,"Offset":0,"Limit":1,"SortDir":"Asc","SortBy":"Name"}}'
     headers:
       Cache-Control:
       - no-cache, no-store, must-revalidate
@@ -23,7 +23,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 29 Oct 2024 13:36:28 GMT
+      - Sun, 11 May 2025 10:31:45 GMT
       Expires:
       - '0'
       Pragma:
@@ -40,7 +40,97 @@ interactions:
       X-Content-Type-Options:
       - nosniff
       X-Request-ID:
-      - 2024.10.29.13.36.28.iaLY3pNBUE-RnWX6UQ6pfw
+      - 2025.05.11.10.31.45.3R37PmsmfkSkr6zYc2kK0Q
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer 224880f27f224388b11f3b193ee377e7
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Swagger-Codegen/1.0.0/python
+    method: GET
+    uri: https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/files?excludevcfindexfolder=False&excludebamcoveragefolder=False&excludesystemfolder=False&excludeemptyfiles=False&filehrefcontentresolution=False&turbomode=False&sortby=Name&offset=1&limit=1&sortdir=Asc
+  response:
+    body:
+      string: '{"Items":[{"Id":"11710715827","Href":"https://api.basespace.illumina.com/v2/files/11710715827","HrefContent":"https://api.basespace.illumina.com/v2/files/11710715827/content","Name":"Myeloid-RNA-Brain-Rep1_S1_L001_R2_001.fastq.gz","ContentType":"application/x-gzip","Size":50934554,"Path":"Myeloid-RNA-Brain-Rep1_S1_L001_R2_001.fastq.gz","IsArchived":false,"DateCreated":"2018-07-19T23:50:10.0000000Z","DateModified":"2018-07-19T23:50:10.0000000Z","ETag":"b270e3ed6754e7c66be4f20ce13f0a98-7","IdAsLong":11710715827}],"Paging":{"DisplayedCount":1,"TotalCount":2,"Offset":1,"Limit":1,"SortDir":"Asc","SortBy":"Name"}}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 11 May 2025 10:31:48 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Server:
+      - Mono.WebServer.XSP/4.8.0.0 Linux
+      - Unknown
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-BaseSpace-Source:
+      - master/readonly
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-ID:
+      - 2025.05.11.10.31.48.YOVUQh1jB0qaclGAppUD3Q
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer 224880f27f224388b11f3b193ee377e7
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Swagger-Codegen/1.0.0/python
+    method: GET
+    uri: https://api.basespace.illumina.com/v2/datasets/ds.ac82a306af3847f2b53ecb695bc22400/files?excludevcfindexfolder=False&excludebamcoveragefolder=False&excludesystemfolder=False&excludeemptyfiles=False&filehrefcontentresolution=False&turbomode=False&sortby=Name&offset=2&limit=1&sortdir=Asc
+  response:
+    body:
+      string: '{"Items":[],"Paging":{"DisplayedCount":0,"TotalCount":2,"Offset":2,"Limit":1,"SortDir":"Asc","SortBy":"Name"}}'
+    headers:
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 11 May 2025 10:31:49 GMT
+      Expires:
+      - '0'
+      Pragma:
+      - no-cache
+      Server:
+      - Mono.WebServer.XSP/4.8.0.0 Linux
+      - Unknown
+      Strict-Transport-Security:
+      - max-age=10886400; includeSubDomains; preload
+      Transfer-Encoding:
+      - chunked
+      X-BaseSpace-Source:
+      - master/readonly
+      X-Content-Type-Options:
+      - nosniff
+      X-Request-ID:
+      - 2025.05.11.10.31.49._GohXH2GF0-9qjnSaw2CHg
     status:
       code: 200
       message: OK
