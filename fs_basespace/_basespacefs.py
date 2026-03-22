@@ -4,8 +4,11 @@ from __future__ import unicode_literals
 
 import io
 import os
+import re
 import threading
 import logging
+
+import requests
 from fs import errors
 from fs import ResourceType
 from fs import tools
@@ -14,7 +17,9 @@ from fs.mode import Mode
 from fs.info import Info
 from fs.path import normpath
 from fs.path import relpath
+
 from smart_open.http import SeekableBufferedInputBase
+from concurrent.futures import ThreadPoolExecutor
 
 from .api_factory import BasespaceApiFactory
 from .basespace_context import FileContext, MAX_PAGE_SIZE
@@ -22,8 +27,10 @@ from .basespace_context import CategoryContext
 from .basespace_context import get_last_direct_context
 from .basespace_context import get_context_by_key
 
+
 __all__ = ["BASESPACEFS"]
 _BASESPACE_DEFAULT_SERVER = "https://api.basespace.illumina.com/"
+TWENTY_GB = 20*1024*1024*1024
 
 logger = logging.getLogger("BaseSpaceFs")
 logger.setLevel(logging.DEBUG)
@@ -239,11 +246,68 @@ class BASESPACEFS(FS):
         s3_url = self.geturl(path=path)
         return SeekableBufferedInputBase(s3_url, mode, timeout=15)
 
+    def _download_file(self, source_path, dest_file):
+        session = requests.Session()
+        s3_presigned_url = ""
+        try:
+            # get the s3 presigned url
+            s3_presigned_url = self.geturl(path=source_path)
+
+            # Detect range support and file size
+            headers = {"Range": "bytes=0-0"}
+            response = session.get(s3_presigned_url, headers=headers, stream=True)
+            if response.status_code != 206:
+                raise RuntimeError(f"Range requests not supported. Error code: {response.status_code}")
+
+            content_range = response.headers.get("Content-Range")
+            m = re.match(r"bytes\s+\d+-\d+/(\d+)", content_range or "")
+            if not m:
+                raise RuntimeError("Invalid Content-Range")
+
+            file_size = int(m.group(1))
+            if file_size <= TWENTY_GB:
+                chunk_size = 32 * 1024 * 1024  # 32 MB
+                workers = 6
+                iter_chunk_size = 2 * 1024 * 1024  # 2 MB
+            else:
+                chunk_size = 64 * 1024 * 1024  # 64 MB
+                workers = 8
+                iter_chunk_size = 4 * 1024 * 1024  # 4 MB
+
+        except Exception as e:
+            logging.exception("Failed to detect range support for file_download_path: %s. Error: %s", s3_presigned_url, e)
+            # Fallback to sequential streaming, using a single thread
+            with self.openbin(source_path, "rb") as basespace_f:
+                tools.copy_file_data(basespace_f, dest_file)
+            return
+
+        # Build byte ranges
+        ranges = []
+        for start in range(0, file_size, chunk_size):
+            end = min(start + chunk_size - 1, file_size - 1)
+            ranges.append((start, end))
+
+        def download_range(current_range):
+            start, end = current_range
+            headers = {"Range": f"bytes={start}-{end}"}
+            offset = start
+
+            with session.get(s3_presigned_url, headers=headers, stream=True) as response:
+                response.raise_for_status()
+                # read the streamed data into chunks
+                for chunk in response.iter_content(iter_chunk_size):
+                    if chunk:
+                        # write the chunk (offset based) to the file - Multiple threads can write simultaneously
+                        os.pwrite(dest_file.fileno(), chunk, offset)
+                        offset += len(chunk)
+
+        with ThreadPoolExecutor(max_workers=workers) as executor:
+            list(executor.map(download_range, ranges))
+
     def download(self, path, file, chunk_size=None, **options):
         logger.debug(f'download path: {path}')
         try:
-            with self.openbin(path, "rb") as basespace_f:
-                tools.copy_file_data(basespace_f, file)
+            self._download_file(source_path=path, dest_file=file)
         except Exception as e:
             logger.exception(f'download failed: {path} err: {str(e)}')
             raise
@@ -272,6 +336,7 @@ class BASESPACEFS(FS):
         try:
             current_context = self.get_context_by_path(path)
             self.verify_upload_complete(path, context=current_context)
+            logger.info(f">>>>>path :{path} size: {current_context.raw_obj.Size}")
             s3_url = current_context.raw_obj.getFileUrl(self.basespace.base_api)
         except errors.ResourceInvalid as e:
             raise e
