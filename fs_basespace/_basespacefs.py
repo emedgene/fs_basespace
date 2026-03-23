@@ -7,6 +7,7 @@ import os
 import re
 import threading
 import logging
+import time
 
 import requests
 from fs import errors
@@ -30,7 +31,15 @@ from .basespace_context import get_context_by_key
 
 __all__ = ["BASESPACEFS"]
 _BASESPACE_DEFAULT_SERVER = "https://api.basespace.illumina.com/"
-TWENTY_GB = 20*1024*1024*1024
+
+REQUEST_TIMEOUT_IN_SEC = 120
+
+MB = 1024 * 1024
+GB = 1024 * MB
+# (chunk_size, workers, iter_chunk_size)
+RANGE_SMALL_DOWNLOAD_POLICY  = (16 * MB, 1, 4 * MB)
+RANGE_MEDIUM_DOWNLOAD_POLICY = (32 * MB, 4, 8 * MB)
+RANGE_LARGE_DOWNLOAD_POLICY  = (64 * MB, 8, 8 * MB)
 
 logger = logging.getLogger("BaseSpaceFs")
 logger.setLevel(logging.DEBUG)
@@ -246,36 +255,49 @@ class BASESPACEFS(FS):
         s3_url = self.geturl(path=path)
         return SeekableBufferedInputBase(s3_url, mode, timeout=15)
 
-    def _download_file(self, source_path, dest_file):
+    def _download_file(self, source_path, dest_file, chunk_size=None):
+        # validation
+        if chunk_size is not None and chunk_size <= 0:
+            raise ValueError(f"Invalid chunk_size {chunk_size}, must be > 0")
+
+        # get the session to reuse connections for multiple requests (range requests) and improve performance
         session = requests.Session()
         s3_presigned_url = ""
         try:
             # get the s3 presigned url
-            s3_presigned_url = self.geturl(path=source_path)
+            file_download_path = self.geturl(path=source_path)
 
             # Detect range support and file size
             headers = {"Range": "bytes=0-0"}
-            response = session.get(s3_presigned_url, headers=headers, stream=True)
+            response = session.get(file_download_path, headers=headers, stream=True, timeout=REQUEST_TIMEOUT_IN_SEC)
             if response.status_code != 206:
                 raise RuntimeError(f"Range requests not supported. Error code: {response.status_code}")
 
             content_range = response.headers.get("Content-Range")
+            if not content_range:
+                raise RuntimeError("Missing Content-Range header")
             m = re.match(r"bytes\s+\d+-\d+/(\d+)", content_range or "")
             if not m:
-                raise RuntimeError("Invalid Content-Range")
+                raise RuntimeError(f"Invalid Content-Range format: {content_range}")
 
+            response.close()
             file_size = int(m.group(1))
-            if file_size <= TWENTY_GB:
-                chunk_size = 32 * 1024 * 1024  # 32 MB
-                workers = 6
-                iter_chunk_size = 2 * 1024 * 1024  # 2 MB
+            dest_file.truncate(file_size)
+
+            # get the download config policy according to file size
+            if file_size <= 100 * MB:
+                download_config_policy = RANGE_SMALL_DOWNLOAD_POLICY
+            elif file_size <= 2 * GB:
+                download_config_policy = RANGE_MEDIUM_DOWNLOAD_POLICY
             else:
-                chunk_size = 64 * 1024 * 1024  # 64 MB
-                workers = 8
-                iter_chunk_size = 4 * 1024 * 1024  # 4 MB
+                download_config_policy = RANGE_LARGE_DOWNLOAD_POLICY
+
+            config_chunk_size, workers, iter_chunk_size = download_config_policy
+            if chunk_size is None:
+                chunk_size = config_chunk_size
 
         except Exception as e:
-            logging.exception("Failed to detect range support for file_download_path: %s. Error: %s", s3_presigned_url, e)
+            logging.exception("Failed to detect range support or file size, fallback to sequential streaming. %s", e)
             # Fallback to sequential streaming, using a single thread
             with self.openbin(source_path, "rb") as basespace_f:
                 tools.copy_file_data(basespace_f, dest_file)
@@ -290,16 +312,31 @@ class BASESPACEFS(FS):
         def download_range(current_range):
             start, end = current_range
             headers = {"Range": f"bytes={start}-{end}"}
-            offset = start
 
-            with session.get(s3_presigned_url, headers=headers, stream=True) as response:
-                response.raise_for_status()
-                # read the streamed data into chunks
-                for chunk in response.iter_content(iter_chunk_size):
-                    if chunk:
-                        # write the chunk (offset based) to the file - Multiple threads can write simultaneously
-                        os.pwrite(dest_file.fileno(), chunk, offset)
-                        offset += len(chunk)
+            for attempt in range(3):
+                try:
+                    offset = start
+                    with session.get(file_download_path, headers=headers, stream=True, timeout=REQUEST_TIMEOUT_IN_SEC) as response:
+                        response.raise_for_status()
+                        if response.status_code != 206:
+                            raise RuntimeError(f"Expected 206, got {response.status_code} from {file_download_path}")
+
+                        for chunk in response.iter_content(iter_chunk_size):
+                            if chunk:
+                                # write the chunk (offset based) to the file - Multiple threads can write simultaneously
+                                os.pwrite(dest_file.fileno(), chunk, offset)
+                                offset += len(chunk)
+
+                    if offset != end + 1:
+                        raise RuntimeError(f"Incomplete download for range {start}-{end} for path {file_download_path}")
+                    return
+                except Exception as e:
+                    logging.warning("Attempt %d: Failed to download range %d-%d from path %s. %s", attempt + 1, start, end, file_download_path, e)
+                    # backoff between retries
+                    time.sleep(2 ** attempt)
+                    if attempt == 2:
+                        logging.exception("All attempts failed for range %d-%d. Aborting download for %s.", start, end, file_download_path)
+                        raise
 
         with ThreadPoolExecutor(max_workers=workers) as executor:
             list(executor.map(download_range, ranges))
@@ -307,7 +344,7 @@ class BASESPACEFS(FS):
     def download(self, path, file, chunk_size=None, **options):
         logger.debug(f'download path: {path}')
         try:
-            self._download_file(source_path=path, dest_file=file)
+            self._download_file(source_path=path, dest_file=file, chunk_size=chunk_size)
         except Exception as e:
             logger.exception(f'download failed: {path} err: {str(e)}')
             raise
@@ -336,7 +373,7 @@ class BASESPACEFS(FS):
         try:
             current_context = self.get_context_by_path(path)
             self.verify_upload_complete(path, context=current_context)
-            logger.info(f">>>>>path :{path} size: {current_context.raw_obj.Size}")
+            logger.info(f"file: {path} size: {current_context.raw_obj.Size}")
             s3_url = current_context.raw_obj.getFileUrl(self.basespace.base_api)
         except errors.ResourceInvalid as e:
             raise e
