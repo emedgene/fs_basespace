@@ -32,3 +32,4 @@ jobs:
         uses: pypa/gh-action-pypi-publish@v1.13.0
         with:
           password: ${{ secrets.PYPI_EMEDGENE_API_KEY }}
+          verbose: true
