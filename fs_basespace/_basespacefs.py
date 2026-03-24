@@ -297,7 +297,7 @@ class BASESPACEFS(FS):
                 chunk_size = config_chunk_size
 
         except Exception as e:
-            logging.exception("Failed to detect range support or file size, fallback to sequential streaming -C %s", e)
+            logging.exception("Failed to detect range support or file size, fallback to sequential streaming - %s", e)
             # Fallback to sequential streaming, using a single thread
             with self.openbin(source_path, "rb") as basespace_f:
                 tools.copy_file_data(basespace_f, dest_file)
