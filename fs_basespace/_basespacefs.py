@@ -260,13 +260,15 @@ class BASESPACEFS(FS):
         if chunk_size is not None and chunk_size <= 0:
             raise ValueError(f"Invalid chunk_size {chunk_size}, must be > 0")
 
+        # get the s3 presigned url
+        try:
+            file_download_path = self.geturl(path=source_path)
+        except Exception as e:
+            raise e
+
         # get the session to reuse connections for multiple requests (range requests) and improve performance
         session = requests.Session()
-        s3_presigned_url = ""
         try:
-            # get the s3 presigned url
-            file_download_path = self.geturl(path=source_path)
-
             # Detect range support and file size
             headers = {"Range": "bytes=0-0"}
             response = session.get(file_download_path, headers=headers, stream=True, timeout=REQUEST_TIMEOUT_IN_SEC)
