@@ -22,6 +22,7 @@ CLIENT_KEY = "YYYYY7c5106e4b4b956e128d1d1XXXXX"
 CLIENT_SECRET = "YYYYY85e8e9b4248b9b396e8c23XXXXX"
 APP_TOKEN = "YYYYY0f27f224388b11f3b193eeXXXXX"
 BASESPACE_DEFAULT_SERVER = "https://api.basespace.illumina.com/"
+EUC1_BASESPACE_DEFAULT_SERVER = "https://api.euc1.sh.basespace.illumina.com/"
 
 
 EMEDGENE_PROJECT_ID = 86591915
@@ -38,6 +39,7 @@ FILE_2_SIZE_IN_BYTES = 50934554
 FILE_2_NAME = 'Myeloid-RNA-Brain-Rep1_S1_L001_R2_001.fastq.gz'
 
 
+
 class TestBaseSpace(unittest.TestCase):
     connection_template = '{scheme}://{client_key}:{client_secret}:{app_token}@{server}!/'
     scheme = 'basespace'
@@ -51,8 +53,8 @@ class TestBaseSpace(unittest.TestCase):
                                                app_token=app_token,
                                                server=server)
 
-    def _init_default_fs(self):
-        basespace_fs = fs.open_fs(self._get_conn_str())
+    def _init_default_fs(self, server=BASESPACE_DEFAULT_SERVER):
+        basespace_fs = fs.open_fs(self._get_conn_str(server=server))
         self.assertIsNotNone(basespace_fs)
         return basespace_fs
 
@@ -81,12 +83,12 @@ class TestBaseSpace(unittest.TestCase):
     @vcr.use_cassette('download/download_file_11.yaml', cassette_library_dir=cassette_lib_dir)
     def test_download_existing_sequenced_file_1(self):
         # prepare
-        file_name = '/projects/86591915/appresults/137682553/files/11761995736'
-        expected_file_size = 1247
+        file_name = f'/projects/5194190/samples/6739741/files/178325741'
+        expected_file_size = 53599050
         out_file_name = 'my_downloaded_binary_file'
 
         # init
-        basespace_fs = self._init_default_fs()
+        basespace_fs = self._init_default_fs(server=EUC1_BASESPACE_DEFAULT_SERVER)
 
         # act
         with open(out_file_name, 'wb') as write_file:
@@ -104,12 +106,12 @@ class TestBaseSpace(unittest.TestCase):
     @vcr.use_cassette('download/download_file_22.yaml', cassette_library_dir=cassette_lib_dir)
     def test_download_existing_sequenced_file_2(self):
         # prepare
-        file_name = '/projects/86591915/appresults/137682553/files/11761995733'
-        expected_file_size = 41809
+        file_name = f'/projects/5194190/samples/6739741/files/178328591'
+        expected_file_size = 50306203
         out_file_name = 'my_downloaded_binary_file'
 
         # init
-        basespace_fs = self._init_default_fs()
+        basespace_fs = self._init_default_fs(server=EUC1_BASESPACE_DEFAULT_SERVER)
 
         # act
         with open(out_file_name, 'wb') as write_file:
@@ -127,12 +129,12 @@ class TestBaseSpace(unittest.TestCase):
     @vcr.use_cassette('download/download_file.yaml', cassette_library_dir=cassette_lib_dir)
     def test_download_existing_file(self):
         # prepare
-        file_name = f'/projects/{EMEDGENE_PROJECT_ID}/biosamples/{EMEDGENE_BIOSAMPLE_ID}/datasets/{EMEDGENE_DATASET_ID}/sequenced files/{FILE_1_ID}'
-        expected_file_size = 48526491
+        file_name = f'/projects/5194190/samples/6739741/files/178328591'
+        expected_file_size = 50306203
         out_file_name = 'my_downloaded_binary_file'
 
         # init
-        basespace_fs = self._init_default_fs()
+        basespace_fs = self._init_default_fs(server=EUC1_BASESPACE_DEFAULT_SERVER)
 
         # act
         with open(out_file_name, 'wb') as write_file:

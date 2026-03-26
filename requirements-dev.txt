@@ -2,3 +2,5 @@
 fs~=2.4
 smart-open~=5.1
 vcrpy>=7.0.0
+requests
+certifi==2024.8.30
